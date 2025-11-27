@@ -4,17 +4,23 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\UserAnswer>
+ */
 class UserAnswerFactory extends Factory
 {
-    protected $model = \App\Models\UserAnswer::class;
-
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
     public function definition(): array
     {
         return [
-            'key' => $this->faker->uuid(),
+            'key' => fake()->uuid(),
             'user_id' => \App\Models\User::factory(),
             'question_id' => \App\Models\Question::factory(),
-            'answer' => $this->faker->randomElement(['yes', 'no']),
+            'answer' => fake()->randomElement([true, false]),
         ];
     }
 }

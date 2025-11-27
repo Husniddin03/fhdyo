@@ -8,13 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Question extends Model
 {
     use HasFactory;
-
-    protected $fillable = [
-        'type', 'question'
-    ];
+    protected $fillable = ['type','question'];
 
     public function answers()
     {
         return $this->hasMany(UserAnswer::class);
     }
+
+    public function couples()
+    {
+        return $this->hasMany(Couple::class);
+    }
 }
+

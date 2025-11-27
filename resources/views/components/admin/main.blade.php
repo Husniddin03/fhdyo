@@ -108,17 +108,10 @@
             <div class="mx-auto w-full max-w-7xl">
                 <nav class="navbar py-2">
                     <div class="navbar-start items-center gap-2">
-                        <button type="button" class="btn btn-soft btn-square btn-sm lg:hidden" aria-haspopup="dialog"
-                            aria-expanded="false" aria-controls="layout-sidebar" data-overlay="#layout-sidebar">
-                            <span class="icon-[tabler--menu-2] size-4.5"></span>
-                        </button>
 
                         <!-- Search  -->
                         <div class="input no-focus border-0 px-0">
-                            <span
-                                class="icon-[tabler--search] text-base-content/80 my-auto me-2 size-4 shrink-0"></span>
-                            <input type="search" class="grow placeholder:text-sm" placeholder="Type to Search..."
-                                id="kbdInput" />
+                            <h3 class="grow text-lg">{{ $title }}</h3>
                             <label class="sr-only" for="kbdInput">Search</label>
                         </div>
                     </div>
@@ -411,23 +404,58 @@
                                     <ul class="space-y-1">
                                         <!-- Simple Link Item (for nested items) -->
                                         <li>
-                                            <a href="{{route('admin.index')}}"  class="{{$page=='admin.index'?'menu-active':''}} inline-flex w-full items-center px-2">
+                                            <a href="{{ route('admin.index') }}"
+                                                class="{{ $page == 'admin.index' ? 'menu-active' : '' }} inline-flex w-full items-center px-2">
                                                 <span>Satistika</span>
                                             </a>
                                         </li>
 
                                         <!-- Simple Link Item (for nested items) -->
                                         <li>
-                                            <a href="{{route('admin.users.index')}}" class="{{$page=='admin.users.index'?'menu-active':''}} inline-flex w-full items-center px-2">
+                                            <a href="{{ route('admin.users.index') }}"
+                                                class="{{ $page == 'admin.users.index' ? 'menu-active' : '' }} inline-flex w-full items-center px-2">
                                                 <span class="grow">Foydalanuvchilar</span>
                                             </a>
                                         </li>
 
                                         <!-- Simple Link Item (for nested items) -->
                                         <li>
-                                            <a href="#" class="inline-flex w-full items-center px-2"
-                                                >
+                                            <a href="{{ route('admin.users.create') }}"
+                                                class="{{ $page == 'admin.users.create' ? 'menu-active' : '' }} inline-flex w-full items-center px-2">
                                                 <span class="grow">Yangi foydalanuvchi</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <li class="active accordion-item" id="dashboard">
+                                <button
+                                    class="accordion-toggle accordion-item-active:bg-neutral/10 inline-flex w-full items-center p-2 text-start text-sm font-normal"
+                                    aria-controls="dashboard-collapse-dashboard" aria-expanded="true">
+                                    <span class="icon-[tabler--dashboard] size-4.5"></span>
+                                    <span class="grow">Juftliklar</span>
+                                    <span
+                                        class="icon-[tabler--chevron-right] accordion-item-active:rotate-90 size-4.5 shrink-0 transition-transform duration-300 rtl:rotate-180"></span>
+                                </button>
+                                <div id="dashboard-collapse-dashboard"
+                                    class="accordion-content mt-1 block w-full overflow-hidden transition-[height] duration-300"
+                                    aria-labelledby="dashboard" role="region">
+                                    <ul class="space-y-1">
+
+                                        <!-- Simple Link Item (for nested items) -->
+                                        <li>
+                                            <a href="{{ route('admin.couple.index') }}"
+                                                class="{{ $page == 'admin.couple.index' ? 'menu-active' : '' }} inline-flex w-full items-center px-2">
+                                                <span class="grow">Barcha juftliklar</span>
+                                            </a>
+                                        </li>
+
+                                        <!-- Simple Link Item (for nested items) -->
+                                        <li>
+                                            <a href="{{ route('admin.couple.create') }}"
+                                                class="{{ $page == 'admin.couple.create' ? 'menu-active' : '' }} inline-flex w-full items-center px-2">
+                                                <span class="grow">Yangi juftlik qo'shish</span>
                                             </a>
                                         </li>
                                     </ul>
@@ -465,8 +493,7 @@
                                                     <!-- Simple Link Item (for nested items) -->
                                                     <li>
                                                         <a href="auth-login-1.html"
-                                                            class="inline-flex w-full items-center px-2"
-                                                            >
+                                                            class="inline-flex w-full items-center px-2">
                                                             <span>Chirchiq</span>
                                                         </a>
                                                     </li>
@@ -474,8 +501,7 @@
                                                     <!-- Simple Link Item (for nested items) -->
                                                     <li>
                                                         <a href="https://demos.flyonui.com/templates/html/dashboard-default/auth-login-2.html"
-                                                            class="inline-flex w-full items-center px-2"
-                                                            >
+                                                            class="inline-flex w-full items-center px-2">
                                                             <span class="grow">Bekaobod</span>
                                                         </a>
                                                     </li>
@@ -500,8 +526,7 @@
                                                     <!-- Simple Link Item (for nested items) -->
                                                     <li>
                                                         <a href="auth-register-1.html"
-                                                            class="inline-flex w-full items-center px-2"
-                                                            >
+                                                            class="inline-flex w-full items-center px-2">
                                                             <span>Jizzax</span>
                                                         </a>
                                                     </li>
@@ -509,8 +534,7 @@
                                                     <!-- Simple Link Item (for nested items) -->
                                                     <li>
                                                         <a href="https://demos.flyonui.com/templates/html/dashboard-default/auth-register-2.html"
-                                                            class="inline-flex w-full items-center px-2"
-                                                            >
+                                                            class="inline-flex w-full items-center px-2">
                                                             <span class="grow">Baxmal</span>
                                                             <span
                                                                 class="badge badge-primary badge-sm badge-soft">Pro</span>
@@ -537,8 +561,7 @@
                                                     <!-- Simple Link Item (for nested items) -->
                                                     <li>
                                                         <a href="auth-forgot-password-1.html"
-                                                            class="inline-flex w-full items-center px-2"
-                                                            >
+                                                            class="inline-flex w-full items-center px-2">
                                                             <span>Termiz</span>
                                                         </a>
                                                     </li>
@@ -546,8 +569,7 @@
                                                     <!-- Simple Link Item (for nested items) -->
                                                     <li>
                                                         <a href="https://demos.flyonui.com/templates/html/dashboard-default/auth-forgot-password-2.html"
-                                                            class="inline-flex w-full items-center px-2"
-                                                            >
+                                                            class="inline-flex w-full items-center px-2">
                                                             <span class="grow">Sho'rchi</span>
                                                             <span
                                                                 class="badge badge-primary badge-sm badge-soft">Pro</span>
@@ -578,7 +600,7 @@
                                         <!-- Simple Link Item (for nested items) -->
                                         <li>
                                             <a href="https://demos.flyonui.com/templates/html/dashboard-default/tables-datatables-basic.html"
-                                                class="inline-flex w-full items-center px-2" >
+                                                class="inline-flex w-full items-center px-2">
                                                 <span>Adminlar</span>
                                             </a>
                                         </li>
@@ -586,7 +608,7 @@
                                         <!-- Simple Link Item (for nested items) -->
                                         <li>
                                             <a href="https://demos.flyonui.com/templates/html/dashboard-default/tables-datatables-advanced.html"
-                                                class="inline-flex w-full items-center px-2" >
+                                                class="inline-flex w-full items-center px-2">
                                                 <span>Yangi admin</span>
                                             </a>
                                         </li>
@@ -684,6 +706,7 @@
             </div>
         </aside>
         <!-- / Menu -->
+
         {{ $slot }}
     </div>
     <button id="scrollToTopBtn"

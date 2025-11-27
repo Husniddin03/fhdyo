@@ -1,12 +1,14 @@
 <?php
 
-use App\Http\Controllers\admin\PageConreoller;
+use App\Http\Controllers\Admin\CoupleController;
+use App\Http\Controllers\Admin\PageConreoller;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
-
+// admin routes
+Route::get('/', [PageConreoller::class, 'index']);
 Route::get('admin/index', [PageConreoller::class, 'index'])->name('admin.index');
-Route::get('admin/users/index', [PageConreoller::class, 'users'])->name('admin.users.index');
+Route::resource('admin/users', UserController::class, array('as'=>'admin'));
+Route::resource('admin/couple', CoupleController::class, array('as'=>'admin'));
+
+
+// user routes

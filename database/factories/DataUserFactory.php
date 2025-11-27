@@ -4,19 +4,25 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\DataUser>
+ */
 class DataUserFactory extends Factory
 {
-    protected $model = \App\Models\DataUser::class;
-
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
     public function definition(): array
     {
         return [
             'user_id' => \App\Models\User::factory(),
-            'phone' => $this->faker->phoneNumber(),
-            'jshshir' => $this->faker->numerify('###########'),
-            'passport_id' => $this->faker->bothify('AA######'),
-            'province' => $this->faker->state(),
-            'region' => $this->faker->city(),
+            'phone' => fake()->phoneNumber(),
+            'jshshir' => fake()->numerify('##############'),
+            'passport_id' => fake()->numerify('AA######'),
+            'province' => fake()->city(),
+            'region' => fake()->streetName(),
         ];
     }
 }

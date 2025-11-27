@@ -11,7 +11,7 @@ class main extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public string $page)
+    public function __construct(public string $page, public string $title)
     {
         //
     }

@@ -8,10 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class UserAnswer extends Model
 {
     use HasFactory;
-
-    protected $fillable = [
-        'key', 'user_id', 'question_id', 'answer'
-    ];
+    protected $fillable = ['key','user_id','question_id','answer'];
 
     public function user()
     {
@@ -23,8 +20,5 @@ class UserAnswer extends Model
         return $this->belongsTo(Question::class);
     }
 
-    public function result()
-    {
-        return $this->hasOne(UserResult::class, 'user_answers_id');
-    }
 }
+

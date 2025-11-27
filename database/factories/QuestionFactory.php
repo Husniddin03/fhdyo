@@ -4,15 +4,21 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Question>
+ */
 class QuestionFactory extends Factory
 {
-    protected $model = \App\Models\Question::class;
-
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
     public function definition(): array
     {
         return [
-            'type' => $this->faker->randomElement(['personal', 'health', 'education']),
-            'question' => $this->faker->sentence(),
+            'type' => fake()->randomElement(['personal', 'emotional', 'family', 'interest']),
+            'question' => fake()->sentence(8),
         ];
     }
 }
