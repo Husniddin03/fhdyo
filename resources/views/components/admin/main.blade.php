@@ -8,7 +8,7 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
     <meta name="robots" content="noindex, nofollow" />
-    <title>Free - Dashboards | FlyonUI - Powered by FlyonUI</title>
+    <title>{{ $title }}</title>
 
     <meta name="description"
         content=" FlyonUIPro is the best FlyonUI dashboard for responsive web apps. Streamline your app development process with ease." />
@@ -451,6 +451,13 @@
                                             </a>
                                         </li>
 
+                                        <li>
+                                            <a href="{{ route('admin.couple.process') }}"
+                                                class="{{ $page == 'admin.couple.process' ? 'menu-active' : '' }} inline-flex w-full items-center px-2">
+                                                <span class="grow">Jarayondagilar</span>
+                                            </a>
+                                        </li>
+
                                         <!-- Simple Link Item (for nested items) -->
                                         <li>
                                             <a href="{{ route('admin.couple.create') }}"
@@ -582,6 +589,13 @@
                                 </div>
                             </li>
 
+                            <li>
+                                <a href="{{ route('admin.questions.index') }}"
+                                    class="px-2 {{ $page == 'admin.questions.index' ? 'menu-active' : '' }}">
+                                    <span class="icon-[tabler--help] size-4.5"></span>
+                                    <span class="grow">Test toifalari</span>
+                                </a>
+                            </li>
 
                             <!-- Accordion Menu Item (Level 0) -->
                             <li class="accordion-item" id="datatable">
@@ -713,5 +727,15 @@
         class="btn btn-circle btn-soft btn-secondary/20 bottom-15 end-15 motion-preset-slide-right motion-duration-800 motion-delay-100 fixed absolute z-[3] hidden"
         aria-label="Circle Soft Icon Button"><span class="icon-[tabler--chevron-up] size-5 shrink-0"></span></button>
 </body>
+<script>
+    function copyKey(copykey, copymsg) {
+        let key = document.getElementById(copykey).innerText;
+        navigator.clipboard.writeText(key).then(() => {
+            const msg = document.getElementById(copymsg);
+            msg.classList.remove('hidden');
+            setTimeout(() => msg.classList.add('hidden'), 2000);
+        });
+    }
+</script>
 
 </html>

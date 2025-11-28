@@ -14,42 +14,53 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $users = User::factory(50)->create();
+
+        // Har bir user uchun DataUser yaratish
         $users->each(function ($user) {
             DataUser::factory()->create([
                 'user_id' => $user->id,
             ]);
         });
-        $questions = Question::factory(50)->create();
 
-        $coupleCount = 0;
-        
-        $availableUsers = $users->shuffle();
-        
-        for ($i = 0; $i < 25 && $availableUsers->count() >= 2; $i++) {
-            $firstUser = $availableUsers->shift();
-            $secondUser = $availableUsers->shift();
-            Couple::factory()->create([
-                'first_user_id'  => $firstUser->id,
-                'second_user_id' => $secondUser->id,
-                'questions_id'   => $questions->random()->id,
+        // 4 xil type bo‘yicha 25 tadan savol
+        $types = ['personal', 'emotional', 'family', 'interest'];
+        foreach ($types as $type) {
+            Question::factory(25)->create([
+                'type' => $type
             ]);
-            
-            $coupleCount++;
         }
-        
-        $totalAnswers = 0;
-        
-        foreach ($users as $user) {
-            $selectedQuestions = $questions->random(5);
-            
-            foreach ($selectedQuestions as $q) {
+
+        $availableUsers = $users->shuffle()->values();
+
+        for ($i = 0; $i < 30; $i++) {
+
+            shuffle($types);
+            $questions = Question::where('type', $types[1])->get();
+
+            $couple = Couple::factory()->create([
+                'first_user_id'  => $availableUsers[$i],
+                'second_user_id' => $availableUsers[$i + 1],
+                'questions_type' => $types[1],
+                'key'            => fake()->uuid(),
+                'result' => fake()->randomFloat(2, 0, 100),
+            ]);
+
+
+            foreach ($questions as $question) {
+
                 UserAnswer::factory()->create([
-                    'user_id'     => $user->id,
-                    'question_id' => $q->id,
+                    'couples_id'   => $couple->id,
+                    'user_id'      => $availableUsers[$i],
+                    'questions_id' => $question->id,
                 ]);
-                $totalAnswers++;
+
+                UserAnswer::factory()->create([
+                    'couples_id'   => $couple->id,
+                    'user_id'      => $availableUsers[$i + 1],
+                    'questions_id' => $question->id,
+                ]);
+
             }
         }
-        
     }
 }

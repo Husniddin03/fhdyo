@@ -14,7 +14,6 @@ class PageConreoller extends Controller
         $users = User::all();
         $couples = Couple::whereNotNull('first_user_id')
             ->whereNotNull('second_user_id')
-            ->whereNotNull('questions_id')
             ->get();
         return view('admin.index', compact('users', 'couples'));
     }

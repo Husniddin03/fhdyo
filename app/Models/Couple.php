@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Couple extends Model
 {
     use HasFactory;
-    protected $fillable = ['first_user_id','second_user_id','questions_id','result'];
+    protected $fillable = ['first_user_id', 'second_user_id', 'questions_type', 'result', 'key'];
 
     public function firstUser()
     {
@@ -20,8 +20,4 @@ class Couple extends Model
         return $this->belongsTo(User::class, 'second_user_id');
     }
 
-    public function question()
-    {
-        return $this->belongsTo(Question::class, 'questions_id');
-    }
 }

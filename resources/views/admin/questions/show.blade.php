@@ -1,4 +1,4 @@
-<x-admin.main page="admin.users.index" title="Barcha foydalanuvchilar">
+<x-admin.main page="admin.questions.show" title="{{ $questions[0]->type }} toifasi">
 
     <!-- Layout Container -->
     <div class="lg:ps-75 flex grow flex-col">
@@ -28,13 +28,7 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Ismi</th>
-                                <th>Jshshir</th>
-                                <th>Paspot ID</th>
-                                <th>Telefon</th>
-                                <th>Viloyat</th>
-                                <th>Tuman</th>
-                                <th>Sana</th>
+                                <th>Savollar</th>
                                 <th>Amallar</th>
                             </tr>
                         </thead>
@@ -42,38 +36,31 @@
                             {{-- <span class="badge badge-soft badge-success text-xs">Professional</span>
                                 <span class="badge badge-soft badge-error text-xs">Rejected</span>
                                 <span class="badge badge-soft badge-info text-xs">Applied</span> --}}
-                            @foreach ($users as $user)
+                            @foreach ($questions as $question)
                                 <tr>
-                                    <td>{{ $user->name }}</td>
-                                    <td>{{ $user->data->jshshir }}</td>
-                                    <td>{{ $user->data->passport_id }}</td>
-                                    <td>{{ $user->data->phone }}</td>
-                                    <td>{{ $user->data->province }}</td>
-                                    <td>{{ $user->data->region }}</td>
+                                    <td>{{ $question->question }}</td>
 
                                     <td>
-                                        {{ \Carbon\Carbon::parse($user->update_at)->format('Y-m-d') }}
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('admin.users.show', $user->id) }}">
-                                            <button class="btn btn-circle btn-text btn-sm" aria-label="Action button">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                    viewBox="0 0 24 24" class="size-5" stroke-width="1.5"
+                                        <a href="{{ route('admin.questions.create', 'type='.$question->type) }}">
+                                            <button class="btn btn-circle btn-text btn-sm"
+                                                aria-label="Action button">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="size-5"
+                                                    fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                                     stroke="currentColor" class="size-6">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
-                                                        d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                                        d="M12 4.5v15m7.5-7.5h-15" />
                                                 </svg>
                                             </button>
                                         </a>
 
-                                        <a href="{{ route('admin.users.edit', $user->id) }}">
+                                        <a href="{{ route('admin.questions.edit', $question->id) }}">
                                             <button class="btn btn-circle btn-text btn-sm"
                                                 aria-label="Action button"><span
                                                     class="icon-[tabler--pencil] size-5"></span></button>
                                         </a>
-                                        <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" class="inline" onsubmit="return confirm('Foydalanuvchi ma\'lumoti o\'chiriladi. Davom etasizmi?')">
+                                        <form action="{{ route('admin.questions.destroy', $question->id) }}"
+                                            method="POST" class="inline"
+                                            onsubmit="return confirm('Foydalanuvchi ma\'lumoti o\'chiriladi. Davom etasizmi?')">
                                             @csrf
                                             <input type="hidden" name="_method" id="" value="DELETE">
                                             <button type="submit" class="btn btn-circle btn-text btn-sm"

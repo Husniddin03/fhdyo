@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class UserAnswer extends Model
 {
     use HasFactory;
-    protected $fillable = ['key','user_id','question_id','answer'];
+    protected $fillable = ['couple_id','user_id','questions_id','answer'];
 
     public function user()
     {
@@ -17,7 +17,7 @@ class UserAnswer extends Model
 
     public function question()
     {
-        return $this->belongsTo(Question::class);
+        return $this->belongsTo(Question::class, 'questions_id');
     }
 
 }

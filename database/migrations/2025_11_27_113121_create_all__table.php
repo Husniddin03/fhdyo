@@ -22,7 +22,9 @@ return new class extends Migration
 
             $table->foreignId('first_user_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('second_user_id')->nullable()->constrained('users')->cascadeOnDelete();
-            $table->foreignId('questions_id')->nullable()->constrained('questions')->cascadeOnDelete();
+            $table->string('questions_type');
+            $table->string('key');
+
             $table->double('result')->nullable();
             
             $table->timestamps();
@@ -43,9 +45,9 @@ return new class extends Migration
         Schema::create('user_answers', function (Blueprint $table) {
             $table->id();
 
-            $table->string('key');
+            $table->foreignId('couples_id')->constrained('couples')->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            $table->foreignId('question_id')->constrained('questions')->cascadeOnDelete();
+            $table->foreignId('questions_id')->constrained('questions')->cascadeOnDelete();
 
             $table->boolean('answer');
 
@@ -62,6 +64,5 @@ return new class extends Migration
         Schema::dropIfExists('data_users');
         Schema::dropIfExists('questions');
         Schema::dropIfExists('user_answers');
-        Schema::dropIfExists('user_results');
     }
 };

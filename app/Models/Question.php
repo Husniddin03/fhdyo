@@ -14,10 +14,5 @@ class Question extends Model
     {
         return $this->hasMany(UserAnswer::class);
     }
-
-    public function couples()
-    {
-        return $this->hasMany(Couple::class);
-    }
 }
 

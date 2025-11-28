@@ -17,9 +17,9 @@ class UserAnswerFactory extends Factory
     public function definition(): array
     {
         return [
-            'key' => fake()->uuid(),
+            'couples_id' => \App\Models\Couple::factory(),
             'user_id' => \App\Models\User::factory(),
-            'question_id' => \App\Models\Question::factory(),
+            'questions_id' => \App\Models\Question::factory(),
             'answer' => fake()->randomElement([true, false]),
         ];
     }

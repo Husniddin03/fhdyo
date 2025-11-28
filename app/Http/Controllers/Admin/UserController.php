@@ -82,22 +82,50 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user = User::with('data')->find($id);
+
+        return view('admin.users.edit', compact('user'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, User $user)
     {
-        //
+
+        $data = $request->validate([
+            "name"       => "sometimes|required|string|max:255",
+            "jshshir"    => "sometimes|required|digits:14",
+            "passport_id" => ["sometimes", "required", "regex:/^[A-Z]{2}[0-9]{7}$/", "unique:data_users"],
+            "phone"      => "sometimes|required|string",
+            "province"   => "sometimes|required|string",
+            "region"     => "sometimes|required|string",
+            "gender"     => "sometimes|required|in:Erkak,Ayol",
+        ]);
+
+
+        $user->update([
+            'name'   => $data['name'],
+            'gender' => $data['gender'],
+        ]);
+        $user->data->update([
+            "user_id"    => $user->id,
+            "jshshir"    => $data['jshshir'],
+            "passport_id" => $data['passport_id'],
+            "phone"      => $data['phone'],
+            "province"   => $data['province'],
+            "region"     => $data['region'],
+        ]);
+
+        return redirect()->route('admin.users.show', $user)->with('success', $data['name'] . " muvoffaqiyatli yaratildi");
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return redirect()->route('admin.users.index')->with('success', "Foydalanuvchi malumot o'chirildi");   
     }
 }

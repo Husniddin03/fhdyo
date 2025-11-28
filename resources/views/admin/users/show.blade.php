@@ -1,4 +1,4 @@
-<x-admin.main page="admin.users.show" title="{{$user->name}}">
+<x-admin.main page="admin.users.show" title="{{ $user->name }}">
     <div class="lg:ps-75 flex grow flex-col">
 
         <!-- Content -->
@@ -35,10 +35,19 @@
                                     {{ \Carbon\Carbon::parse($user->update_at)->format('Y-m-d') }}
                                 </td>
                                 <td>
-                                    <button class="btn btn-circle btn-text btn-sm" aria-label="Action button"><span
-                                            class="icon-[tabler--pencil] size-5"></span></button>
-                                    <button class="btn btn-circle btn-text btn-sm" aria-label="Action button"><span
-                                            class="icon-[tabler--trash] size-5"></span></button>
+                                    <a href="{{ route('admin.users.edit', $user->id) }}">
+                                        <button class="btn btn-circle btn-text btn-sm" aria-label="Action button"><span
+                                                class="icon-[tabler--pencil] size-5"></span></button>
+                                    </a>
+                                    <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST"
+                                        class="inline"
+                                        onsubmit="return confirm('Foydalanuvchi ma\'lumoti o\'chiriladi. Davom etasizmi?')">
+                                        @csrf
+                                        <input type="hidden" name="_method" id="" value="DELETE">
+                                        <button type="submit" class="btn btn-circle btn-text btn-sm"
+                                            aria-label="Action button"><span
+                                                class="icon-[tabler--trash] size-5"></span></button>
+                                    </form>
                                 </td>
                             </tr>
                         </tbody>
@@ -96,7 +105,7 @@
 
                                     <td>
                                         <span
-                                            class="badge badge-soft badge-success text-xs">{{ $couple->question->type }}</span>
+                                            class="badge badge-soft badge-success text-xs">{{ $couple->questions_type }}</span>
                                     </td>
                                     @php
                                         if ($couple->result >= 80) {

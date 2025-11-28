@@ -19,7 +19,8 @@ class CoupleFactory extends Factory
         return [
             'first_user_id' => \App\Models\User::factory(),
             'second_user_id' => \App\Models\User::factory(),
-            'questions_id' => \App\Models\Question::factory(),
+            'questions_type' => fake()->randomElement(['personal', 'emotional', 'family', 'interest']),
+            'key' => fake()->uuid()
         ];
     }
 }

@@ -7,7 +7,7 @@
                     <div class="border-base-content/20 flex items-end gap-6 border-b pb-4">
                         <h2 class="text-3xl">Juftliklar malumotlari</h2>
                     </div>
-                    <form class="space-y-6" method="POST" action="{{ route('admin.users.store') }}">
+                    <form class="space-y-6" method="POST" action="{{ route('admin.couple.store') }}">
                         @csrf
                         <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
                             <div>
@@ -67,7 +67,7 @@
                             <div>
                                 <label class="label-text" for="coutry">Test turkumi</label>
                                 <div class="max-w-full">
-                                    <select name="questions_id"
+                                    <select name="questions_type"
                                         data-select='{
                                                         "placeholder": "Test turkumi",
                                                         "toggleTag": "<button type=\"button\" aria-expanded=\"false\"></button>",

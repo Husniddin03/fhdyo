@@ -44,21 +44,29 @@
                             @foreach ($couples as $couple)
                                 <tr>
                                     @if ($couple->firstUser->gender == 'Erkak')
-                                        <td>{{ $couple->firstUser->name }}</td>
-                                        <td>{{ $couple->secondUser->name }}</td>
+                                        <td><a
+                                                href="{{ route('admin.users.show', $couple->firstUser->id) }}">{{ $couple->firstUser->name }}</a>
+                                        </td>
+                                        <td><a
+                                                href="{{ route('admin.users.show', $couple->secondUser->id) }}">{{ $couple->secondUser->name }}</a>
+                                        </td>
                                     @else
-                                        <td>{{ $couple->secondUser->name }}</td>
-                                        <td>{{ $couple->firstUser->name }}</td>
+                                        <td><a
+                                                href="{{ route('admin.users.show', $couple->secondUser->id) }}">{{ $couple->secondUser->name }}</a>
+                                        </td>
+                                        <td><a
+                                                href="{{ route('admin.users.show', $couple->firstUser->id) }}">{{ $couple->firstUser->name }}</a>
+                                        </td>
                                     @endif
 
                                     <td>
                                         <span
-                                            class="badge badge-soft badge-success text-xs">{{ $couple->question->type }}</span>
+                                            class="badge badge-soft badge-success text-xs">{{ $couple->questions_type }}</span>
                                     </td>
                                     @php
-                                        if ($couple->result >= 80) {
+                                        if ($couple->result >= 75) {
                                             $result = 'success';
-                                        } elseif ($couple->result >= 60) {
+                                        } elseif ($couple->result >= 50) {
                                             $result = 'info';
                                         } else {
                                             $result = 'error';
@@ -81,17 +89,27 @@
                                         {{ \Carbon\Carbon::parse($couple->update_at)->format('Y-m-d') }}
                                     </td>
                                     <td>
-                                        <button class="btn btn-circle btn-text btn-sm" aria-label="Action button">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                class="size-5" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                                            </svg>
-                                        </button>
-                                        <button class="btn btn-circle btn-text btn-sm" aria-label="Action button"><span
-                                                class="icon-[tabler--trash] size-5"></span></button>
+                                        <a href="{{ route('admin.couple.show', $couple->id) }}">
+                                            <button class="btn btn-circle btn-text btn-sm" aria-label="Action button">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                    viewBox="0 0 24 24" class="size-5" stroke-width="1.5"
+                                                    stroke="currentColor" class="size-6">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                                </svg>
+                                            </button>
+                                        </a>
+                                        <form action="{{ route('admin.couple.destroy', $couple->id) }}" method="POST"
+                                            class="inline"
+                                            onsubmit="return confirm('Foydalanuvchi ma\'lumoti o\'chiriladi. Davom etasizmi?')">
+                                            @csrf
+                                            <input type="hidden" name="_method" id="" value="DELETE">
+                                            <button type="submit" class="btn btn-circle btn-text btn-sm"
+                                                aria-label="Action button"><span
+                                                    class="icon-[tabler--trash] size-5"></span></button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach
