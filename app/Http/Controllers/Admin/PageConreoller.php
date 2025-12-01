@@ -12,9 +12,11 @@ class PageConreoller extends Controller
     public function index()
     {
         $users = User::all();
-        $couples = Couple::whereNotNull('first_user_id')
-            ->whereNotNull('second_user_id')
+        $couples = Couple::whereNotNull('result')
+            ->orderBy('updated_at', 'desc')
+            ->limit(10)
             ->get();
+
         return view('admin.index', compact('users', 'couples'));
     }
 
@@ -22,5 +24,10 @@ class PageConreoller extends Controller
     {
         $users = User::all();
         return view('admin.users.index', compact('users'));
+    }
+
+    public function error()
+    {
+        return view('error');
     }
 }

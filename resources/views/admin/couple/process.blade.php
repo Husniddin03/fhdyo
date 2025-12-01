@@ -108,9 +108,13 @@
                                     @endif
 
                                     <td>
-                                        <span
-                                            class="badge badge-soft badge-success text-xs">{{ $couple->questions_type }}</span>
+                                        @foreach (explode(',', $couple->questions_type) as $type)
+                                            <span class="badge badge-soft badge-success text-xs me-1">
+                                                {{ trim($type) }}
+                                            </span>
+                                        @endforeach
                                     </td>
+
                                     @php
                                         if ($couple->result >= 75) {
                                             $result = 'success';

@@ -9,44 +9,45 @@
             <!-- Form Card -->
             <form action="{{ route('admin.questions.store') }}" method="POST" class="space-y-6">
                 @csrf
-
-                <input type="hidden" name="type" value="{{ $type }}">
-
                 <!-- Header -->
                 <div class="mx-auto w-full max-w-7xl">
                     <nav class="shadow rounded-md py-4 px-6 mb-4 flex items-center justify-between">
                         <h3 class="text-lg font-semibold">
                             {{ $type ?? 'Toifa' }} testlarini to'ldiring!
                         </h3>
-                        <span class="text-sm">
-                            Savollar soni: {{ $count ?? 0 }}
-                        </span>
                     </nav>
                 </div>
 
                 <!-- Table Container -->
-                <div class="rounded-lg shadow-md w-full overflow-x-auto">
+                <div class="rounded-lg shadow-md w-full overflow-x-auto p-4 space-y-4">
+
+                    <div class="flex flex-col gap-2">
+                        <label for="type" class="font-medium">Toifa nomi</label>
+                        <input type="text" id="type" name="type" value="{{ old('type') }}"
+                            class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400" />
+                    </div>
+
                     <table class="table-auto w-full border-collapse">
                         <thead>
                             <tr class="bg-gray-100 text-left">
-                                <th class="px-4 py-2">#</th>
-                                <th class="px-4 py-2">Savol</th>
+                                <th class="px-4 py-2">Savollar</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            @for ($i = 0; $i < $count; $i++)
-                                <tr class="border-b">
-                                    <td class="px-4 py-2 font-medium">{{ $i + 1 }}</td>
-                                    <td class="p-0">
-                                        <textarea name="questions[]" required placeholder="{{ $i + 1 }} - Savolni kiriting ..."
-                                            class="block w-full h-full min-h-[80px] px-4 py-2 border border-gray-300 rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400"></textarea>
-                                    </td>
-                                </tr>
-                            @endfor
+                        <tbody id="t-body">
+                            <tr class="border-b">
+                                <td class="p-0">
+                                    <textarea name="questions[]" required placeholder="Savolni kiriting ..."
+                                        class="block w-full h-full min-h-[80px] px-4 py-2 border border-gray-300 rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400"></textarea>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
-                </div>
 
+                    <button type="button" id="add-row"
+                        class="w-full py-3 font-semibold transition-all duration-200 border rounded-md">
+                        Yangi qator +
+                    </button>
+                </div>
                 <!-- Submit Button -->
                 <div class="mt-4">
                     <button type="submit"
@@ -61,3 +62,23 @@
     </div>
 
 </x-admin.main>
+
+
+<script>
+    document.getElementById("add-row").addEventListener("click", function() {
+
+        const tbody = document.getElementById("t-body");
+
+        const newRow = document.createElement("tr");
+        newRow.className = "border-b";
+
+        newRow.innerHTML = `
+                    <td class="p-0">
+                        <textarea name="questions[]" required placeholder="Savolni kiriting ..."
+                            class="block w-full h-full min-h-[80px] px-4 py-2 border border-gray-300 rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400"></textarea>
+                    </td>
+                `;
+
+        tbody.appendChild(newRow);
+    });
+</script>

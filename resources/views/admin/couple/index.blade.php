@@ -59,10 +59,19 @@
                                         </td>
                                     @endif
 
+                                    @php
+                                        $data = $thiw->resultData($couple);
+                                    @endphp
+
                                     <td>
-                                        <span
-                                            class="badge badge-soft badge-success text-xs">{{ $couple->questions_type }}</span>
+                                        @foreach (explode(',', $couple->questions_type) as $type)
+                                            <span
+                                                class="badge badge-soft badge-{{ $data[$type] >= 75 ? 'seccess' : ($data[$type] >= 50 ? 'info' : 'error') }} text-xs me-1">
+                                                {{ trim($type) }} {{ $data[$type] }}%
+                                            </span>
+                                        @endforeach
                                     </td>
+
                                     @php
                                         if ($couple->result >= 75) {
                                             $result = 'success';

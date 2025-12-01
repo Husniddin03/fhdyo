@@ -108,7 +108,10 @@
             <div class="mx-auto w-full max-w-7xl">
                 <nav class="navbar py-2">
                     <div class="navbar-start items-center gap-2">
-
+                        <button type="button" class="btn btn-soft btn-square btn-sm lg:hidden" aria-haspopup="dialog"
+                            aria-expanded="false" aria-controls="layout-sidebar" data-overlay="#layout-sidebar">
+                            <span class="icon-[tabler--menu-2] size-4.5"></span>
+                        </button>
                         <!-- Search  -->
                         <div class="input no-focus border-0 px-0">
                             <h3 class="grow text-lg">{{ $title }}</h3>
@@ -137,22 +140,25 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <h6 class="text-base-content mb-0.5 font-semibold">Mitchell Johnson</h6>
-                                        <p class="text-base-content/80 font-medium">Influencer</p>
+                                        <h6 class="text-base-content mb-0.5 font-semibold">{{ Auth::user()->name }}</h6>
+                                        <p class="text-base-content/80 font-medium">{{ Auth::user()->email }}</p>
                                     </div>
                                 </li>
                                 <li>
                                     <a class="dropdown-item px-3" href="#">
                                         <span class="icon-[tabler--user] size-5"></span>
-                                        My account
+                                        Profil
                                     </a>
                                 </li>
                                 <li class="dropdown-footer p-2 pt-1">
-                                    <a class="btn btn-text btn-error btn-block h-11 justify-start px-3 font-normal"
-                                        href="#">
-                                        <span class="icon-[tabler--logout] size-5"></span>
-                                        Logout
-                                    </a>
+                                    <form action="{{ route('admin.logout') }}" method="POST">
+                                        @csrf
+                                        <button
+                                            type="submit"class="btn btn-text btn-error btn-block h-11 justify-start px-3 font-normal">
+                                            <span class="icon-[tabler--logout] size-5"></span>
+                                            Chiqish
+                                        </button>
+                                    </form>
                                 </li>
                             </ul>
                         </div>
@@ -170,197 +176,6 @@
                     data-overlay="#activity-drawer">
                     <span class="icon-[tabler--x] size-4"></span>
                 </button>
-            </div>
-            <div class="drawer-body p-0">
-                <ul class="space-y-0">
-                    <!-- Joe Lincoln Activity -->
-                    <li class="flex items-start gap-4 p-4">
-                        <div class="avatar">
-                            <div class="size-8 rounded-full">
-                                <img src={{ Vite::asset('resources/assets/img/avatars/1.png') }} alt="avatar" />
-                            </div>
-                        </div>
-                        <div class="flex-1">
-                            <div class="mb-1">
-                                <span class="text-base-content font-semibold">joe Lincoln</span>
-                                <span class="text-base-content text-sm">mentioned you in last trends topic</span>
-                            </div>
-                            <p class="text-base-content/50 mb-3 text-sm">18 Mins ago</p>
-
-                            <div class="bg-base-200 rounded-box border-base-content/20 border px-4 py-2.5">
-                                <p class="text-base-content mb-4 text-sm font-medium">@Flyonui For an expert opinion,
-                                    check out what Mike has to say on this topic!</p>
-                                <div class="input input-sm">
-                                    <input type="text" class="grow" placeholder="Reply" id="flyonuiReply" />
-                                    <span
-                                        class="icon-[tabler--photo] text-base-content/80 my-auto ms-2 size-4 shrink-0"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-
-                    <li>
-                        <div class="divider"></div>
-                    </li>
-
-                    <!-- Sofia -->
-                    <li class="flex items-start gap-4 p-4">
-                        <div class="avatar">
-                            <div class="size-8 rounded-full">
-                                <img src={{ Vite::asset('resources/assets/img/avatars/2.png') }} alt="Sofia" />
-                            </div>
-                        </div>
-                        <div class="flex-1">
-                            <div class="mb-1">
-                                <span class="text-base-content font-semibold">Sofia</span>
-                                <span class="text-base-content text-sm">requested feedback on her design.</span>
-                            </div>
-                            <p class="text-base-content/50 text-sm">1 Hour ago</p>
-                        </div>
-                    </li>
-
-                    <li>
-                        <div class="divider"></div>
-                    </li>
-
-                    <!-- Jane Perez File Review -->
-                    <li class="flex items-start gap-4 p-4">
-                        <div class="avatar">
-                            <div class="size-8 rounded-full">
-                                <img src={{ Vite::asset('resources/assets/img/avatars/3.png') }} alt="Jane Perez" />
-                            </div>
-                        </div>
-                        <div class="flex-1">
-                            <div class="mb-1">
-                                <span class="text-base-content font-semibold">Jane Perez</span>
-                                <span class="text-base-content text-sm">invites you to review a file.</span>
-                            </div>
-                            <p class="text-base-content/50 mb-2.5 text-sm">3 Hours ago</p>
-                            <span class="badge badge-soft badge-lg">
-                                <span class="icon-[tabler--file-type-pdf] text-error"></span>
-                                invoices.pdf
-                            </span>
-                        </div>
-                    </li>
-
-                    <li>
-                        <div class="divider"></div>
-                    </li>
-
-                    <!-- Liam -->
-                    <li class="flex items-start gap-4 p-4">
-                        <div class="avatar">
-                            <div class="size-8 rounded-full">
-                                <img src={{ Vite::asset('resources/assets/img/avatars/11.png') }} alt="Liam" />
-                            </div>
-                        </div>
-                        <div class="flex-1">
-                            <div class="mb-1">
-                                <span class="text-base-content font-semibold">Liam</span>
-                                <span class="text-base-content text-sm">has shared a project update.</span>
-                            </div>
-                            <p class="text-base-content/50 text-sm">5 Hours ago</p>
-                        </div>
-                    </li>
-
-                    <li>
-                        <div class="divider"></div>
-                    </li>
-
-                    <!-- Tyler Hero Design Project -->
-                    <li class="flex items-start gap-4 p-4">
-                        <div class="avatar">
-                            <div class="size-8 rounded-full">
-                                <img src={{ Vite::asset('resources/assets/img/avatars/9.png') }} alt="Tyler Hero" />
-                            </div>
-                        </div>
-                        <div class="flex-1">
-                            <div class="mb-1">
-                                <span class="text-base-content font-semibold">Tyler Hero</span>
-                                <span class="text-base-content text-sm">wants to view your design project</span>
-                            </div>
-                            <p class="text-base-content/50 mb-3 text-sm">18 Mins ago</p>
-
-                            <div
-                                class="bg-base-200 rounded-box border-base-content/20 flex items-center gap-4 border px-4 py-2.5">
-                                <div class="avatar avatar-placeholder">
-                                    <div class="bg-base-100 text-primary rounded-box size-8 p-2">
-                                        <img src="https://cdn.flyonui.com/fy-assets/blocks/marketing-ui/brand-logo/figma-icon.png"
-                                            alt="avatar" />
-                                    </div>
-                                </div>
-                                <span class="text-sm font-medium">Launcher-UIkit.fig</span>
-                            </div>
-                        </div>
-                    </li>
-
-                    <li>
-                        <div class="divider"></div>
-                    </li>
-
-                    <!-- Denial Invite -->
-                    <li class="flex items-start gap-4 p-4">
-                        <div class="avatar">
-                            <div class="size-8 rounded-full">
-                                <img src={{ Vite::asset('resources/assets/img/avatars/4.png') }} alt="Denial" />
-                            </div>
-                        </div>
-                        <div class="flex-1">
-                            <div class="mb-1">
-                                <span class="text-base-content font-semibold">Denial</span>
-                                <span class="text-base-content text-sm">Invite from invite link</span>
-                            </div>
-                            <p class="text-base-content/50 text-sm">3 Hours ago</p>
-                        </div>
-                    </li>
-
-                    <li>
-                        <div class="divider"></div>
-                    </li>
-
-                    <!-- Leslie Alexander Tags -->
-                    <li class="flex items-start gap-4 p-4">
-                        <div class="avatar">
-                            <div class="size-8 rounded-full">
-                                <img src={{ Vite::asset('resources/assets/img/avatars/5.png') }}
-                                    alt="Leslie Alexander" />
-                            </div>
-                        </div>
-                        <div class="flex-1">
-                            <div class="mb-1">
-                                <span class="text-base-content font-semibold">Leslie Alexander</span>
-                                <span class="text-base-content text-sm">new tags to Web Redesign</span>
-                            </div>
-                            <p class="text-base-content/50 mb-3 text-sm">18 Mins ago</p>
-
-                            <div class="flex gap-2.5">
-                                <span class="badge badge-soft badge-primary badge-sm">Client - Request</span>
-                                <span class="badge badge-soft badge-warning badge-sm">Figma</span>
-                                <span class="badge badge-soft badge-info badge-sm">Redesign</span>
-                            </div>
-                        </div>
-                    </li>
-
-                    <li>
-                        <div class="divider"></div>
-                    </li>
-
-                    <!-- Miya File Review -->
-                    <li class="flex items-start gap-4 p-4">
-                        <div class="avatar">
-                            <div class="size-8 rounded-full">
-                                <img src={{ Vite::asset('resources/assets/img/avatars/6.png') }} alt="Miya" />
-                            </div>
-                        </div>
-                        <div class="flex-1">
-                            <div class="mb-1">
-                                <span class="text-base-content font-semibold">Miya</span>
-                                <span class="text-base-content text-sm">invites you to review a file.</span>
-                            </div>
-                            <p class="text-base-content/50 text-sm">10 Hours ago</p>
-                        </div>
-                    </li>
-                </ul>
             </div>
         </div>
         <!-- ---------- END HEADER ---------- -->
@@ -382,8 +197,9 @@
                             </div>
                         </div>
                         <div class="text-center">
-                            <h3 class="text-base-content text-lg font-semibold">Mitchell Johnson</h3>
-                            <p class="text-base-content/80">flyonui@mitchell</p>
+                            <h3 class="text-base-content text-lg font-semibold">{{ Auth::user()->name }}</h3>
+                            <p class="text-base-content/80">{{ Auth::user()->email }}</p>
+                            <p class="text-base-content/80">{{ Auth::user()->role }}</p>
                         </div>
                     </div>
                     <div class="h-full overflow-y-auto">
@@ -589,21 +405,12 @@
                                 </div>
                             </li>
 
-                            <li>
-                                <a href="{{ route('admin.questions.index') }}"
-                                    class="px-2 {{ $page == 'admin.questions.index' ? 'menu-active' : '' }}">
-                                    <span class="icon-[tabler--help] size-4.5"></span>
-                                    <span class="grow">Test toifalari</span>
-                                </a>
-                            </li>
-
-                            <!-- Accordion Menu Item (Level 0) -->
                             <li class="accordion-item" id="datatable">
                                 <button
                                     class="accordion-toggle accordion-item-active:bg-neutral/10 inline-flex w-full items-center p-2 text-start text-sm font-normal"
                                     aria-controls="datatable-collapse-datatable" aria-expanded="true">
                                     <span class="icon-[tabler--table] size-4.5"></span>
-                                    <span class="grow">Adminlar</span>
+                                    <span class="grow">Test toifalari</span>
                                     <span
                                         class="icon-[tabler--chevron-right] accordion-item-active:rotate-90 size-4.5 shrink-0 transition-transform duration-300 rtl:rotate-180"></span>
                                 </button>
@@ -613,22 +420,57 @@
                                     <ul class="space-y-1">
                                         <!-- Simple Link Item (for nested items) -->
                                         <li>
-                                            <a href="https://demos.flyonui.com/templates/html/dashboard-default/tables-datatables-basic.html"
-                                                class="inline-flex w-full items-center px-2">
-                                                <span>Adminlar</span>
+                                            <a href="{{ route('admin.questions.index') }}"
+                                                class="inline-flex w-full items-center px-2 {{ $page == 'admin.questions.index' ? 'menu-active' : '' }}">
+                                                <span>Barchasi</span>
                                             </a>
                                         </li>
 
                                         <!-- Simple Link Item (for nested items) -->
                                         <li>
-                                            <a href="https://demos.flyonui.com/templates/html/dashboard-default/tables-datatables-advanced.html"
-                                                class="inline-flex w-full items-center px-2">
-                                                <span>Yangi admin</span>
+                                            <a href="{{ route('admin.questions.create') }}"
+                                                class="inline-flex w-full items-center px-2 {{ $page == 'admin.questions.create' ? 'menu-active' : '' }}">
+                                                <span>Yangi toifa qo'shish</span>
                                             </a>
                                         </li>
                                     </ul>
                                 </div>
                             </li>
+
+                            <!-- Accordion Menu Item (Level 0) -->
+                            @if (Auth::user()->role == 'uuper_admin')
+                                <li class="accordion-item" id="datatable">
+                                    <button
+                                        class="accordion-toggle accordion-item-active:bg-neutral/10 inline-flex w-full items-center p-2 text-start text-sm font-normal"
+                                        aria-controls="datatable-collapse-datatable" aria-expanded="true">
+                                        <span class="icon-[tabler--table] size-4.5"></span>
+                                        <span class="grow">Adminlar</span>
+                                        <span
+                                            class="icon-[tabler--chevron-right] accordion-item-active:rotate-90 size-4.5 shrink-0 transition-transform duration-300 rtl:rotate-180"></span>
+                                    </button>
+                                    <div id="datatable-collapse-datatable"
+                                        class="accordion-content mt-1 hidden w-full overflow-hidden transition-[height] duration-300"
+                                        aria-labelledby="datatable" role="region">
+                                        <ul class="space-y-1">
+                                            <!-- Simple Link Item (for nested items) -->
+                                            <li>
+                                                <a href="{{ route('admin.admin.index') }}"
+                                                    class="inline-flex w-full items-center px-2 {{ $page == 'admin.admin.index' ? 'menu-active' : '' }}">
+                                                    <span>Adminlar</span>
+                                                </a>
+                                            </li>
+
+                                            <!-- Simple Link Item (for nested items) -->
+                                            <li>
+                                                <a href="{{ route('admin.admin.create') }}"
+                                                    class="inline-flex w-full items-center px-2 {{ $page == 'admin.admin.create' ? 'menu-active' : '' }}">
+                                                    <span>Yangi admin</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            @endif
                         </ul>
                     </div>
                     <div class="dropdown relative inline-flex w-full p-2 [--offset:5] [--placement:bottom]">
@@ -723,6 +565,14 @@
 
         {{ $slot }}
     </div>
+    <div id="flash-message" class="text-2xl bottom-15 end-15 motion-preset-slide-right motion-duration-800 motion-delay-100 fixed absolute z-[3]">
+        @if (session('success') !== null)
+            <h5 style="background-color: green; color: white; padding: 1rem; border-radius: 10px;" >{{ session('success') }}</h5>
+        @elseif(session('error') !== null)
+            <h5 style="color: white; background-color: red; padding: 1rem; border-radius: 10px;" >{{ session('error') }}</h5>
+        @endif
+    </div>
+
     <button id="scrollToTopBtn"
         class="btn btn-circle btn-soft btn-secondary/20 bottom-15 end-15 motion-preset-slide-right motion-duration-800 motion-delay-100 fixed absolute z-[3] hidden"
         aria-label="Circle Soft Icon Button"><span class="icon-[tabler--chevron-up] size-5 shrink-0"></span></button>
@@ -737,5 +587,19 @@
         });
     }
 </script>
+
+<script>
+    setTimeout(() => {
+        const flash = document.getElementById('flash-message');
+        if (flash) {
+            flash.style.transition = "opacity 0.5s";
+            flash.style.opacity = "0";
+
+            // 0.5s fade out tugagandan keyin blockni butunlay olib tashlash
+            setTimeout(() => flash.remove(), 500);
+        }
+    }, 3000); // 3 soniya
+</script>
+
 
 </html>

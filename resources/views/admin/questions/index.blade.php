@@ -37,50 +37,7 @@
                             {{-- <span class="badge badge-soft badge-success text-xs">Professional</span>
                                 <span class="badge badge-soft badge-error text-xs">Rejected</span>
                                 <span class="badge badge-soft badge-info text-xs">Applied</span> --}}
-                            <tr class="{{ $create == 'true' ? '' : 'hidden' }}">
-                                <form action="{{ route('admin.questions.create') }}" method="GET">
-                                    <td class="p-0">
-                                        <input type="text" name="type" placeholder="Tifaga nom bering ..."
-                                            class="block w-full h-full px-4 py-2" required>
-                                    </td>
-                                    <td class="p-0">
-                                        <input type="number" name="count" placeholder="Toifadagi savollar soni ..."
-                                            class="block w-full h-full px-4 py-2" required>
-                                    </td>
 
-                                    <td>
-                                        <button type="submit">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                stroke-width="1.5" stroke="currentColor" class="size-6">
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
-                                            </svg>
-                                        </button>
-                                    </td>
-                                </form>
-                            </tr>
-                            <tr class="{{ $update != null ? '' : 'hidden' }}">
-                                <form action="{{ route('admin.questions.update', $questions[0]->type) }}"
-                                    method="POST">
-                                    @csrf
-                                    @method('PUT')
-                                    <input type="hidden" name="_method" value="PUT" id="">
-                                    <td class="p-0">
-                                        <input type="text" name="type" placeholder="Tifaga nom bering ..."
-                                            value="{{ $update }}" class="block w-full h-full px-4 py-2" required>
-                                    </td>
-                                    <td></td>
-                                    <td>
-                                        <button type="submit">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                stroke-width="1.5" stroke="currentColor" class="size-6">
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
-                                            </svg>
-                                        </button>
-                                    </td>
-                                </form>
-                            </tr>
                             @foreach ($questions as $question)
                                 <tr>
                                     <td><a
@@ -89,7 +46,7 @@
                                     <td>{{ $question->count }} ta</td>
 
                                     <td>
-                                        <a href="{{ route('admin.questions.index', 'create=true') }}">
+                                        <a href="{{ route('admin.questions.create') }}">
                                             <button class="btn btn-circle btn-text btn-sm" aria-label="Action button">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="size-5" fill="none"
                                                     viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -112,16 +69,16 @@
                                             </button>
                                         </a>
 
-                                        <a href="{{ route('admin.questions.index', 'update=' . $question->type) }}">
+                                        <a href="{{ route('admin.questions.edit', $question->type) }}">
                                             <button class="btn btn-circle btn-text btn-sm"
                                                 aria-label="Action button"><span
                                                     class="icon-[tabler--pencil] size-5"></span></button>
                                         </a>
-                                        <form action="{{ route('admin.questions.destroy', $question->type) }}"
+                                        <form action="{{ route('admin.questions.delete_all') }}"
                                             method="POST" class="inline"
                                             onsubmit="return confirm('Foydalanuvchi ma\'lumoti o\'chiriladi. Davom etasizmi?')">
                                             @csrf
-                                            <input type="hidden" name="_method" id="" value="DELETE">
+                                            <input type="hidden" name="type", value="{{$question->type}}">
                                             <button type="submit" class="btn btn-circle btn-text btn-sm"
                                                 aria-label="Action button"><span
                                                     class="icon-[tabler--trash] size-5"></span></button>

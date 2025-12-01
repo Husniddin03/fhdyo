@@ -12,6 +12,7 @@
                         <thead>
                             <tr>
                                 <th>Savollar</th>
+
                                 @if ($couple->firstUser->gender == 'Erkak')
                                     <th>{{ $couple->firstUser->name }}</th>
                                     <th>{{ $couple->secondUser->name }}</th>
@@ -26,7 +27,7 @@
                             {{-- <span class="badge badge-soft badge-success text-xs">Professional</span>
                                 <span class="badge badge-soft badge-error text-xs">Rejected</span>
                                 <span class="badge badge-soft badge-info text-xs">Applied</span> --}}
-                            @foreach ($data as $item)
+                            @foreach ($data1 as $item)
                                 <tr>
                                     <td>{{ $item['question'] }}</td>
                                     @if ($item['first'] == 1)
@@ -50,10 +51,14 @@
                                 <td>Umumiy Natija</td>
                                 <td>{{ $all['first'] }} ta <span
                                         class="badge badge-soft badge-success text-xs">Ha</span>
-                                    {{ count($data) - $all['first'] }} ta yo'q </td>
+                                    {{ count($data1) - $all['first'] }} ta
+                                    <span class="badge badge-soft badge-error text-xs">Yo'q</span>
+                                </td>
+
+                                </td>
                                 <td>{{ $all['second'] }} ta <span
                                         class="badge badge-soft badge-success text-xs">Ha</span>
-                                    {{ count($data) - $all['second'] }} ta <span
+                                    {{ count($data1) - $all['second'] }} ta <span
                                         class="badge badge-soft badge-error text-xs">Yo'q</span> </td>
                                 @if ($all['all'] >= 75)
                                     <td><span class="badge badge-soft badge-success text-xs">{{ $all['all'] }} %

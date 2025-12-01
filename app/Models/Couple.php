@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Couple extends Model
 {
     use HasFactory;
-    protected $fillable = ['first_user_id', 'second_user_id', 'questions_type', 'result', 'key'];
+    protected $fillable = ['first_user_id', 'second_user_id', 'questions_type', 'result','number', 'key'];
 
     public function firstUser()
     {

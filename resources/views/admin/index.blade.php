@@ -255,8 +255,11 @@
                                     @endif
 
                                     <td>
-                                        <span
-                                            class="badge badge-soft badge-success text-xs">{{ $couple->questions_type }}</span>
+                                        @foreach (explode(',', $couple->questions_type) as $type)
+                                            <span class="badge badge-soft badge-success text-xs me-1">
+                                                {{ trim($type) }}
+                                            </span>
+                                        @endforeach
                                     </td>
                                     @php
                                         if ($couple->result >= 75) {
@@ -296,7 +299,9 @@
                                                 </svg>
                                             </button>
                                         </a>
-                                        <form action="{{ route('admin.couple.destroy', $couple->id) }}" method="POST" class="inline" onsubmit="return confirm('Foydalanuvchi ma\'lumoti o\'chiriladi. Davom etasizmi?')">
+                                        <form action="{{ route('admin.couple.destroy', $couple->id) }}"
+                                            method="POST" class="inline"
+                                            onsubmit="return confirm('Foydalanuvchi ma\'lumoti o\'chiriladi. Davom etasizmi?')">
                                             @csrf
                                             <input type="hidden" name="_method" id="" value="DELETE">
                                             <button type="submit" class="btn btn-circle btn-text btn-sm"

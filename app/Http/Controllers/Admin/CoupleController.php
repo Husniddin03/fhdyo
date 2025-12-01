@@ -18,10 +18,12 @@ class CoupleController extends Controller
     public function index()
     {
         $users = User::all();
-        $couples = Couple::whereNotNull('first_user_id')
-            ->whereNotNull('second_user_id')
+        $couples = Couple::whereNotNull('result')
             ->get();
-        return view('admin.couple.index', compact('couples'));
+
+        $thiw = $this;
+
+        return view('admin.couple.index', compact('couples', 'thiw'));
     }
 
     /**
@@ -42,36 +44,23 @@ class CoupleController extends Controller
         $request->validate([
             'first_user_id' => 'required|exists:users,id',
             'second_user_id' => 'required|exists:users,id',
-            'questions_type' => 'required|exists:questions,type'
+            'number' => 'required'
         ]);
 
-        $couple = Couple::where([
-            'first_user_id' => $request->input('first_user_id'),
-            'second_user_id' => $request->input('second_user_id'),
-            'questions_type' => $request->input('questions_type'),
-        ])->first();
+        $types = Question::select('type')->distinct()->pluck('type')->implode(',');
 
         $key = (string) Str::uuid();
-        if ($couple) {
-            $couple->update([
-                'first_user_id' => $request->input('first_user_id'),
-                'second_user_id' => $request->input('second_user_id'),
-                'questions_type' => $request->input('questions_type'),
-                'result' => null,
-                'key' => $key
-            ]);
-        } else {
-            Couple::create([
-                'first_user_id' => $request->input('first_user_id'),
-                'second_user_id' => $request->input('second_user_id'),
-                'questions_type' => $request->input('questions_type'),
-                'result' => null,
-                'key' => $key
-            ]);
-        }
+        Couple::create([
+            'first_user_id' => $request->first_user_id,
+            'second_user_id' => $request->second_user_id,
+            'questions_type' => $types,
+            'result' => null,
+            'key' => $key,
+            'number' => $request->number,
+        ]);
 
 
-        return redirect()->route('admin.couple.getkey', ['key' => $key])->with("seccess", "Juftik yaratildi, kalit orqali testni boshlang");
+        return redirect()->route('admin.couple.getkey', ['key' => $key])->with("success", "Juftik yaratildi, kalit orqali testni boshlang");
     }
 
     /**
@@ -81,20 +70,23 @@ class CoupleController extends Controller
     {
         $couple = Couple::find($id);
 
-        $data = [];
+
         $all = ['first' => 0, 'second' => 0, 'all' => 0];
+        $data1 = [];
         for ($i = 0; $i < count($couple->firstUser->answers); $i++) {
-            $data[$i]['question'] = $couple->firstUser->answers[$i]->question->question;
-            $data[$i]['first'] = $couple->firstUser->answers[$i]->answer;
-            $data[$i]['second'] = $couple->secondUser->answers[$i]->answer;
-            $data[$i]['check'] = $couple->firstUser->answers[$i]->answer == $couple->secondUser->answers[$i]->answer;
+            $data1[$i]['question'] = $couple->firstUser->answers[$i]->question->question;
+            $data1[$i]['first'] = $couple->firstUser->answers[$i]->answer;
+            $data1[$i]['second'] = $couple->secondUser->answers[$i]->answer;
+            $data1[$i]['check'] = $couple->firstUser->answers[$i]->answer == $couple->secondUser->answers[$i]->answer;
             $all['all'] += $couple->firstUser->answers[$i]->answer == $couple->secondUser->answers[$i]->answer ? 1 : 0;
             $all['first'] += $couple->firstUser->answers[$i]->answer;
             $all['second'] += $couple->secondUser->answers[$i]->answer;
         }
         $all['all'] = round($all['all'] * 100 / count($couple->firstUser->answers), 2);
 
-        return view('admin.couple.show', compact('couple', 'data', 'all'));
+        $data = $this->resultData($couple);
+
+        return view('admin.couple.show', compact('couple', 'data', 'data1', 'all'));
     }
 
     /**
@@ -117,7 +109,7 @@ class CoupleController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(Couple $couple)
-    {   
+    {
         $couple->delete();
         return redirect()->route('admin.couple.index')->with('success', "Malumot o'chirildi");
     }
@@ -133,5 +125,39 @@ class CoupleController extends Controller
     public function getkey($key)
     {
         return view('admin.couple.getkey', compact('key'));
+    }
+
+    public function resultData($couple)
+    {
+        $firstAnswers = $couple->firstUser->answers->keyBy('questions_id');
+        $secondAnswers = $couple->secondUser->answers->keyBy('questions_id');
+        $types = explode(',', $couple->questions_type);
+        $questions = Question::all();
+
+        $result = $firstAnswers->map(function ($answer1, $questionId) use ($secondAnswers) {
+            $answer2 = $secondAnswers->get($questionId);
+
+            return [
+                'question_id' => $questionId,
+                'first_answer' => $answer1->answer,
+                'second_answer' => $answer2?->answer,
+                'is_equal' => $answer1->answer === ($answer2?->answer),
+            ];
+        });
+        $data = [];
+
+        foreach ($types as $type) {
+            $data[$type] = 0;
+        }
+
+        foreach ($result as $item) {
+            $data[$questions->find($item['question_id'])->type] += $item['is_equal'] ? 1 : 0;
+        }
+
+        foreach ($types as $type) {
+            $data[$type] = $data[$type] * 100 / $couple->number;
+        }
+
+        return $data;
     }
 }

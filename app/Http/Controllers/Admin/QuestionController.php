@@ -13,13 +13,11 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        $create = request('create') ?? 'false';
-        $update = request('update') ?? null;
         $questions = Question::select('type')
             ->selectRaw('COUNT(*) as count')
             ->groupBy('type')
             ->get();
-        return view('admin.questions.index', compact('questions', 'create', 'update'));
+        return view('admin.questions.index', compact('questions'));
     }
 
     /**
@@ -27,12 +25,7 @@ class QuestionController extends Controller
      */
     public function create(Request $request)
     {
-        $request->validate([
-            'type' => "required|unique:questions,type"
-        ]);
-        $type = $request->input('type');
-        $count = $request->input('count');
-        return view('admin.questions.create', compact('type', 'count'));
+        return view('admin.questions.create');
     }
 
     /**
@@ -47,17 +40,17 @@ class QuestionController extends Controller
         ]);
 
         foreach ($request->input('questions') as $question) {
-            Question::create([
-                'type' => $request->input('type'),
-                'question' => $question
-            ]);
+            if ($question != null) {
+                Question::create([
+                    'type' => $request->input('type'),
+                    'question' => $question
+                ]);
+            }
         }
         return redirect()->route('admin.questions.show', $request->input('type'))->with('success', "$request->input('type') toifasi yaratildi");
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(string $type)
     {
         $questions = Question::where('type', $type)->get();
@@ -77,20 +70,39 @@ class QuestionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $type)
     {
-        if (is_numeric($id)) {
-        } else {
-            Question::where('type', $id)->update(['type' => $request->input('type')]);
+        $request->validate([
+            'type' => "required|unique:questions,type",
+            'questions' => "required|array",
+            'questions.*' => "required|string",
+        ]);
+
+        Question::where('type', $type)->delete();
+
+        foreach ($request->input('questions') as $question) {
+            if ($question != null) {
+                Question::create([
+                    'type' => $request->input('type'),
+                    'question' => $question
+                ]);
+            }
         }
-        return redirect()->route('admin.questions.show', $id)->with('seccess', "Muoffaqiyatli yangilandi");
+        return redirect()->route('admin.questions.show', $request->input('type'))->with('seccess', "Muoffaqiyatli yangilandi");
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Question $question) {
+        $question->delete();
+        return back()->with('success', "O'chirildi");
+    }
+
+    public function delete_all(Request $request)
     {
-        //
+        $type = $request->input('type');
+        Question::where('type', $type)->delete();
+        return redirect()->route('admin.questions.index', $type)->with('seccess', "Muoffaqiyatli o'chirildi");
     }
 }

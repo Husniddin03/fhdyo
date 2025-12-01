@@ -24,6 +24,7 @@ return new class extends Migration
             $table->foreignId('second_user_id')->nullable()->constrained('users')->cascadeOnDelete();
             $table->string('questions_type');
             $table->string('key');
+            $table->integer('number')->default(5);
 
             $table->double('result')->nullable();
             

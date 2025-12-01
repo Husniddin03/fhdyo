@@ -65,31 +65,18 @@
                                 </div>
                             </div>
                             <div>
-                                <label class="label-text" for="coutry">Test turkumi</label>
-                                <div class="max-w-full">
-                                    <select name="questions_type"
-                                        data-select='{
-                                                        "placeholder": "Test turkumi",
-                                                        "toggleTag": "<button type=\"button\" aria-expanded=\"false\"></button>",
-                                                        "toggleClasses": "advance-select-toggle select-disabled:pointer-events-none select-disabled:opacity-40",
-                                                        "hasSearch": true,
-                                                        "dropdownClasses": "advance-select-menu max-h-52 pt-0 overflow-y-auto",
-                                                        "optionClasses": "advance-select-option selected:select-active",
-                                                        "optionTemplate": "<div class=\"flex justify-between items-center w-full\"><span data-title></span><span class=\"icon-[tabler--check] shrink-0 size-4 text-primary hidden selected:block \"></span></div>",
-                                                        "extraMarkup": "<span class=\"icon-[tabler--chevron-down] shrink-0 size-4 text-base-content absolute top-1/2 end-3 -translate-y-1/2 \"></span>"
-                                                        }'
-                                        class="hidden">
-                                        <option value="" selected disabled>Test turkumi</option>
-                                        @foreach ($questions as $question)
-                                            <option value="{{ $question->type }}">{{ $question->type }}</option>
-                                        @endforeach
-                                    </select>
-                                    <p class="text-error">
-                                        @error('province')
-                                            {{ $message }}
-                                        @enderror
-                                    </p>
-                                </div>
+                                <label class="label-text" for="name">Soni</label>
+                                <div>Barcha bo'limlardan savollar soni</div>
+                            </div>
+                            <div>
+                                <label class="label-text" for="name">Soni</label>
+                                <input value="{{ old('number') }}" type="number" id="number" name="number"
+                                    class="input" placeholder="Soni" />
+                                <p class="text-error">
+                                    @error('number')
+                                        {{ $message }}
+                                    @enderror
+                                </p>
                             </div>
                         </div>
                         <!-- Submit Button -->

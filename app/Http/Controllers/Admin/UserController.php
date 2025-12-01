@@ -16,7 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::with('data')->get();
+        $users = User::where('role', 'user')->with('data')->get();
         return view('admin.users.index', compact('users'));
     }
 
@@ -96,7 +96,7 @@ class UserController extends Controller
         $data = $request->validate([
             "name"       => "sometimes|required|string|max:255",
             "jshshir"    => "sometimes|required|digits:14",
-            "passport_id" => ["sometimes", "required", "regex:/^[A-Z]{2}[0-9]{7}$/", "unique:data_users"],
+            "passport_id" => ["sometimes", "required", "regex:/^[A-Z]{2}[0-9]{7}$/"],
             "phone"      => "sometimes|required|string",
             "province"   => "sometimes|required|string",
             "region"     => "sometimes|required|string",
