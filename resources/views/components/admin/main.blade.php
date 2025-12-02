@@ -1,3 +1,242 @@
+@php
+    $regions = [
+        [
+            'viloyat' => 'Qoraqalpog‘iston Respublikasi',
+            'tuman' => [
+                'Nukus shahri',
+                'Amudaryo',
+                'Beruniy',
+                'Kegayli',
+                'Qanliko‘l',
+                'Qo‘ng‘irot',
+                'Mo‘ynoq',
+                'Nukus tumani',
+                'Taxtako‘pir',
+                'To‘rtko‘l',
+                'Xo‘jayli',
+                'Chimboy',
+                'Shumanay',
+                'Ellikqal‘a',
+            ],
+        ],
+        [
+            'viloyat' => 'Toshkent shahri',
+            'tuman' => [
+                'Bektemir',
+                'Chilonzor',
+                'Mirzo Ulug‘bek',
+                'Mirobod',
+                'Olmazor',
+                'Sergeli',
+                'Shayxontohur',
+                'Uchtepa',
+                'Yakkasaroy',
+                'Yashnobod',
+                'Yunusobod',
+            ],
+        ],
+        [
+            'viloyat' => 'Toshkent',
+            'tuman' => [
+                'Angren',
+                'Bekobod',
+                'Bekobod tumani',
+                'Bo‘ka',
+                'Bo‘stonliq',
+                'Chinoz',
+                'Qibray',
+                'Oqqo‘rg‘on',
+                'Ohangaron',
+                'Parkent',
+                'Piskent',
+                'Quyichirchiq',
+                'O‘rtachirchiq',
+                'Yuqorichirchiq',
+                'Yangiyo‘l',
+                'Zangiota',
+            ],
+        ],
+        [
+            'viloyat' => 'Andijon',
+            'tuman' => [
+                'Andijon shahri',
+                'Andijon tumani',
+                'Asaka',
+                'Baliqchi',
+                'Bo‘z',
+                'Buloqbosh',
+                'Izboskan',
+                'Jalaquduq',
+                'Kurgontepa',
+                'Marhamat',
+                'Oltinko‘l',
+                'Paxtaobod',
+                'Shahrikhon',
+                'Ulug‘nor',
+                'Xo‘jaobod',
+            ],
+        ],
+        [
+            'viloyat' => 'Farg‘ona',
+            'tuman' => [
+                'Farg‘ona shahri',
+                'Beshariq',
+                'Bog‘dod',
+                'Buvayda',
+                'Dang‘ara',
+                'Farg‘ona tumani',
+                'Furqat',
+                'Oltiariq',
+                'Quva',
+                'Rishton',
+                'So‘x',
+                'Toshloq',
+                'Uchko‘prik',
+                'Yozyovon',
+            ],
+        ],
+        [
+            'viloyat' => 'Namangan',
+            'tuman' => [
+                'Namangan shahri',
+                'Chortoq',
+                'Chust',
+                'Kosonsoy',
+                'Mingbuloq',
+                'Namangan tumani',
+                'Norin',
+                'Pop',
+                'To‘raqo‘rg‘on',
+                'Uychi',
+                'Uchqo‘rg‘on',
+                'Yangiqo‘rg‘on',
+            ],
+        ],
+        [
+            'viloyat' => 'Samarqand',
+            'tuman' => [
+                'Samarqand shahri',
+                'Bulung‘ur',
+                'Ishtixon',
+                'Jomboy',
+                'Kattaqo‘rg‘on shahri',
+                'Kattaqo‘rg‘on tumani',
+                'Narpay',
+                'Nurobod',
+                'Oqdaryo',
+                'Paxtachi',
+                'Payariq',
+                'Pastdarg‘om',
+                'Qo‘shrabot',
+                'Samarqand tumani',
+                'Tayloq',
+                'Urgut',
+            ],
+        ],
+        [
+            'viloyat' => 'Buxoro',
+            'tuman' => [
+                'Buxoro shahri',
+                'Buxoro tumani',
+                'G‘ijduvon',
+                'Jondor',
+                'Kogon shahri',
+                'Kogon tumani',
+                'Olot',
+                'Peshku',
+                'Qorako‘l',
+                'Qorovulbozor',
+                'Romitan',
+                'Shofirkon',
+                'Vobkent',
+            ],
+        ],
+        [
+            'viloyat' => 'Navoiy',
+            'tuman' => [
+                'Navoiy shahri',
+                'Konimex',
+                'Karmana',
+                'Navbahor',
+                'Nurota',
+                'Qiziltepa',
+                'Tomdi',
+                'Uchquduq',
+                'Xatirchi',
+            ],
+        ],
+        [
+            'viloyat' => 'Qashqadaryo',
+            'tuman' => [
+                'Qarshi shahri',
+                'Chiroqchi',
+                'Dehqonobod',
+                'G‘uzor',
+                'Kasbi',
+                'Kitob',
+                'Koson',
+                'Mirishkor',
+                'Muborak',
+                'Nishon',
+                'Qamashi',
+                'Qarshi tumani',
+                'Shahrisabz',
+                'Yakkabog‘',
+            ],
+        ],
+        [
+            'viloyat' => 'Surxondaryo',
+            'tuman' => [
+                'Termiz shahri',
+                'Angor',
+                'Bandixon',
+                'Boysun',
+                'Denov',
+                'Jarqo‘rg‘on',
+                'Muzrabot',
+                'Oltinsoy',
+                'Qiziriq',
+                'Qumqo‘rg‘on',
+                'Sariosiyo',
+                'Sherobod',
+                'Sho‘rchi',
+                'Termiz tumani',
+            ],
+        ],
+        [
+            'viloyat' => 'Jizzax',
+            'tuman' => [
+                'Jizzax shahri',
+                'Arnasoy',
+                'Baxmal',
+                'Do‘stlik',
+                'Forish',
+                'G‘allaorol',
+                'Mirzacho‘l',
+                'Paxtakor',
+                'Yangiobod',
+                'Zafarobod',
+                'Zarbdor',
+            ],
+        ],
+        [
+            'viloyat' => 'Sirdaryo',
+            'tuman' => [
+                'Guliston shahri',
+                'Boyovut',
+                'Guliston tumani',
+                'Mirzaobod',
+                'Oqoltin',
+                'Sardoba',
+                'Sirdaryo tumani',
+                'Sayxunobod',
+                'Xovos',
+            ],
+        ],
+    ];
+
+@endphp
+
 <!doctype html>
 
 <html lang="en" data-theme="light" data-assets-path="assets/" data-layout-path="dashboard-free/" dir="ltr"
@@ -300,107 +539,33 @@
                                     aria-labelledby="authentications" role="region">
                                     <ul class="accordion space-y-1">
                                         <!-- Accordion Menu Item (Level 1) -->
-                                        <li class="accordion-item" id="authentications-login">
-                                            <button
-                                                class="accordion-toggle accordion-item-active:bg-neutral/10 inline-flex w-full items-center p-2 text-start text-sm font-normal"
-                                                aria-controls="login-collapse-authentications-login"
-                                                aria-expanded="true">
-                                                <span class="grow">Toshkent</span>
-                                                <span
-                                                    class="icon-[tabler--chevron-right] accordion-item-active:rotate-90 size-4.5 shrink-0 transition-transform duration-300 rtl:rotate-180"></span>
-                                            </button>
-                                            <div id="login-collapse-authentications-login"
-                                                class="accordion-content mt-1 hidden w-full overflow-hidden transition-[height] duration-300"
-                                                aria-labelledby="authentications-login" role="region">
-                                                <ul class="space-y-1">
-                                                    <!-- Simple Link Item (for nested items) -->
-                                                    <li>
-                                                        <a href="auth-login-1.html"
-                                                            class="inline-flex w-full items-center px-2">
-                                                            <span>Chirchiq</span>
-                                                        </a>
-                                                    </li>
-
-                                                    <!-- Simple Link Item (for nested items) -->
-                                                    <li>
-                                                        <a href="https://demos.flyonui.com/templates/html/dashboard-default/auth-login-2.html"
-                                                            class="inline-flex w-full items-center px-2">
-                                                            <span class="grow">Bekaobod</span>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </li>
-
-                                        <!-- Accordion Menu Item (Level 1) -->
-                                        <li class="accordion-item" id="authentications-register">
-                                            <button
-                                                class="accordion-toggle accordion-item-active:bg-neutral/10 inline-flex w-full items-center p-2 text-start text-sm font-normal"
-                                                aria-controls="register-collapse-authentications-register"
-                                                aria-expanded="true">
-                                                <span class="grow">Jizzax</span>
-                                                <span
-                                                    class="icon-[tabler--chevron-right] accordion-item-active:rotate-90 size-4.5 shrink-0 transition-transform duration-300 rtl:rotate-180"></span>
-                                            </button>
-                                            <div id="register-collapse-authentications-register"
-                                                class="accordion-content mt-1 hidden w-full overflow-hidden transition-[height] duration-300"
-                                                aria-labelledby="authentications-register" role="region">
-                                                <ul class="space-y-1">
-                                                    <!-- Simple Link Item (for nested items) -->
-                                                    <li>
-                                                        <a href="auth-register-1.html"
-                                                            class="inline-flex w-full items-center px-2">
-                                                            <span>Jizzax</span>
-                                                        </a>
-                                                    </li>
-
-                                                    <!-- Simple Link Item (for nested items) -->
-                                                    <li>
-                                                        <a href="https://demos.flyonui.com/templates/html/dashboard-default/auth-register-2.html"
-                                                            class="inline-flex w-full items-center px-2">
-                                                            <span class="grow">Baxmal</span>
-                                                            <span
-                                                                class="badge badge-primary badge-sm badge-soft">Pro</span>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </li>
-
-                                        <!-- Accordion Menu Item (Level 1) -->
-                                        <li class="accordion-item" id="authentications-forgot-password">
-                                            <button
-                                                class="accordion-toggle accordion-item-active:bg-neutral/10 inline-flex w-full items-center p-2 text-start text-sm font-normal"
-                                                aria-controls="forgot-password-collapse-authentications-forgot-password"
-                                                aria-expanded="true">
-                                                <span class="grow">Surxandaryo</span>
-                                                <span
-                                                    class="icon-[tabler--chevron-right] accordion-item-active:rotate-90 size-4.5 shrink-0 transition-transform duration-300 rtl:rotate-180"></span>
-                                            </button>
-                                            <div id="forgot-password-collapse-authentications-forgot-password"
-                                                class="accordion-content mt-1 hidden w-full overflow-hidden transition-[height] duration-300"
-                                                aria-labelledby="authentications-forgot-password" role="region">
-                                                <ul class="space-y-1">
-                                                    <!-- Simple Link Item (for nested items) -->
-                                                    <li>
-                                                        <a href="auth-forgot-password-1.html"
-                                                            class="inline-flex w-full items-center px-2">
-                                                            <span>Termiz</span>
-                                                        </a>
-                                                    </li>
-
-                                                    <!-- Simple Link Item (for nested items) -->
-                                                    <li>
-                                                        <a href="https://demos.flyonui.com/templates/html/dashboard-default/auth-forgot-password-2.html"
-                                                            class="inline-flex w-full items-center px-2">
-                                                            <span class="grow">Sho'rchi</span>
-                                                            <span
-                                                                class="badge badge-primary badge-sm badge-soft">Pro</span>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </li>
+                                        @foreach ($regions as $region)
+                                            <li class="accordion-item" id="authentications-login">
+                                                <button
+                                                    class="accordion-toggle accordion-item-active:bg-neutral/10 inline-flex w-full items-center p-2 text-start text-sm font-normal"
+                                                    aria-controls="login-collapse-authentications-login"
+                                                    aria-expanded="true">
+                                                    <span class="grow">{{ $region['viloyat'] }}</span>
+                                                    <span
+                                                        class="icon-[tabler--chevron-right] accordion-item-active:rotate-90 size-4.5 shrink-0 transition-transform duration-300 rtl:rotate-180"></span>
+                                                </button>
+                                                <div id="login-collapse-authentications-login"
+                                                    class="accordion-content mt-1 hidden w-full overflow-hidden transition-[height] duration-300"
+                                                    aria-labelledby="authentications-login" role="region">
+                                                    <ul class="space-y-1">
+                                                        <!-- Simple Link Item (for nested items) -->
+                                                        @foreach ($region['tuman'] as $tuman)
+                                                            <li>
+                                                                <a href="auth-login-1.html"
+                                                                    class="inline-flex w-full items-center px-2">
+                                                                    <span>{{ $tuman }}</span>
+                                                                </a>
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        @endforeach
                                     </ul>
                                 </div>
                             </li>
@@ -565,11 +730,14 @@
 
         {{ $slot }}
     </div>
-    <div id="flash-message" class="text-2xl bottom-15 end-15 motion-preset-slide-right motion-duration-800 motion-delay-100 fixed absolute z-[3]">
+    <div id="flash-message"
+        class="text-2xl bottom-15 end-15 motion-preset-slide-right motion-duration-800 motion-delay-100 fixed absolute z-[3]">
         @if (session('success') !== null)
-            <h5 style="background-color: green; color: white; padding: 1rem; border-radius: 10px;" >{{ session('success') }}</h5>
+            <h5 style="background-color: green; color: white; padding: 1rem; border-radius: 10px;">
+                {{ session('success') }}</h5>
         @elseif(session('error') !== null)
-            <h5 style="color: white; background-color: red; padding: 1rem; border-radius: 10px;" >{{ session('error') }}</h5>
+            <h5 style="color: white; background-color: red; padding: 1rem; border-radius: 10px;">
+                {{ session('error') }}</h5>
         @endif
     </div>
 
