@@ -1,6 +1,6 @@
 <x-app title="home">
     <h1 class="text-2xl font-semibold text-gray-900">Dashboard</h1>
-    <div class="mt-4 p-6 bg-white rounded-lg shadow-md flex space-x-4 contents-center">
+    <div class="mt-4 p-6 bg-white rounded-lg shadow-md flex justify-center space-x-4 contents-center">
         <a href="#">
             <button class="w-full p-3 flex cursor-pointer justify-center rounded-lg text-gray-500 hover:bg-gray-50">
                 <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"

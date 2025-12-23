@@ -15,8 +15,8 @@ class CoupleFactory extends Factory
     public function definition(): array
     {
         return [
-            'husband' => Human::where('gender', 'erkak')->first()->id,
-            'wife' => Human::where('gender', 'ayol')->first()->id,
+            'husband' => Human::where('gender', 'female')->first()->id,
+            'wife' => Human::where('gender', 'male')->first()->id,
             'husband_key' => Str::random(10),
             'wife_key' => Str::random(10),
             'status' => $this->faker->randomElement(['active','inactive']),

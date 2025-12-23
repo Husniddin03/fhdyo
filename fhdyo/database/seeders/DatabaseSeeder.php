@@ -23,11 +23,11 @@ class DatabaseSeeder extends Seeder
 
         // Humans
         Human::factory(20)->create([
-            'gender' => 'ayol'
+            'gender' => 'male'
         ]);
 
         Human::factory(20)->create([
-            'gender' => 'erkak'
+            'gender' => 'female'
         ]);
 
         // Categories va Questions

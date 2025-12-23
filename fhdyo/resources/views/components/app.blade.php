@@ -4,6 +4,7 @@
 <head>
     <title>{{ $title ?? 'FHDYO' }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script src="//unpkg.com/alpinejs" defer></script>
 </head>
 
 <body class="bg-gray-100">
@@ -18,7 +19,7 @@
 
                 <!-- Navigation -->
                 <nav class="flex-1 w-full px-2 space-y-2 mt-6">
-                    <a href="#">
+                    <a href="/">
                         <button
                             class="w-full p-3 flex cursor-pointer justify-center rounded-lg {{ $title == 'home' ? 'bg-indigo-50 text-indigo-600' : 'text-gray-500 hover:bg-gray-50' }}">
                             <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -29,9 +30,9 @@
                         </button>
                     </a>
 
-                    <a href="#">
+                    <a href="{{ route('humans.index') }}">
                         <button
-                            class="w-full p-3 flex cursor-pointer justify-center rounded-lg text-gray-500 hover:bg-gray-50">
+                            class="w-full p-3 flex cursor-pointer justify-center rounded-lg {{ $title == 'human' ? 'bg-indigo-50 text-indigo-600' : 'text-gray-500 hover:bg-gray-50' }}">
                             <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                 stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -96,7 +97,7 @@
         </aside>
 
         <!-- Main Content -->
-        <main class="flex-1 p-6 bg-gray-100">
+        <main class="flex-1 p-6 bg-gray-100 max-h-screen overflow-y-auto">
             {{ $slot }}
         </main>
     </div>
