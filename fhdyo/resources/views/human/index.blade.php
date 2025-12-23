@@ -14,6 +14,14 @@
                 </button>
             </form>
 
+            <a href="{{ route('humans.create') }}"
+                class="mx-3 flex justify-center items-center gap-2 border p-2 rounded-md border-gray-300 bg-green-50 hover:bg-green-100">
+                <h4 class="">Add human</h4>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                </svg>
+            </a>
 
             <a href="{{ route('humans.index') }}"
                 class="mx-3 flex justify-center items-center gap-2 border p-2 rounded-md border-gray-300">
@@ -114,8 +122,8 @@
                                                     <button type="submit"
                                                         class="p-2 text-gray-500 hover:text-red-600 transition">
                                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                                            class="w-5 h-5">
+                                                            viewBox="0 0 24 24" stroke-width="1.5"
+                                                            stroke="currentColor" class="w-5 h-5">
                                                             <path stroke-linecap="round" stroke-linejoin="round"
                                                                 d="M6 18 18 6M6 6l12 12" />
                                                         </svg>
@@ -532,8 +540,9 @@
                             <tr class="border-t border-gray-400">
                                 <td class="px-4 py-3 w-[20%]">
                                     <div class="flex items-center space-x-2">
-                                        <input type="checkbox" id="checkbox_{{ $human->id }}" data-human="{{ $human->id }}"
-                                            name="humans[]={{ $human->id }}" class="w-5 h-5 rounded-lg" />
+                                        <input type="checkbox" id="checkbox_{{ $human->id }}"
+                                            data-human="{{ $human->id }}" name="humans[]={{ $human->id }}"
+                                            class="w-5 h-5 rounded-lg" />
                                         <div>
                                             <span
                                                 class="block font-bold">{{ $human->first_name . ' ' . $human->last_name . ' ' . $human->middle_name }}</span>
@@ -555,25 +564,17 @@
                                 <td class="px-4 py-3 w-[12%] text-xs">{{ $human->passport_id }}</td>
                                 <td class="px-4 py-3 w-[12%] text-xs">{{ $human->province . ', ' . $human->region }}
                                 </td>
-                                <td class="px-4 py-3 w-[7%] relative" x-data="{ open: false }">
+                                <td class="px-4 py-3 w-[7%] relative">
                                     <div class="w-full flex justify-end">
-                                        <!-- Trigger button -->
-                                        <button @click="open = !open"
-                                            class="flex flex-col gap-y-1 mr-6 text-black hover:text-gray-600 px-5 py-2 hover:bg-gray-400 hover:rounded-xl focus:outline-none">
+                                        <button onclick="toggleDropdown(this)"
+                                            class="flex flex-col gap-y-1 mr-6 text-black hover:text-gray-600 px-5 py-2 hover:bg-gray-200 rounded-md">
                                             <span class="bg-black h-1 w-1 rounded-full"></span>
                                             <span class="bg-black h-1 w-1 rounded-full"></span>
                                             <span class="bg-black h-1 w-1 rounded-full"></span>
                                         </button>
 
-                                        <!-- Dropdown -->
-                                        <div x-show="open" @click.away="open = false"
-                                            x-transition:enter="transition ease-out duration-200"
-                                            x-transition:enter-start="opacity-0 transform scale-95"
-                                            x-transition:enter-end="opacity-100 transform scale-100"
-                                            x-transition:leave="transition ease-in duration-150"
-                                            x-transition:leave-start="opacity-100 transform scale-100"
-                                            x-transition:leave-end="opacity-0 transform scale-95"
-                                            class="absolute right-0 mt-8 bg-white border rounded-md shadow-lg w-36 z-50">
+                                        <div
+                                            class="hidden absolute right-0 mt-8 bg-white border rounded-md shadow-lg w-32 z-50">
                                             <ul class="flex flex-col text-sm text-gray-700">
                                                 <li>
                                                     <a href="{{ route('humans.edit', $human->id) }}"
@@ -581,8 +582,7 @@
                                                 </li>
                                                 <li>
                                                     <form method="POST"
-                                                        action="{{ route('humans.destroy', $human->id) }}"
-                                                        onsubmit="return confirm('Are you sure you want to delete this human?');">
+                                                        action="{{ route('humans.destroy', $human->id) }}" onsubmit="return confirm('Are you sure you want to delete selected humans?');">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit"
@@ -595,7 +595,6 @@
                                         </div>
                                     </div>
                                 </td>
-
                             </tr>
                         @endforeach
                     </tbody>
@@ -683,4 +682,17 @@
             updateDeleteForm();
         }
     });
+</script>
+
+<script>
+    function toggleDropdown(button) {
+        const dropdown = button.nextElementSibling;
+        dropdown.classList.toggle('hidden');
+        // tashqariga bosilganda yopish
+        document.addEventListener('click', function(e) {
+            if (!button.contains(e.target) && !dropdown.contains(e.target)) {
+                dropdown.classList.add('hidden');
+            }
+        });
+    }
 </script>

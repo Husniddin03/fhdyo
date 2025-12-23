@@ -75,6 +75,10 @@ class HumanController extends Controller
         return view('human.index', compact('humans', 'count'));
     }
 
+    public function create()
+    {
+        return view('human.create');
+    }
 
     public function store(Request $request)
     {
@@ -90,6 +94,8 @@ class HumanController extends Controller
             'province' => 'nullable|string',
             'region' => 'nullable|string',
         ]);
+
+        Human::create($data);
 
         return redirect()->route('humans.index')->with('success', 'Human created successfully');
     }

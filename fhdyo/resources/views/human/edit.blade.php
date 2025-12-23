@@ -1,11 +1,11 @@
 <x-app title="human">
     <div class="flex justify-between">
-        <h1 class="text-2xl font-semibold text-gray-900">Humans</h1>
+        <h1 class="text-2xl font-semibold text-gray-900">Update Human</h1>
 
         <div class="flex justify-center items-center gap-2">
             <a href="{{ route('humans.index') }}"
                 class="mx-3 flex justify-center items-center gap-2 border p-2 rounded-md border-gray-300">
-                <h4 class="">Backe</h4>
+                <h4 class="">Back</h4>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-6">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -82,7 +82,7 @@
                 <div class="flex w-auto items-end justify-center gap-2">
                     <a href="{{ route('humans.index') }}"
                         class="flex justify-center items-center gap-2 border p-2 rounded-md border-gray-300">
-                        <h4 class="">Backe</h4>
+                        <h4 class="">Back</h4>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                             stroke-width="1.5" stroke="currentColor" class="size-6">
                             <path stroke-linecap="round" stroke-linejoin="round"
