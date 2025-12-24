@@ -7,40 +7,15 @@ use Illuminate\Http\Request;
 
 class QuestionController extends Controller
 {
-    public function index()
+    public function destroy($id)
     {
-        return Question::with('category','answers')->get();
-    }
-
-    public function store(Request $request)
-    {
-        $data = $request->validate([
-            'category_id'=>'required|integer|exists:categories,id',
-            'question'=>'required|string',
-        ]);
-
-        return Question::create($data);
-    }
-
-    public function show(Question $question)
-    {
-        return $question->load('category','answers');
-    }
-
-    public function update(Request $request, Question $question)
-    {
-        $data = $request->validate([
-            'category_id'=>'integer|exists:categories,id',
-            'question'=>'string',
-        ]);
-
-        $question->update($data);
-        return $question;
-    }
-
-    public function destroy(Question $question)
-    {
+        if($id == -1) {
+            $ids = request()->input('questions', []);
+            Question::whereIn('id', $ids)->delete();
+            return redirect()->route('questions.index')->with('success', 'Selected questions deleted successfully');
+        }
+        $question = Question::findOrFail($id);
         $question->delete();
-        return response()->json(['message'=>'Question deleted']);
+        return redirect()->route('questions.index')->with('success', 'Question deleted successfully');
     }
 }

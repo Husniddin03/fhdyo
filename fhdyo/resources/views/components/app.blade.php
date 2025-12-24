@@ -40,9 +40,20 @@
                         </button>
                     </a>
 
-                    <a href="#">
+                    <a href="{{ route('couples.index') }}">
                         <button
-                            class="w-full p-3 flex cursor-pointer justify-center rounded-lg text-gray-500 hover:bg-gray-50">
+                            class="w-full p-3 flex cursor-pointer justify-center rounded-lg {{ $title == 'couple' ? 'bg-indigo-50 text-indigo-600' : 'text-gray-500 hover:bg-gray-50' }}">
+                            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1zM15 14a4 4 0 100-8 4 4 0 000 8zm6 6a6 6 0 00-12 0v1h12v-1z" />
+                            </svg>
+                        </button>
+                    </a>
+
+                    <a href="{{ route('categories.index') }}">
+                        <button
+                            class="w-full p-3 flex cursor-pointer justify-center rounded-lg {{ $title == 'category' ? 'bg-indigo-50 text-indigo-600' : 'text-gray-500 hover:bg-gray-50' }}">
                             <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                 stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
