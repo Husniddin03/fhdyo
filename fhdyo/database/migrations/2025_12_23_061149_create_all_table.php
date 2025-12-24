@@ -39,6 +39,7 @@ return new class extends Migration
             $table->string('husband_key');
             $table->string('wife_key');
             $table->string('status');
+            $table->float('result')->default(0);
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });

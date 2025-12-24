@@ -20,6 +20,7 @@ class CoupleFactory extends Factory
             'husband_key' => Str::random(10),
             'wife_key' => Str::random(10),
             'status' => $this->faker->randomElement(['married','unmarried','divorced']),
+            'result' => $this->faker->randomFloat(2, 0, 100),
             'user_id' => User::factory(),
         ];
     }

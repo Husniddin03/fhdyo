@@ -102,7 +102,8 @@ class HumanController extends Controller
 
     public function show(Human $human)
     {
-        return $human;
+        $couples = $human->husbandCouples->merge($human->wifeCouples);
+        return view('human.show', compact('human', 'couples'));
     }
 
     public function edit(Human $human)
@@ -131,7 +132,7 @@ class HumanController extends Controller
 
     public function destroy($id)
     {
-        if($id == -1) {
+        if ($id == -1) {
             $ids = request()->input('humans', []);
             Human::whereIn('id', $ids)->delete();
             return redirect()->route('humans.index')->with('success', 'Selected humans deleted successfully');

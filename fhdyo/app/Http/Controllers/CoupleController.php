@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Couple;
+use App\Models\Human;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class CoupleController extends Controller
@@ -35,7 +37,7 @@ class CoupleController extends Controller
         }
 
         if ($created_at = request('created_at')) {
-            $query->whereDate('created_at', $created_at);
+            $query->where('created_at', 'like', "%{$created_at}%");
         }
 
         if ($user = request('user')) {
@@ -59,6 +61,16 @@ class CoupleController extends Controller
             });
         }
 
+        if ($result = request('results')) {
+            if ($result === '0-50') {
+                $query->where('result', '>=', 0)->where('result', '<=', 50);
+            } elseif ($result === '51-80') {
+                $query->where('result', '>=', 51)->where('result', '<=', 80);
+            } elseif ($result === '81-100') {
+                $query->where('result', '>=', 81)->where('result', '<=', 100);
+            }
+        }
+
 
         // 🔽 Sortlashlar
         if ($createdSort = request('created_at_sort')) {
@@ -78,16 +90,7 @@ class CoupleController extends Controller
                 ->orderBy('users.name', $userSort)
                 ->select('couples.*');
         } elseif ($resultsSort = request('results_sort')) {
-            $query->leftJoinSub(
-                DB::table('couple_results')
-                    ->select('couple_id', DB::raw('SUM(percent) as total_percent'))
-                    ->groupBy('couple_id'),
-                'result_stats',
-                'couples.id',
-                '=',
-                'result_stats.couple_id'
-            )->orderBy('result_stats.total_percent', $resultsSort)
-                ->select('couples.*', 'result_stats.total_percent');
+            $query->orderBy('result', $resultsSort);
         } else {
             $query->orderBy('created_at', 'desc');
         }
@@ -107,23 +110,74 @@ class CoupleController extends Controller
         return view('couple.index', compact('couples', 'count'));
     }
 
+    public function create()
+    {
+        $humans = Human::all();
+        return view('couple.create', compact('humans'));
+    }
+
     public function store(Request $request)
     {
         $data = $request->validate([
             'husband' => 'required|integer|exists:humans,id',
             'wife' => 'required|integer|exists:humans,id',
-            'husband_key' => 'nullable|string',
-            'wife_key' => 'nullable|string',
-            'status' => 'nullable|string',
-            'user_id' => 'required|integer|exists:users,id',
+            'status' => 'required|in:married,unmarried,divorced',
         ]);
 
-        return Couple::create($data);
+        $data['user_id'] = 1;
+        // $data['user_id'] = Auth::id();
+
+        while (true) {
+            $data['husband_key'] = bin2hex(random_bytes(4));
+            $data['wife_key'] = bin2hex(random_bytes(4));
+
+            $exists = Couple::where('husband_key', $data['husband_key'])
+                ->orWhere('wife_key', $data['wife_key'])
+                ->exists();
+
+            if (!$exists) {
+                break;
+            }
+        }
+
+        Couple::create($data);
+        return redirect()->route('couples.index')->with('success', 'Couple created successfully');
     }
 
-    public function show(Couple $couple)
+
+    public function show($id)
     {
-        return $couple->load(['husbandData', 'wifeData', 'user', 'answers', 'results']);
+        $couple = Couple::with('answers')->findOrFail($id);
+
+        // 1-usul: Collection metodlari bilan
+        $husbandAnswers = $couple->answers
+            ->where('key', $couple->husband_key)
+            ->sortBy('question_id')
+            ->values();
+
+        $wifeAnswers = $couple->answers
+            ->where('key', $couple->wife_key)
+            ->sortBy('question_id')
+            ->values();
+
+        // Javoblarni birlashtirish
+        $answers = [];
+        foreach ($husbandAnswers as $index => $husbandAnswer) {
+            $answers[] = [
+                'question' => $husbandAnswer->question->question,
+                'category' => $husbandAnswer->question->category->category,
+                'husband' => $husbandAnswer->answer,
+                'wife' => $wifeAnswers[$index]->answer ?? null,
+            ];
+        }
+
+        return view('couple.show', compact('couple', 'answers'));
+    }
+
+    public function edit(Couple $couple)
+    {
+        $humans = Human::all();
+        return view('couple.edit', compact('couple', 'humans'));
     }
 
     public function update(Request $request, Couple $couple)
@@ -131,19 +185,38 @@ class CoupleController extends Controller
         $data = $request->validate([
             'husband' => 'integer|exists:humans,id',
             'wife' => 'integer|exists:humans,id',
-            'husband_key' => 'nullable|string',
-            'wife_key' => 'nullable|string',
-            'status' => 'nullable|string',
-            'user_id' => 'integer|exists:users,id',
+            'status' => 'nullable|in:married,unmarried,divorced',
         ]);
 
+        $data['user_id'] = 1;
+        // $data['user_id'] = Auth::id();
+
+        while (true) {
+            $data['husband_key'] = bin2hex(random_bytes(4));
+            $data['wife_key'] = bin2hex(random_bytes(4));
+
+            $exists = Couple::where('husband_key', $data['husband_key'])
+                ->orWhere('wife_key', $data['wife_key'])
+                ->exists();
+
+            if (!$exists) {
+                break;
+            }
+        }
+
         $couple->update($data);
-        return $couple;
+        return redirect()->route('couples.index')->with('success', 'Couple updated successfully');
     }
 
-    public function destroy(Couple $couple)
+    public function destroy($id)
     {
+        if ($id == -1) {
+            $ids = request()->input('couples', []);
+            Couple::whereIn('id', $ids)->delete();
+            return redirect()->route('couples.index')->with('success', 'Selected couples deleted successfully');
+        }
+        $couple = Couple::findOrFail($id);
         $couple->delete();
-        return response()->json(['message' => 'Couple deleted']);
+        return redirect()->route('couples.index')->with('success', 'Couple deleted successfully');
     }
 }

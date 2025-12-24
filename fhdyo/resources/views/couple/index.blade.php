@@ -422,7 +422,7 @@
                                                 <option value=""
                                                     {{ request('results') === '' ? 'selected' : '' }}>All</option>
                                                 <option value="0-50"
-                                                    {{ request('results') === '0-50' ? 'selected' : '' }}>0% - 50% 
+                                                    {{ request('results') === '0-50' ? 'selected' : '' }}>0% - 50%
                                                 </option>
                                                 <option value="51-80"
                                                     {{ request('results') === '51-80' ? 'selected' : '' }}>51% - 80%
@@ -476,13 +476,10 @@
                                     </span>
                                 </td>
                                 <td class="px-4 py-3 w-[13%]">
-                                    @php
-                                        $avgPercent = $couple->results->avg('percent');
-                                    @endphp
                                     <div class="relative">
                                         <button onclick="toggleResultsDropdown(this)"
                                             class="px-3 py-1 bg-blue-50 hover:bg-blue-100 rounded-md border border-blue-200 text-sm font-medium">
-                                            {{ $avgPercent ? number_format($avgPercent, 1) . '%' : 'N/A' }}
+                                            {{ $couple->result ? number_format($couple->result, 1) . '%' : 'N/A' }}
                                         </button>
 
                                         @if ($couple->results->count() > 0)
@@ -518,6 +515,10 @@
                                         <div
                                             class="hidden absolute right-0 mt-8 bg-white border rounded-md shadow-lg w-32 z-50">
                                             <ul class="flex flex-col text-sm text-gray-700">
+                                                <li>
+                                                    <a href="{{ route('couples.show', $couple->id) }}"
+                                                        class="block px-4 py-2 hover:bg-gray-100">👁️ Ko‘rish</a>
+                                                </li>
                                                 <li>
                                                     <a href="{{ route('couples.edit', $couple->id) }}"
                                                         class="block px-4 py-2 hover:bg-gray-100">✏️ Tahrirlash</a>

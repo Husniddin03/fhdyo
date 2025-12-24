@@ -577,6 +577,10 @@
                                             class="hidden absolute right-0 mt-8 bg-white border rounded-md shadow-lg w-32 z-50">
                                             <ul class="flex flex-col text-sm text-gray-700">
                                                 <li>
+                                                    <a href="{{ route('humans.show', $human->id) }}"
+                                                        class="block px-4 py-2 hover:bg-gray-100">👁️ Ko‘rish</a>
+                                                </li>
+                                                <li>
                                                     <a href="{{ route('humans.edit', $human->id) }}"
                                                         class="block px-4 py-2 hover:bg-gray-100">✏️ Tahrirlash</a>
                                                 </li>

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Question;
-use Illuminate\Http\Request;
 
 class QuestionController extends Controller
 {
@@ -16,6 +15,6 @@ class QuestionController extends Controller
         }
         $question = Question::findOrFail($id);
         $question->delete();
-        return redirect()->route('questions.index')->with('success', 'Question deleted successfully');
+        return redirect()->route('categories.index')->with('success', 'Question deleted successfully');
     }
 }

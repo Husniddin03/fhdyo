@@ -15,6 +15,7 @@ class Couple extends Model
         'husband_key',
         'wife_key',
         'status',
+        'result',
         'user_id',
     ];
 

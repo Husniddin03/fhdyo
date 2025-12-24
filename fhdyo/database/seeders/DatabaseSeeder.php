@@ -38,14 +38,17 @@ class DatabaseSeeder extends Seeder
         // Couples
         $couples = Couple::factory(10)->create();
 
+        $count = 0;
         // CoupleAnswers
         foreach ($couples as $couple) {
             foreach ($categories as $category) {
                 foreach ($category->questions as $question) {
                     CoupleAnswer::factory()->create([
+                        'key' => $count % 2 == 0 ? $couple->husband_key : $couple->wife_key,
                         'couple_id' => $couple->id,
                         'question_id' => $question->id,
                     ]);
+                    $count++;
                 }
             }
         }
