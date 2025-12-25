@@ -78,11 +78,11 @@ class CoupleController extends Controller
         } elseif ($statusSort = request('status_sort')) {
             $query->orderBy('status', $statusSort);
         } elseif ($husbandSort = request('husband_sort')) {
-            $query->join('humans as husband', 'couples.husband_id', '=', 'husband.id')
+            $query->join('humans as husband', 'couples.husband', '=', 'husband.id')
                 ->orderBy('husband.first_name', $husbandSort)
                 ->select('couples.*');
         } elseif ($wifeSort = request('wife_sort')) {
-            $query->join('humans as wife', 'couples.wife_id', '=', 'wife.id')
+            $query->join('humans as wife', 'couples.wife', '=', 'wife.id')
                 ->orderBy('wife.first_name', $wifeSort)
                 ->select('couples.*');
         } elseif ($userSort = request('user_sort')) {
@@ -122,10 +122,10 @@ class CoupleController extends Controller
             'husband' => 'required|integer|exists:humans,id',
             'wife' => 'required|integer|exists:humans,id',
             'status' => 'required|in:married,unmarried,divorced',
+            'date' => 'nullable|date',
         ]);
 
-        $data['user_id'] = 1;
-        // $data['user_id'] = Auth::id();
+        $data['user_id'] = Auth::id();
 
         while (true) {
             $data['husband_key'] = bin2hex(random_bytes(4));
@@ -188,8 +188,7 @@ class CoupleController extends Controller
             'status' => 'nullable|in:married,unmarried,divorced',
         ]);
 
-        $data['user_id'] = 1;
-        // $data['user_id'] = Auth::id();
+        $data['user_id'] = Auth::id();
 
         while (true) {
             $data['husband_key'] = bin2hex(random_bytes(4));

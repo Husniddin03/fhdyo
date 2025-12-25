@@ -53,7 +53,7 @@
     <div class="mt-4 bg-white rounded-lg shadow-md">
         <div class="mt-4 p-6 bg-white rounded-lg shadow-md flex justify-center space-x-4 contents-center">
 
-            <div class="w-full border items-center border-gray-400 rounded-lg overflow-x-auto">
+            <div class="w-full border items-center border-gray-400 rounded-lg">
                 <!-- Table -->
                 <table class="w-full text-left min-w-[1200px]">
                     <!-- Head -->

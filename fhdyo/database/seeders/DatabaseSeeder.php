@@ -16,6 +16,16 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
+        // Create test user
+        User::factory()
+            ->has(UserData::factory())
+            ->create([
+                'name' => 'Shaxobiddin Jovliyev',
+                'email' => 'shaxobiddin@gmail.com',
+                'password' => bcrypt('secret'),
+                'role' => 'super_admin'
+            ]);
+
         // Users va UserData
         User::factory(10)
             ->has(UserData::factory())
@@ -36,7 +46,9 @@ class DatabaseSeeder extends Seeder
             ->create();
 
         // Couples
-        $couples = Couple::factory(10)->create();
+        $couples = Couple::factory(20)->create([
+            'user_id' => 1,
+        ]);
 
         $count = 0;
         // CoupleAnswers

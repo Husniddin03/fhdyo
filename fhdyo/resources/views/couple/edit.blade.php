@@ -20,7 +20,8 @@
 
     </div>
     <div class="mt-4 p-6 bg-white rounded-lg shadow-md">
-        <form action="{{ route('couples.update', $couple->id) }}" method="POST" class="space-y-4 flex flex-wrap flex-row gap-4">
+        <form action="{{ route('couples.update', $couple->id) }}" method="POST"
+            class="space-y-4 flex flex-wrap flex-row gap-4">
             @csrf
             @method('PUT')
 
@@ -31,7 +32,8 @@
                     <option value="" {{ $couple->husbandData->id == '' ? 'selected' : '' }}>Select human</option>
                     @foreach ($humans as $human)
                         @if ($human->gender == 'male')
-                            <option value="{{ $human->id }}" {{ $couple->husbandData->id == $human->id ? 'selected' : '' }}>
+                            <option value="{{ $human->id }}"
+                                {{ $couple->husbandData->id == $human->id ? 'selected' : '' }}>
                                 {{ $human->first_name }} {{ $human->middle_name }} {{ $human->last_name }}
                             </option>
                         @endif
@@ -46,7 +48,8 @@
                     <option value="" {{ $couple->wifeData->id == '' ? 'selected' : '' }}>Select human</option>
                     @foreach ($humans as $human)
                         @if ($human->gender == 'female')
-                            <option value="{{ $human->id }}" {{ $couple->wifeData->id == $human->id ? 'selected' : '' }}>
+                            <option value="{{ $human->id }}"
+                                {{ $couple->wifeData->id == $human->id ? 'selected' : '' }}>
                                 {{ $human->first_name }} {{ $human->middle_name }} {{ $human->last_name }}
                             </option>
                         @endif
@@ -69,6 +72,12 @@
                         Divorced
                     </option>
                 </select>
+            </div>
+
+            <div class="w-auto">
+                <label for="wife" class="block text-sm font-medium text-gray-700">Sattus</label>
+                <input type="date" name="date" id="date" value="{{ $couple->date }}"
+                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
             </div>
 
             <div class="w-full flex justify-between mt-4">

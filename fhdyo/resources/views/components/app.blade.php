@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>{{ $title ?? 'FHDYO' }}</title>
+    <title>FHDYO</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
@@ -18,7 +18,7 @@
 
                 <!-- Navigation -->
                 <nav class="flex-1 w-full px-2 space-y-2 mt-6">
-                    <a href="/">
+                    <a href="{{ route('home') }}">
                         <button
                             class="w-full p-3 flex cursor-pointer justify-center rounded-lg {{ $title == 'home' ? 'bg-indigo-50 text-indigo-600' : 'text-gray-500 hover:bg-gray-50' }}">
                             <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -73,9 +73,9 @@
                         </button>
                     </a>
 
-                    <a href="#">
+                    <a href="{{route('graphic')}}">
                         <button
-                            class="w-full p-3 flex cursor-pointer justify-center rounded-lg text-gray-500 hover:bg-gray-50">
+                            class="w-full p-3 flex cursor-pointer justify-center rounded-lg {{ $title == 'graphic' ? 'bg-indigo-50 text-indigo-600' : 'text-gray-500 hover:bg-gray-50' }}">
                             <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                 stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -94,14 +94,45 @@
                             </svg>
                         </button>
                     </a>
+
+                    {{-- admins --}}
+
+                    @if (Auth::user()->role == 'super_admin')
+                        <a href="{{ route('users.index') }}">
+                            <button
+                                class="w-full p-3 flex cursor-pointer justify-center rounded-lg {{ $title == 'admin' ? 'bg-indigo-50 text-indigo-600' : 'text-gray-500 hover:bg-gray-50' }}">
+                                <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                </svg>
+                            </button>
+                        </a>
+                    @endif
+
+                    {{-- logout --}}
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                        onsubmit="return confirm('Are you sure you want to logout?');">
+                        @csrf
+                        <button type="submit"
+                            class="w-full p-3 flex cursor-pointer justify-center rounded-lg text-red-500 hover:bg-gray-50">
+                            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                            </svg>
+                        </button>
+                    </form>
                 </nav>
 
                 <!-- User Profile -->
                 <div class="mt-auto pb-4">
-                    <button class="w-12 cursor-pointer h-12 rounded-full overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                            alt="User" class="w-full h-full object-cover">
-                    </button>
+                    <a href="{{ route('users.show', Auth::user()->id) }}">
+                        <button class="w-12 cursor-pointer h-12 rounded-full overflow-hidden">
+                            <img src="https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg?semt=ais_hybrid&w=740&q=80"
+                                alt="User" class="w-full h-full object-cover">
+                        </button>
+                    </a>
                 </div>
             </div>
         </aside>

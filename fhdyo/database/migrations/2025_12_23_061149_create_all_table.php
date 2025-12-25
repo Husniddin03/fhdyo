@@ -38,6 +38,7 @@ return new class extends Migration
             $table->foreignId('wife')->constrained('humans')->onDelete('cascade');
             $table->string('husband_key');
             $table->string('wife_key');
+            $table->date('date')->nullable();
             $table->string('status');
             $table->float('result')->default(0);
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
