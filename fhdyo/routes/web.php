@@ -9,9 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
-    Route::get('/home', function () {
-        return view('home');
-    })->name('home');
+    Route::get('/home', [GraphicController::class, 'home'])->name('home');
 
     Route::get('graphic', [GraphicController::class, 'graphic'])->name('graphic');
 

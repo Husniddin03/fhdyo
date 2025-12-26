@@ -61,4 +61,74 @@
             </button>
         </a>
     </div>
+
+    <div class="flex justify-between mt-5">
+        <h1 class="text-2xl font-semibold text-gray-900">Province Graphic</h1>
+    </div>
+    <div class="mt-4 p-6 bg-white rounded-lg shadow-md">
+        <canvas id="provinceChart" class="w-full"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('provinceChart').getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: @json($provinces),
+                datasets: [{
+                        label: 'Married',
+                        data: @json($marriedCounts->values()),
+                        borderColor: '#ec4899', // pink-500
+                        backgroundColor: 'transparent',
+                        tension: 0.4,
+                        pointBackgroundColor: '#ec4899',
+                        pointRadius: 5
+                    },
+                    {
+                        label: 'Divorced',
+                        data: @json($divorcedCounts->values()),
+                        borderColor: '#1e3a8a', // blue-900
+                        backgroundColor: 'transparent',
+                        tension: 0.4,
+                        pointBackgroundColor: '#1e3a8a',
+                        pointRadius: 5
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            color: '#374151' // gray-700
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Viloyatlar bo‘yicha nikoh holati',
+                        color: '#111827', // gray-900
+                        font: {
+                            size: 18
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            color: '#4b5563' // gray-600
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            color: '#4b5563'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+
 </x-app>

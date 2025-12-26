@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Models\UserData;
 use App\Models\Human;
 
 
@@ -18,12 +17,12 @@ class HumanFactory extends Factory
             'first_name' => $this->faker->firstName(),
             'middle_name' => $this->faker->firstName(),
             'last_name' => $this->faker->lastName(),
-            'gender' => $this->faker->randomElement(['male','female']),
+            'gender' => $this->faker->randomElement(['male', 'female']),
             'birthday' => $this->faker->date(),
             'phone' => $this->faker->phoneNumber(),
             'jshshir' => Str::random(14),
             'passport_id' => strtoupper(Str::random(9)),
-            'province' => $this->faker->city(),
+            'province' => $this->faker->randomElement(["Toshkent sh", "Toshkent", "Andijon", "Farg'ona", "Namangan", "Andijon", "Sirdaryo", "Jizzax", "Samarqand", "Surxandaryo", "Qashqadaryo", "Navoiy", "Buxoro", "Xorazm", "Qoroqolpog'iston R"]),
             'region' => $this->faker->city(),
         ];
     }
