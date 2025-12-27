@@ -238,9 +238,9 @@
                         @foreach ($answers as $answer)
                             <tr class="border-t border-gray-400">
                                 <td class="px-4 py-3 w-[25%]">
-                                    {{ $answer['husband'] == 0 ? 'No' : ($answer['husband'] == 1 ? 'Yes' : 'Unanswered') }}
+                                    {{ $answer['husband'] === 0 ? 'No' : ($answer['husband'] == 1 ? 'Yes' : 'Unanswered') }}
                                 </td>
-                                <td> {{ $answer['wife'] == 0 ? 'No' : ($answer['wife'] == 1 ? 'Yes' : 'Unanswered') }}
+                                <td> {{ $answer['wife'] === 0 ? 'No' : ($answer['wife'] == 1 ? 'Yes' : 'Unanswered') }}
                                 </td>
                                 <td class="px-4 py-3 w-[25%]">{{ $answer['question'] }}</td>
                                 <td class="px-4 py-3 w-[25%]">{{ $answer['category'] }}</td>

@@ -63,11 +63,14 @@ class DatabaseSeeder extends Seeder
                     ]);
                     $count++;
                 }
+                $question_ids = $category->questions->random(5)->pluck('id');
+                foreach ($question_ids as $question_id) {
+                    CoupleQuiz::factory()->create([
+                        'couple_id' => $couple->id,
+                        'question_id' => $question_id
+                    ]);
+                }
             }
-
-            CoupleQuiz::factory()->create([
-                'couple_id' => $couple->id
-            ]);
         }
 
         // CoupleResults

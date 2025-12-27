@@ -20,9 +20,10 @@ class CoupleFactory extends Factory
             'wife' => Human::where('gender', 'male')->get()->random()->id,
             'husband_key' => Str::random(10),
             'wife_key' => Str::random(10),
-            'status' => $this->faker->randomElement(['married','unmarried','divorced']),
+            'status' => $this->faker->randomElement(['married', 'unmarried', 'divorced']),
             'result' => $this->faker->randomFloat(2, 0, 100),
             'date' => Date::now(),
+            'count' => $this->faker->randomElement([3, 4, 5]),
             'user_id' => User::factory(),
         ];
     }

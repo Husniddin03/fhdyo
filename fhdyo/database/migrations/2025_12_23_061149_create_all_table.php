@@ -39,6 +39,7 @@ return new class extends Migration
             $table->string('husband_key');
             $table->string('wife_key');
             $table->date('date')->nullable();
+            $table->integer('count')->default(5);
             $table->string('status');
             $table->float('result')->default(0);
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
@@ -74,7 +75,7 @@ return new class extends Migration
             $table->foreignId('couple_id')->constrained('couples')->onDelete('cascade');
             $table->string('key');
             $table->foreignId('question_id')->constrained('questions')->onDelete('cascade');
-            $table->integer('answer')->default(0); // -1, 0, 1
+            $table->integer('answer')->default(-1); // -1, 0, 1
             $table->timestamps();
         });
 

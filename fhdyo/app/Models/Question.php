@@ -26,6 +26,6 @@ class Question extends Model
 
     public function quizes()
     {
-        return $this->hasMany(CoupleQuiz::class);
+        return $this->belongsTo(CoupleQuiz::class);
     }
 }

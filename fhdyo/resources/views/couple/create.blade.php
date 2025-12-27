@@ -55,6 +55,11 @@
             </div>
 
             <div class="w-auto">
+                <label for="number" class="block text-sm font-medium text-gray-700">Number</label>
+                <input type="number" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" name="count">
+            </div>
+
+            <div class="w-auto">
                 <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
                 <select required name="status" id="status"
                     class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">

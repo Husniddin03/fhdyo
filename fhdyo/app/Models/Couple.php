@@ -17,6 +17,7 @@ class Couple extends Model
         'status',
         'result',
         'user_id',
+        'count'
     ];
 
     public function husbandData()

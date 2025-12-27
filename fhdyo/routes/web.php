@@ -23,10 +23,11 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/', [QuizController::class, 'index'])->name('quiz.index');
+Route::get('quiz/result', [QuizController::class, 'result'])->name('quiz.result');
 Route::post('quiz/check', [QuizController::class, 'check'])->name('quiz.check');
 Route::get('quiz/start', [QuizController::class, 'start'])->name('quiz.start');
 Route::post('quiz/answers', [QuizController::class, 'answers'])->name('quiz.answers');
-Route::get('quiz/quiz', [QuizController::class, 'quiz'])->name('quiz.quiz');
+Route::get('quiz/quiz/{key}', [QuizController::class, 'quiz'])->name('quiz.quiz');
 
 Route::post('logout', function () {
     Auth::logout();

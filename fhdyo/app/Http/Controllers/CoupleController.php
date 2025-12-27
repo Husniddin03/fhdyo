@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Couple;
+use App\Models\CoupleQuiz;
 use App\Models\Human;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class CoupleController extends Controller
 {
@@ -123,6 +124,7 @@ class CoupleController extends Controller
             'wife' => 'required|integer|exists:humans,id',
             'status' => 'required|in:married,unmarried,divorced',
             'date' => 'nullable|date',
+            'count' => 'nullable|integer'
         ]);
 
         $data['user_id'] = Auth::id();
@@ -140,7 +142,21 @@ class CoupleController extends Controller
             }
         }
 
-        Couple::create($data);
+        $couple = Couple::create($data);
+
+        $categories = Category::all();
+
+        foreach ($categories as $categoriy) {
+            $questions = $categoriy->questions->random($request->count);
+            foreach ($questions as $question) {
+                CoupleQuiz::create([
+                    'couple_id' => $couple->id,
+                    'category_id' => $categoriy->id,
+                    'question_id' => $question->id
+                ]);
+            }
+        }
+
         return redirect()->route('couples.index')->with('success', 'Couple created successfully');
     }
 
@@ -186,6 +202,7 @@ class CoupleController extends Controller
             'husband' => 'integer|exists:humans,id',
             'wife' => 'integer|exists:humans,id',
             'status' => 'nullable|in:married,unmarried,divorced',
+            'count' => 'nullable|integer'
         ]);
 
         $data['user_id'] = Auth::id();
