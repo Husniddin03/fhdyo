@@ -22,7 +22,7 @@ class HumanFactory extends Factory
             'phone' => $this->faker->phoneNumber(),
             'jshshir' => Str::random(14),
             'passport_id' => strtoupper(Str::random(9)),
-            'province' => $this->faker->randomElement(["Toshkent sh", "Toshkent", "Andijon", "Farg'ona", "Namangan", "Andijon", "Sirdaryo", "Jizzax", "Samarqand", "Surxandaryo", "Qashqadaryo", "Navoiy", "Buxoro", "Xorazm", "Qoroqolpog'iston R"]),
+            'province' => $this->faker->randomElement(["Toshkent sh", "Toshkent", "Andijon", "Farg'ona", "Namangan", "Andijon", "Sirdaryo", "Jizzax", "Samarqand", "Surxandaryo", "Qashqadaryo", "Navoiy", "Buxoro", "Xorazm", "Qoraqalpog'iston R"]),
             'region' => $this->faker->city(),
         ];
     }

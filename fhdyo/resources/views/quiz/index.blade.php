@@ -44,7 +44,7 @@
                             <label for="kalit"
                                 class="block text-sm font-medium text-slate-700 dark:text-slate-300">Kalit</label>
                             <div class="mt-2 relative">
-                                <input type="text" id="kalit" name="kalit" required autocomplete="kalit"
+                                <input type="text" id="kalit" name="key" required autocomplete="kalit"
                                     class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-slate-900 shadow-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100"
                                     placeholder="8h1jjdj3" />
                             </div>

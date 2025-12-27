@@ -23,4 +23,9 @@ class Question extends Model
     {
         return $this->hasMany(CoupleAnswer::class);
     }
+
+    public function quizes()
+    {
+        return $this->hasMany(CoupleQuiz::class);
+    }
 }

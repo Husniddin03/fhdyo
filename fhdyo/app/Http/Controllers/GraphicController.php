@@ -8,23 +8,62 @@ class GraphicController extends Controller
 {
     public function graphic()
     {
-        $month = [
+        $provinces = [
             "Toshkent sh",
             "Toshkent",
             "Samarqand",
             "Buxoro",
-            "Fargona",
+            "Farg'ona",
             "Andijon",
             "Sirdaryo",
             "Jizzax",
             "Qashqadaryo",
-            "Surxandaryo",
+            "Surxondaryo",
             "Navoiy",
-            "Buxoro",
             "Xorazm",
-            "Qoraqalpog'stoon R"
+            "Qoraqalpog'iston R"
         ];
-        return view('graphic.graphic', compact(''));
+
+        $months = ['Yan', 'Fev', 'Mar', 'Apr', 'May', 'Iyun', 'Iyul', 'Avg', 'Sen', 'Okt', 'Noy', 'Dek'];
+
+        $provinceData = [];
+
+        foreach ($provinces as $province) {
+            $monthlyData = [];
+
+            foreach ($months as $index => $month) {
+                $monthNumber = $index + 1;
+
+                // Nikohlanganlar soni
+                $married = Couple::where('status', 'married')
+                    ->whereHas('husbandData', function ($query) use ($province) {
+                        $query->where('province', $province);
+                    })
+                    ->whereMonth('date', $monthNumber)
+                    ->whereYear('date', date('Y'))
+                    ->count();
+
+                // Ajrashganlar soni
+                $divorced = Couple::where('status', 'divorced')
+                    ->whereHas('husbandData', function ($query) use ($province) {
+                        $query->where('province', $province);
+                    })
+                    ->whereMonth('date', $monthNumber)
+                    ->whereYear('date', date('Y'))
+                    ->count();
+
+                $monthlyData[] = [
+                    'month' => $month,
+                    'married' => $married,
+                    'divorced' => $divorced
+                ];
+            }
+
+            $provinceKey = strtolower(str_replace([' ', "'"], '', $province));
+            $provinceData[$provinceKey] = $monthlyData;
+        }
+
+        return view('graphic.graphic', compact('provinceData'));
     }
 
 

@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use App\Models\Human;
 use App\Models\User;
 use App\Models\Couple;
+use Illuminate\Support\Facades\Date;
 
 class CoupleFactory extends Factory
 {
@@ -21,7 +22,7 @@ class CoupleFactory extends Factory
             'wife_key' => Str::random(10),
             'status' => $this->faker->randomElement(['married','unmarried','divorced']),
             'result' => $this->faker->randomFloat(2, 0, 100),
-            'date' => $this->faker->date(),
+            'date' => Date::now(),
             'user_id' => User::factory(),
         ];
     }

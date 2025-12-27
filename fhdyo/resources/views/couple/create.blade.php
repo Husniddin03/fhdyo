@@ -55,7 +55,7 @@
             </div>
 
             <div class="w-auto">
-                <label for="wife" class="block text-sm font-medium text-gray-700">Sattus</label>
+                <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
                 <select required name="status" id="status"
                     class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
                     <option value="" {{ old('status') == '' ? 'selected' : '' }}>Select status</option>
@@ -71,10 +71,21 @@
                 </select>
             </div>
 
-             <div class="w-auto">
-                <label for="wife" class="block text-sm font-medium text-gray-700">Sattus</label>
-                <input type="date" name="date" id="date" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+            <div class="w-auto" id="dateDiv">
+                <label for="date" class="block text-sm font-medium text-gray-700">Date</label>
+                <input type="date" name="date" id="date"
+                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
             </div>
+
+            <script>
+                $('#status').change(function() {
+                    if ($(this).val() === 'unmarried') {
+                        $('#dateDiv').hide();
+                    } else {
+                        $('#dateDiv').show();
+                    }
+                }).trigger('change');
+            </script>
 
             <div class="w-full flex justify-between mt-4">
                 <div class="w-auto flex items-end">

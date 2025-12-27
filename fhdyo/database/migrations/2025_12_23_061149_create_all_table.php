@@ -45,6 +45,8 @@ return new class extends Migration
             $table->timestamps();
         });
 
+
+
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->string('category');
@@ -56,6 +58,14 @@ return new class extends Migration
             $table->id();
             $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
             $table->text('question');
+            $table->timestamps();
+        });
+
+        Schema::create('couple_quizes', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('couple_id')->constrained('couples')->onDelete('cascade');
+            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
+            $table->foreignId('question_id')->constrained('questions')->onDelete('cascade');
             $table->timestamps();
         });
 
@@ -81,6 +91,7 @@ return new class extends Migration
     {
         Schema::dropIfExists('couple_results');
         Schema::dropIfExists('couple_answers');
+        Schema::dropIfExists('couple_quizes');
         Schema::dropIfExists('questions');
         Schema::dropIfExists('categories');
         Schema::dropIfExists('couples');

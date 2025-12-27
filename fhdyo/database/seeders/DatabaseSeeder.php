@@ -10,6 +10,7 @@ use App\Models\Couple;
 use App\Models\Category;
 use App\Models\Question;
 use App\Models\CoupleAnswer;
+use App\Models\CoupleQuiz;
 use App\Models\CoupleResult;
 
 class DatabaseSeeder extends Seeder
@@ -63,6 +64,10 @@ class DatabaseSeeder extends Seeder
                     $count++;
                 }
             }
+
+            CoupleQuiz::factory()->create([
+                'couple_id' => $couple->id
+            ]);
         }
 
         // CoupleResults
