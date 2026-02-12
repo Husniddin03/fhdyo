@@ -1,14 +1,5 @@
-<!DOCTYPE html>
-<html lang="uz">
+<x-user-app>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>Quiz Test</title>
-</head>
-
-<body class="bg-[#f8f0ff] min-h-screen flex items-center justify-center font-sans">
     <form action="{{ route('quiz.answers') }}" method="POST" class="w-full max-w-2xl">
         @csrf
         @php $count = 0; @endphp
@@ -75,7 +66,6 @@
             @php $count++; @endphp
         @endforeach
 
-        <input type="text">
 
         <button type="submit" id="submit"
             class="bg-gradient-to-r hidden from-blue-500 to-purple-500 hover:opacity-90 text-white px-8 py-3 rounded-xl font-medium flex items-center gap-2 mx-auto transition-all mt-4">
@@ -87,23 +77,4 @@
         </button>
     </form>
 
-    <script>
-        let total = {{ count($quizes) }};
-        let quizes = [];
-        for (let i = 0; i < total; i++) {
-            quizes.push(document.getElementById('quiz_' + i));
-        }
-
-        function show(id) {
-            quizes.forEach((q) => q.style.display = 'none');
-
-            if (id >= quizes.length) {
-                document.getElementById('submit').style.display = 'flex';
-            } else {
-                quizes[id].style.display = 'block';
-            }
-        }
-    </script>
-</body>
-
-</html>
+</x-user-app>
