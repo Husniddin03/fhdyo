@@ -47,40 +47,40 @@ class DatabaseSeeder extends Seeder
             ->create();
 
         // Couples
-        $couples = Couple::factory(20)->create([
-            'user_id' => 1,
-        ]);
+        // $couples = Couple::factory(20)->create([
+        //     'user_id' => 1,
+        // ]);
 
-        $count = 0;
-        // CoupleAnswers
-        foreach ($couples as $couple) {
-            foreach ($categories as $category) {
-                foreach ($category->questions as $question) {
-                    CoupleAnswer::factory()->create([
-                        'key' => $count % 2 == 0 ? $couple->husband_key : $couple->wife_key,
-                        'couple_id' => $couple->id,
-                        'question_id' => $question->id,
-                    ]);
-                    $count++;
-                }
-                $question_ids = $category->questions->random(5)->pluck('id');
-                foreach ($question_ids as $question_id) {
-                    CoupleQuiz::factory()->create([
-                        'couple_id' => $couple->id,
-                        'question_id' => $question_id
-                    ]);
-                }
-            }
-        }
+        // $count = 0;
+        // // CoupleAnswers
+        // foreach ($couples as $couple) {
+        //     foreach ($categories as $category) {
+        //         foreach ($category->questions as $question) {
+        //             CoupleAnswer::factory()->create([
+        //                 'key' => $count % 2 == 0 ? $couple->husband_key : $couple->wife_key,
+        //                 'couple_id' => $couple->id,
+        //                 'question_id' => $question->id,
+        //             ]);
+        //             $count++;
+        //         }
+        //         $question_ids = $category->questions->random(5)->pluck('id');
+        //         foreach ($question_ids as $question_id) {
+        //             CoupleQuiz::factory()->create([
+        //                 'couple_id' => $couple->id,
+        //                 'question_id' => $question_id
+        //             ]);
+        //         }
+        //     }
+        // }
 
-        // CoupleResults
-        foreach ($couples as $couple) {
-            foreach ($categories as $category) {
-                CoupleResult::factory()->create([
-                    'couple_id' => $couple->id,
-                    'category_id' => $category->id,
-                ]);
-            }
-        }
+        // // CoupleResults
+        // foreach ($couples as $couple) {
+        //     foreach ($categories as $category) {
+        //         CoupleResult::factory()->create([
+        //             'couple_id' => $couple->id,
+        //             'category_id' => $category->id,
+        //         ]);
+        //     }
+        // }
     }
 }

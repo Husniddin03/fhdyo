@@ -9,10 +9,6 @@
                 </svg>
             </div>
 
-            <!-- Answer text -->
-            <h2 class="text-3xl font-extrabold text-center text-gray-800">
-                {{ $answer }}
-            </h2>
 
             <!-- Subtext -->
             <p class="mt-4 text-center text-gray-600 text-lg">

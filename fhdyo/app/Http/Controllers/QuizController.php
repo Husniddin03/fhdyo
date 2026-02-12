@@ -41,7 +41,8 @@ class QuizController extends Controller
                 return view('quiz.result', compact('answer'));
             }
         }
-        return view('quiz.start', compact('key'))->with('success', "Testni boshlang");
+
+        return redirect()->route('quiz.quiz', ['key' => $key]);
     }
 
     public function answers(Request $request)
