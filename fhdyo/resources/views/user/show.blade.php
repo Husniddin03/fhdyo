@@ -1,217 +1,166 @@
-<x-app title="admin">
-    <div class="flex justify-between">
-        <h1 class="text-2xl font-semibold text-gray-900">Admin</h1>
+@extends('layouts.app')
 
-        <div class="flex justify-center items-center gap-2">
+@section('title', 'Admin')
+@section('nav', 'admin')
+
+@section('content')
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+                <h1 class="text-2xl font-semibold tracking-tight text-slate-900 dark:text-white">Admin</h1>
+                <p class="mt-1 text-sm text-slate-600 dark:text-slate-300">Admin details and created couples.</p>
+            </div>
+
             <a href="{{ route('users.index') }}"
-                class="mx-3 flex justify-center items-center gap-2 border p-2 rounded-md border-gray-300">
-                <h4 class="">Back</h4>
+                class="inline-flex items-center justify-center gap-2 rounded-xl bg-white/60 px-5 py-2.5 text-sm font-semibold text-slate-800 shadow-sm shadow-black/5 ring-1 ring-white/30 transition hover:bg-white/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/30 dark:bg-slate-950/40 dark:text-slate-100 dark:ring-slate-800/60 dark:hover:bg-slate-950/60 w-full sm:w-auto">
+                <span>Back</span>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="size-6">
+                    stroke="currentColor" class="h-5 w-5">
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
                 </svg>
             </a>
         </div>
 
-    </div>
-    <div class="mt-4 bg-white rounded-lg shadow-md">
-        <div class="mt-4 p-6 bg-white rounded-lg shadow-md flex justify-center space-x-4 contents-center">
+        <x-card class="p-6 sm:p-8">
+            <div class="flex items-start justify-between gap-4">
+                <div>
+                    <h2 class="text-lg font-semibold tracking-tight text-slate-900 dark:text-white">Overview</h2>
+                    <p class="mt-1 text-sm text-slate-600 dark:text-slate-300">Account information.</p>
+                </div>
 
-            <div class="w-full border items-center border-gray-400 rounded-lg">
-                <!-- Table -->
-                <table class="w-full text-left min-w-[1200px]">
-                    <!-- Head -->
-                    <thead class="font-bold">
-                        <tr>
-                            <th class="py-4 px-5 w-[20%]">
-                                <div class="flex items-center gap-4">
+                @if (Auth::user()->role == 'super_admin')
+                    <div class="relative">
+                        <button onclick="toggleDropdown(this)"
+                            class="inline-flex items-center justify-center rounded-xl p-2 text-slate-700 transition hover:bg-slate-900/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/30 dark:text-slate-200 dark:hover:bg-white/5"
+                            type="button" aria-label="Actions">
+                            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5 12h.01M12 12h.01M19 12h.01" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" />
+                            </svg>
+                        </button>
 
-                                    <div class="">
-                                        <div class="flex items-center justify-between mb-2">
-                                            <label class="font-medium text-gray-700 flex items-center gap-2">
-                                                <span>Full name</span>
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </th>
-                            <th class="py-4 px-5 w-[12%]">
-                                <div class="flex flex-col gap-2">
-                                    <div class="flex items-center justify-between">
-                                        <label class="font-medium text-gray-700 flex items-center gap-2">
-                                            <span>Email</span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </th>
-                            <th class="py-4 px-5 w-[12%]">
-                                <div class="flex flex-col gap-2">
-                                    <div class="flex items-center justify-between">
-                                        <label class="font-medium text-gray-700 flex items-center gap-2">
-                                            <span>Role</span>
-                                        </label>
-                                    </div>
-                                </div>
-
-                            </th>
-                            <th class="py-4 px-5 w-[12%]">
-                                <div class="flex flex-col gap-2">
-                                    <div class="flex items-center justify-between">
-                                        <label class="font-medium text-gray-700 flex items-center gap-2">
-                                            <span>Gender</span>
-                                        </label>
-                                    </div>
-                                </div>
-
-                            </th>
-                            <th class="py-4 px-5 w-[13%]">
-                                <div class="flex flex-col gap-2">
-                                    <div class="flex items-center justify-between">
-                                        <label class="font-medium text-gray-700 flex items-center gap-2">
-                                            <span>Birthday</span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </th>
-                            @if (Auth::user()->role == 'super_admin')
-                                <th class="py-4 px-5 w-[7%]"></th>
-                            @endif
-                        </tr>
-                    </thead>
-                    <!-- Body -->
-                    <tbody class="bg-gray-100">
-                        <tr class="border-t border-gray-400">
-                            <td class="px-4 py-3 w-[20%]">
-                                <div class="flex items-center space-x-2">
-                                    <div>
-                                        <span class="block font-bold">{{ $user->name }}</span>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="px-4 py-3 w-[12%]">
-                                <div>
-                                    <span>{{ $user->email }}</span>
-                                </div>
-                            </td>
-                            <td class="px-4 py-3 w-[12%]">{{ $user->role }}</td>
-                            <td class="px-4 py-3 w-[12%]">{{ $user->userData->gender ?? '-' }}</td>
-                            <td class="px-4 py-3 w-[13%]">
-                                <div class="flex flex-col">
-                                    <span>{{ $user->userData->birthday ?? '-' }}</span>
-                                </div>
-                            </td>
-
-                            @if (Auth::user()->role == 'super_admin')
-                                <td class="px-4 py-3 w-[7%] relative">
-                                    <div class="w-full flex justify-end">
-                                        <button onclick="toggleDropdown(this)"
-                                            class="flex flex-col gap-y-1 mr-6 text-black hover:text-gray-600 px-5 py-2 hover:bg-gray-200 rounded-md">
-                                            <span class="bg-black h-1 w-1 rounded-full"></span>
-                                            <span class="bg-black h-1 w-1 rounded-full"></span>
-                                            <span class="bg-black h-1 w-1 rounded-full"></span>
-                                        </button>
-
-                                        <div
-                                            class="hidden absolute right-0 mt-8 bg-white border rounded-md shadow-lg w-32 z-50">
-                                            <ul class="flex flex-col text-sm text-gray-700">
-                                                <li>
-                                                    <a href="{{ route('users.edit', $user->id) }}"
-                                                        class="block px-4 py-2 hover:bg-gray-100">✏️ Tahrirlash</a>
-                                                </li>
-                                                <li>
-                                                    <form method="POST"
-                                                        action="{{ route('users.destroy', $user->id) }}"
-                                                        onsubmit="return confirm('Are you sure you want to delete selected users?');">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit"
-                                                            class="w-full text-left px-4 py-2 hover:bg-gray-100 text-red-600">
-                                                            🗑️ O‘chirish
-                                                        </button>
-                                                    </form>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </td>
-                            @endif
-                        </tr>
-                    </tbody>
-                </table>
+                        <div
+                            class="hidden absolute right-0 mt-2 w-40 overflow-hidden rounded-xl border border-white/20 bg-white/80 shadow-lg shadow-black/10 backdrop-blur-xl dark:border-slate-800/60 dark:bg-slate-950/70 z-50">
+                            <ul class="flex flex-col text-sm">
+                                <li>
+                                    <a href="{{ route('users.edit', $user->id) }}"
+                                        class="block px-4 py-2 font-semibold text-slate-700 hover:bg-slate-900/5 dark:text-slate-200 dark:hover:bg-white/5">✏️
+                                        Tahrirlash</a>
+                                </li>
+                                <li>
+                                    <form method="POST" action="{{ route('users.destroy', $user->id) }}"
+                                        onsubmit="return confirm('Are you sure you want to delete selected users?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                            class="w-full px-4 py-2 text-left font-semibold text-red-600 hover:bg-red-500/10 dark:text-red-400 dark:hover:bg-red-500/10">🗑️
+                                            O‘chirish</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                @endif
             </div>
-        </div>
-    </div>
 
-    <div class="flex justify-between mt-5">
-        <h1 class="text-2xl font-semibold text-gray-900">Tish user created couples</h1>
+            <dl class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                <div class="rounded-2xl border border-white/20 bg-white/40 p-4 dark:border-slate-800/60 dark:bg-slate-950/20">
+                    <dt class="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300">Full name</dt>
+                    <dd class="mt-1 text-sm font-semibold text-slate-900 dark:text-white">{{ $user->name }}</dd>
+                </div>
+                <div class="rounded-2xl border border-white/20 bg-white/40 p-4 dark:border-slate-800/60 dark:bg-slate-950/20">
+                    <dt class="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300">Email</dt>
+                    <dd class="mt-1 text-sm font-semibold text-slate-900 dark:text-white">{{ $user->email }}</dd>
+                </div>
+                <div class="rounded-2xl border border-white/20 bg-white/40 p-4 dark:border-slate-800/60 dark:bg-slate-950/20">
+                    <dt class="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300">Role</dt>
+                    <dd class="mt-1 text-sm font-semibold text-slate-900 dark:text-white">{{ $user->role }}</dd>
+                </div>
+                <div class="rounded-2xl border border-white/20 bg-white/40 p-4 dark:border-slate-800/60 dark:bg-slate-950/20">
+                    <dt class="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300">Gender</dt>
+                    <dd class="mt-1 text-sm font-semibold text-slate-900 dark:text-white">{{ $user->userData->gender ?? '-' }}</dd>
+                </div>
+                <div class="rounded-2xl border border-white/20 bg-white/40 p-4 dark:border-slate-800/60 dark:bg-slate-950/20">
+                    <dt class="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300">Birthday</dt>
+                    <dd class="mt-1 text-sm font-semibold text-slate-900 dark:text-white">{{ $user->userData->birthday ?? '-' }}</dd>
+                </div>
+            </dl>
+        </x-card>
 
-        <div class="flex justify-center items-center gap-2">
-            <form id="bulkDeleteForm" method="POST" action="{{ route('couples.destroy', -1) }}"
-                onsubmit="return confirm('Are you sure you want to delete selected couples?');"
-                class="hidden bg-red-500 mx-3 flex justify-center items-center gap-2 border p-2 rounded-md border-gray-300">
-                @csrf
-                @method('DELETE')
-                <div id="selectedInputs"></div>
-                <button type="submit" class="text-white">
-                    Delete selected
-                </button>
-            </form>
+        <x-card class="p-0 overflow-hidden">
+            <div class="border-b border-white/20 px-6 py-4 dark:border-slate-800/60">
+                <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+                    <div>
+                        <h2 class="text-base font-semibold tracking-tight text-slate-900 dark:text-white">This user created couples</h2>
+                        <p class="mt-1 text-sm text-slate-600 dark:text-slate-300">Manage couples created by this user.</p>
+                    </div>
 
-            <a href="{{ route('couples.create') }}"
-                class="mx-3 flex justify-center items-center gap-2 border p-2 rounded-md border-gray-300 bg-green-50 hover:bg-green-100">
-                <h4 class="">Add couple</h4>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="size-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                </svg>
-            </a>
+                    <div class="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-end">
+                        <form id="bulkDeleteForm" method="POST" action="{{ route('couples.destroy', -1) }}"
+                            onsubmit="return confirm('Are you sure you want to delete selected couples?');"
+                            class="hidden inline-flex items-center justify-center gap-2 rounded-xl bg-red-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm shadow-red-500/30 transition hover:bg-red-700">
+                            @csrf
+                            @method('DELETE')
+                            <div id="selectedInputs"></div>
+                            <button type="submit">
+                                Delete selected
+                            </button>
+                        </form>
 
-            <a href="{{ route('users.show', $user->id) }}"
-                class="mx-3 flex justify-center items-center gap-2 border p-2 rounded-md border-gray-300">
-                <h4 class="">Clear filter</h4>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="size-6">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M6 13.5V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m12-3V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m-6-9V3.75m0 3.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 9.75V10.5" />
-                </svg>
-            </a>
-            <form method="GET" action="{{ route('couples.destroy', -1) }}"
-                class="mx-3 flex justify-center items-center gap-2 border p-2 rounded-md border-gray-300">
-                <h4>Per page</h4>
-                @foreach (request()->except('per_page') as $key => $value)
-                    <input type="hidden" name="{{ $key }}" value="{{ $value }}">
-                @endforeach
-                <select name="per_page" onchange="this.form.submit()">
-                    @for ($i = 10; $i <= $count; $i += 10)
-                        <option value="{{ $i }}" {{ request()->get('per_page') == $i ? 'selected' : '' }}>
-                            {{ $i }}</option>
-                    @endfor
-                    <option {{ request()->get('per_page') == $count ? 'selected' : '' }} value="{{ $count }}">
-                        All
-                    </option>
-                </select>
-            </form>
-        </div>
+                        <a href="{{ route('couples.create') }}"
+                            class="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm shadow-emerald-500/30 transition hover:bg-emerald-700">
+                            <span>Add couple</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="h-5 w-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                            </svg>
+                        </a>
 
-    </div>
-    <div class="mt-4 bg-white rounded-lg shadow-md">
-        <div class="mt-4 p-6 bg-white rounded-lg shadow-md flex justify-center space-x-4 contents-center">
+                        <a href="{{ route('users.show', $user->id) }}"
+                            class="inline-flex items-center justify-center gap-2 rounded-xl bg-white/60 px-4 py-2.5 text-sm font-semibold text-slate-800 shadow-sm shadow-black/5 ring-1 ring-white/30 transition hover:bg-white/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/30 dark:bg-slate-950/40 dark:text-slate-100 dark:ring-slate-800/60 dark:hover:bg-slate-950/60">
+                            <span>Clear filter</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="h-5 w-5">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M6 13.5V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m12-3V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m-6-9V3.75m0 3.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 9.75V10.5" />
+                            </svg>
+                        </a>
 
-            <div class="w-full border items-center border-gray-400 rounded-lg">
+                        <form method="GET" action="{{ route('couples.destroy', -1) }}" class="inline-flex items-center gap-2">
+                            <h4 class="text-sm font-semibold text-slate-700 dark:text-slate-200">Per page</h4>
+                            @foreach (request()->except('per_page') as $key => $value)
+                                <input type="hidden" name="{{ $key }}" value="{{ $value }}">
+                            @endforeach
+                            <select name="per_page" onchange="this.form.submit()"
+                                class="rounded-xl border border-white/20 bg-white/60 px-3 py-2 text-sm font-semibold text-slate-900 shadow-sm shadow-black/5 outline-none transition focus:ring-2 focus:ring-indigo-500/30 dark:border-slate-800/60 dark:bg-slate-950/40 dark:text-white">
+                                @for ($i = 10; $i <= $count; $i += 10)
+                                    <option value="{{ $i }}" {{ request()->get('per_page') == $i ? 'selected' : '' }}>
+                                        {{ $i }}</option>
+                                @endfor
+                                <option {{ request()->get('per_page') == $count ? 'selected' : '' }} value="{{ $count }}">
+                                    All
+                                </option>
+                            </select>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto">
                 <!-- Table -->
                 <table class="w-full text-left min-w-[1400px]">
                     <!-- Head -->
-                    <thead class="font-bold">
+                    <thead class="bg-white/40 dark:bg-slate-950/30">
                         <tr>
                             <th class="py-4 px-5 w-[5%]">
-                                <input type="checkbox" id="allCheckbox" class="w-5 h-5 rounded-lg " />
+                                <input type="checkbox" id="allCheckbox"
+                                    class="h-5 w-5 rounded-lg border border-slate-300 bg-white text-indigo-600 focus:ring-2 focus:ring-indigo-500/30 dark:border-slate-700 dark:bg-slate-900" />
                             </th>
                             <th class="py-4 px-5 w-[18%]">
                                 <div class="flex flex-col gap-2">
                                     <div class="flex items-center justify-between mb-2">
-                                        <label class="font-medium text-gray-700 flex items-center gap-2">
+                                        <label class="font-medium text-slate-700 dark:text-slate-200 flex items-center gap-2">
                                             <span>Husband</span>
                                             {{-- Sort toggle --}}
                                             <form method="GET" action="{{ route('users.show', $user->id) }}">
@@ -223,7 +172,7 @@
                                                     value="{{ request('husband_sort') === 'asc' ? 'desc' : 'asc' }}">
                                                     <svg width="20" height="20" viewBox="0 0 20 20"
                                                         fill="none" xmlns="http://www.w3.org/2000/svg"
-                                                        class="text-gray-600 hover:text-black transition">
+                                                        class="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition">
                                                         <path d="M15 9.167L10 4.167 5 9.167h10Z"
                                                             fill="{{ request('husband_sort') === 'asc' ? 'black' : '#9CA3AF' }}" />
                                                         <path d="M15 10.833 10 15.833 5 10.833h10Z"
@@ -251,7 +200,7 @@
                                                     stroke-linejoin="round" />
                                             </svg>
                                             <input type="text" name="husband"
-                                                class="bg-white p-2 pl-8 text-sm border rounded-md border-gray-300 w-full focus:ring focus:ring-blue-200"
+                                                class="bg-white/70 dark:bg-slate-950/30 p-2 pl-8 text-sm border rounded-xl border-white/20 dark:border-slate-800/60 w-full focus:ring-2 focus:ring-indigo-500/30 outline-none text-slate-900 dark:text-white placeholder:text-slate-400"
                                                 placeholder="Search husband..."
                                                 value="{{ request('husband') ?? '' }}" />
                                         </form>
@@ -264,7 +213,7 @@
                                                         value="{{ $value }}">
                                                 @endforeach
                                                 <button type="submit"
-                                                    class="p-2 text-gray-500 hover:text-red-600 transition">
+                                                    class="p-2 text-slate-500 hover:text-red-600 transition">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                                                         class="w-5 h-5">
@@ -280,7 +229,7 @@
                             <th class="py-4 px-5 w-[18%]">
                                 <div class="flex flex-col gap-2">
                                     <div class="flex items-center justify-between mb-2">
-                                        <label class="font-medium text-gray-700 flex items-center gap-2">
+                                        <label class="font-medium text-slate-700 dark:text-slate-200 flex items-center gap-2">
                                             <span>Wife</span>
                                             {{-- Sort toggle --}}
                                             <form method="GET" action="{{ route('users.show', $user->id) }}">
@@ -290,9 +239,9 @@
                                                 @endforeach
                                                 <button type="submit" name="wife_sort"
                                                     value="{{ request('wife_sort') === 'asc' ? 'desc' : 'asc' }}">
-                                                    <svg width="20" height="20" viewBox="0 0 20 20"
-                                                        fill="none" xmlns="http://www.w3.org/2000/svg"
-                                                        class="text-gray-600 hover:text-black transition">
+                                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        class="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition">
                                                         <path d="M15 9.167L10 4.167 5 9.167h10Z"
                                                             fill="{{ request('wife_sort') === 'asc' ? 'black' : '#9CA3AF' }}" />
                                                         <path d="M15 10.833 10 15.833 5 10.833h10Z"
@@ -320,7 +269,7 @@
                                                     stroke-linejoin="round" />
                                             </svg>
                                             <input type="text" name="wife"
-                                                class="bg-white p-2 pl-8 text-sm border rounded-md border-gray-300 w-full focus:ring focus:ring-blue-200"
+                                                class="bg-white/70 dark:bg-slate-950/30 p-2 pl-8 text-sm border rounded-xl border-white/20 dark:border-slate-800/60 w-full focus:ring-2 focus:ring-indigo-500/30 outline-none text-slate-900 dark:text-white placeholder:text-slate-400"
                                                 placeholder="Search wife..." value="{{ request('wife') ?? '' }}" />
                                         </form>
 
@@ -332,7 +281,7 @@
                                                         value="{{ $value }}">
                                                 @endforeach
                                                 <button type="submit"
-                                                    class="p-2 text-gray-500 hover:text-red-600 transition">
+                                                    class="p-2 text-slate-500 hover:text-red-600 transition">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                                                         class="w-5 h-5">
@@ -348,7 +297,7 @@
                             <th class="py-4 px-5 w-[13%]">
                                 <div class="flex flex-col gap-2">
                                     <div class="flex items-center justify-between mb-2">
-                                        <label class="font-medium text-gray-700 flex items-center gap-2">
+                                        <label class="font-medium text-slate-700 dark:text-slate-200 flex items-center gap-2">
                                             <span>Created At</span>
                                             {{-- Sort toggle --}}
                                             <form method="GET" action="{{ route('users.show', $user->id) }}">
@@ -358,9 +307,9 @@
                                                 @endforeach
                                                 <button type="submit" name="created_at_sort"
                                                     value="{{ request('created_at_sort') === 'asc' ? 'desc' : 'asc' }}">
-                                                    <svg width="20" height="20" viewBox="0 0 20 20"
-                                                        fill="none" xmlns="http://www.w3.org/2000/svg"
-                                                        class="text-gray-600 hover:text-black transition">
+                                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        class="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition">
                                                         <path d="M15 9.167L10 4.167 5 9.167h10Z"
                                                             fill="{{ request('created_at_sort') === 'asc' ? 'black' : '#9CA3AF' }}" />
                                                         <path d="M15 10.833 10 15.833 5 10.833h10Z"
@@ -388,7 +337,7 @@
                                                     stroke-linejoin="round" />
                                             </svg>
                                             <input type="text" name="created_at"
-                                                class="bg-white p-2 pl-8 text-sm border rounded-md border-gray-300 w-full focus:ring focus:ring-blue-200"
+                                                class="bg-white/70 dark:bg-slate-950/30 p-2 pl-8 text-sm border rounded-xl border-white/20 dark:border-slate-800/60 w-full focus:ring-2 focus:ring-indigo-500/30 outline-none text-slate-900 dark:text-white placeholder:text-slate-400"
                                                 value="{{ request('created_at') ?? '' }}" />
                                         </form>
 
@@ -400,7 +349,7 @@
                                                         value="{{ $value }}">
                                                 @endforeach
                                                 <button type="submit"
-                                                    class="p-2 text-gray-500 hover:text-red-600 transition">
+                                                    class="p-2 text-slate-500 hover:text-red-600 transition">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                                                         class="w-5 h-5">
@@ -416,7 +365,7 @@
                             <th class="py-4 px-5 w-[13%]">
                                 <div class="flex flex-col gap-2">
                                     <div class="flex items-center justify-between mb-2">
-                                        <label class="font-medium text-gray-700 flex items-center gap-2">
+                                        <label class="font-medium text-slate-700 dark:text-slate-200 flex items-center gap-2">
                                             <span>Status</span>
                                             {{-- Sort toggle --}}
                                             <form method="GET" action="{{ route('users.show', $user->id) }}">
@@ -426,9 +375,9 @@
                                                 @endforeach
                                                 <button type="submit" name="status_sort"
                                                     value="{{ request('status_sort') === 'asc' ? 'desc' : 'asc' }}">
-                                                    <svg width="20" height="20" viewBox="0 0 20 20"
-                                                        fill="none" xmlns="http://www.w3.org/2000/svg"
-                                                        class="text-gray-600 hover:text-black transition">
+                                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        class="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition">
                                                         <path d="M15 9.167L10 4.167 5 9.167h10Z"
                                                             fill="{{ request('status_sort') === 'asc' ? 'black' : '#9CA3AF' }}" />
                                                         <path d="M15 10.833 10 15.833 5 10.833h10Z"
@@ -446,7 +395,7 @@
                                                     value="{{ $value }}">
                                             @endforeach
                                             <select name="status" id="status" onchange="this.form.submit()"
-                                                class="bg-white p-2 px-3 text-sm focus:outline-none border rounded-md border-gray-300 w-full">
+                                                class="bg-white/70 dark:bg-slate-950/30 p-2 px-3 text-sm border rounded-xl border-white/20 dark:border-slate-800/60 w-full outline-none focus:ring-2 focus:ring-indigo-500/30 text-slate-900 dark:text-white">
                                                 <option value=""
                                                     {{ request('status') === '' ? 'selected' : '' }}>All</option>
                                                 <option value="married"
@@ -466,7 +415,7 @@
                             <th class="py-4 px-5 w-[13%]">
                                 <div class="flex flex-col gap-2">
                                     <div class="flex items-center justify-between mb-2">
-                                        <label class="font-medium text-gray-700 flex items-center gap-2">
+                                        <label class="font-medium text-slate-700 dark:text-slate-200 flex items-center gap-2">
                                             <span>Results</span>
                                             {{-- Sort toggle --}}
                                             <form method="GET" action="{{ route('users.show', $user->id) }}">
@@ -496,7 +445,7 @@
                                                     value="{{ $value }}">
                                             @endforeach
                                             <select name="results" id="results" onchange="this.form.submit()"
-                                                class="bg-white p-2 px-3 text-sm focus:outline-none border rounded-md border-gray-300 w-full">
+                                                class="bg-white/70 dark:bg-slate-950/30 p-2 px-3 text-sm border rounded-xl border-white/20 dark:border-slate-800/60 w-full outline-none focus:ring-2 focus:ring-indigo-500/30 text-slate-900 dark:text-white">
                                                 <option value=""
                                                     {{ request('results') === '' ? 'selected' : '' }}>All</option>
                                                 <option value="0-50"
@@ -517,20 +466,20 @@
                         </tr>
                     </thead>
                     <!-- Body -->
-                    <tbody class="bg-gray-100">
+                    <tbody class="divide-y divide-white/20 bg-white/20 dark:divide-slate-800/60 dark:bg-slate-950/10">
                         @foreach ($couples as $couple)
-                            <tr class="border-t border-gray-400">
+                            <tr class="transition hover:bg-white/30 dark:hover:bg-white/5">
                                 <td class="px-4 py-3 w-[5%]">
                                     <input type="checkbox" id="checkbox_{{ $couple->id }}"
                                         data-couple="{{ $couple->id }}" name="couples[]={{ $couple->id }}"
-                                        class="w-5 h-5 rounded-lg" />
+                                        class="h-5 w-5 rounded-lg border border-slate-300 bg-white text-indigo-600 focus:ring-2 focus:ring-indigo-500/30 dark:border-slate-700 dark:bg-slate-900" />
                                 </td>
                                 <td class="px-4 py-3 w-[18%]">
                                     <div>
                                         <span class="block font-bold">
                                             {{ $couple->husbandData ? $couple->husbandData->first_name . ' ' . $couple->husbandData->middle_name . ' ' . $couple->husbandData->last_name : 'N/A' }}
                                         </span>
-                                        <span class="text-xs text-gray-500">Key: {{ $couple->husband_key }}</span>
+                                        <span class="text-xs text-slate-500 dark:text-slate-400">Key: {{ $couple->husband_key }}</span>
                                     </div>
                                 </td>
                                 <td class="px-4 py-3 w-[18%]">
@@ -538,10 +487,10 @@
                                         <span class="block font-bold">
                                             {{ $couple->wifeData ? $couple->wifeData->first_name . ' ' . $couple->wifeData->middle_name . ' ' . $couple->wifeData->last_name : 'N/A' }}
                                         </span>
-                                        <span class="text-xs text-gray-500">Key: {{ $couple->wife_key }}</span>
+                                        <span class="text-xs text-slate-500 dark:text-slate-400">Key: {{ $couple->wife_key }}</span>
                                     </div>
                                 </td>
-                                <td class="px-4 py-3 w-[13%]">
+                                <td class="px-4 py-3 w-[13%] text-sm font-semibold text-slate-900 dark:text-white">
                                     {{ $couple->created_at->format('Y-m-d H:i') }}
                                 </td>
                                 <td class="px-4 py-3 w-[13%]">
@@ -553,13 +502,13 @@
                                 <td class="px-4 py-3 w-[13%]">
                                     <div class="relative">
                                         <button onclick="toggleResultsDropdown(this)"
-                                            class="px-3 py-1 bg-blue-50 hover:bg-blue-100 rounded-md border border-blue-200 text-sm font-medium">
+                                            class="px-3 py-2 bg-white/60 hover:bg-white/80 dark:bg-slate-950/40 dark:hover:bg-slate-950/60 rounded-xl border border-white/20 dark:border-slate-800/60 text-sm font-semibold text-slate-900 dark:text-white shadow-sm shadow-black/5">
                                             {{ $couple->result ? number_format($couple->result, 1) . '%' : 'N/A' }}
                                         </button>
 
                                         @if ($couple->results->count() > 0)
                                             <div
-                                                class="hidden absolute right-0 mt-2 bg-white border rounded-md shadow-lg w-64 z-50">
+                                                class="hidden absolute right-0 mt-2 bg-white/85 border border-white/20 rounded-xl shadow-lg shadow-black/10 backdrop-blur-xl w-64 z-50 dark:bg-slate-950/70 dark:border-slate-800/60">
                                                 <div class="p-3">
                                                     <h4 class="font-bold text-sm mb-2 border-b pb-2">Results by
                                                         Category</h4>
@@ -567,9 +516,9 @@
                                                         @foreach ($couple->results as $result)
                                                             <li class="flex justify-between items-center text-sm">
                                                                 <span
-                                                                    class="text-gray-700">{{ $result->category->category ?? 'Category' }}:</span>
+                                                                    class="text-slate-700 dark:text-slate-200">{{ $result->category->category ?? 'Category' }}:</span>
                                                                 <span
-                                                                    class="font-semibold text-blue-600">{{ number_format($result->percent, 1) }}%</span>
+                                                                    class="font-semibold text-indigo-700 dark:text-indigo-200">{{ number_format($result->percent, 1) }}%</span>
                                                             </li>
                                                         @endforeach
                                                     </ul>
@@ -581,22 +530,23 @@
                                 <td class="px-4 py-3 w-[7%] relative">
                                     <div class="w-full flex justify-end">
                                         <button onclick="toggleDropdown(this)"
-                                            class="flex flex-col gap-y-1 mr-6 text-black hover:text-gray-600 px-5 py-2 hover:bg-gray-200 rounded-md">
-                                            <span class="bg-black h-1 w-1 rounded-full"></span>
-                                            <span class="bg-black h-1 w-1 rounded-full"></span>
-                                            <span class="bg-black h-1 w-1 rounded-full"></span>
+                                            class="inline-flex items-center justify-center rounded-xl p-2 text-slate-700 transition hover:bg-slate-900/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/30 dark:text-slate-200 dark:hover:bg-white/5">
+                                            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M5 12h.01M12 12h.01M19 12h.01" stroke="currentColor" stroke-width="2"
+                                                    stroke-linecap="round" />
+                                            </svg>
                                         </button>
 
                                         <div
-                                            class="hidden absolute right-0 mt-8 bg-white border rounded-md shadow-lg w-32 z-50">
-                                            <ul class="flex flex-col text-sm text-gray-700">
+                                            class="hidden absolute right-0 mt-8 bg-white/85 border border-white/20 rounded-xl shadow-lg shadow-black/10 backdrop-blur-xl w-40 z-50 dark:bg-slate-950/70 dark:border-slate-800/60">
+                                            <ul class="flex flex-col text-sm text-slate-700 dark:text-slate-200">
                                                 <li>
                                                     <a href="{{ route('couples.show', $couple->id) }}"
-                                                        class="block px-4 py-2 hover:bg-gray-100">👁️ Ko‘rish</a>
+                                                        class="block px-4 py-2 hover:bg-slate-900/5 dark:hover:bg-white/5">👁️ Ko‘rish</a>
                                                 </li>
                                                 <li>
                                                     <a href="{{ route('couples.edit', $couple->id) }}"
-                                                        class="block px-4 py-2 hover:bg-gray-100">✏️ Tahrirlash</a>
+                                                        class="block px-4 py-2 hover:bg-slate-900/5 dark:hover:bg-white/5">✏️ Tahrirlash</a>
                                                 </li>
                                                 <li>
                                                     <form method="POST"
@@ -605,7 +555,7 @@
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit"
-                                                            class="w-full text-left px-4 py-2 hover:bg-gray-100 text-red-600">
+                                                            class="w-full text-left px-4 py-2 hover:bg-red-500/10 text-red-600 dark:text-red-400">
                                                             🗑️ O'chirish
                                                         </button>
                                                     </form>
@@ -619,41 +569,40 @@
                     </tbody>
                 </table>
                 <!-- Pagination -->
-                <div class="flex min-w-[1400px] justify-between items-center py-4 px-5 border-t border-gray-400">
+                <div
+                    class="flex min-w-[1400px] justify-between items-center py-4 px-6 border-t border-white/20 dark:border-slate-800/60 bg-white/10 dark:bg-slate-950/10">
                     @if ($couples->onFirstPage())
                         <button disabled
-                            class="bg-gray-100 text-gray-400 font-bold border border-gray-300 px-4 py-2 rounded-md cursor-not-allowed">
+                            class="rounded-xl bg-white/40 px-4 py-2 text-sm font-semibold text-slate-400 ring-1 ring-white/20 cursor-not-allowed dark:bg-slate-950/20 dark:ring-slate-800/60">
                             Previous
                         </button>
                     @else
                         <a href="{{ $couples->previousPageUrl() }}"
-                            class="bg-white font-bold border border-gray-400 px-4 py-2 rounded-md hover:border-gray-600 hover:bg-gray-50 transition-colors">
+                            class="rounded-xl bg-white/60 px-4 py-2 text-sm font-semibold text-slate-900 shadow-sm shadow-black/5 ring-1 ring-white/30 transition hover:bg-white/80 dark:bg-slate-950/40 dark:text-white dark:ring-slate-800/60 dark:hover:bg-slate-950/60">
                             Previous
                         </a>
                     @endif
 
                     <span
-                        class="bg-white font-bold border border-gray-400 px-6 py-2 rounded-md hover:border-gray-600 hover:bg-gray-50 transition-colors">
+                        class="rounded-xl bg-white/60 px-6 py-2 text-sm font-semibold text-slate-900 shadow-sm shadow-black/5 ring-1 ring-white/30 dark:bg-slate-950/40 dark:text-white dark:ring-slate-800/60">
                         {{ $couples->appends(request()->all())->links() }}
                     </span>
 
                     @if ($couples->hasMorePages())
                         <a href="{{ $couples->nextPageUrl() }}"
-                            class="bg-white font-bold border border-gray-400 px-6 py-2 rounded-md hover:border-gray-600 hover:bg-gray-50 transition-colors">
+                            class="rounded-xl bg-white/60 px-6 py-2 text-sm font-semibold text-slate-900 shadow-sm shadow-black/5 ring-1 ring-white/30 transition hover:bg-white/80 dark:bg-slate-950/40 dark:text-white dark:ring-slate-800/60 dark:hover:bg-slate-950/60">
                             Next
                         </a>
                     @else
                         <button disabled
-                            class="bg-gray-100 text-gray-400 font-bold border border-gray-300 px-6 py-2 rounded-md cursor-not-allowed">
+                            class="rounded-xl bg-white/40 px-6 py-2 text-sm font-semibold text-slate-400 ring-1 ring-white/20 cursor-not-allowed dark:bg-slate-950/20 dark:ring-slate-800/60">
                             Next
                         </button>
                     @endif
                 </div>
             </div>
-        </div>
-    </div>
-
-</x-app>
+        </x-card>
+@endsection
 
 <script>
     function toggleDropdown(button) {

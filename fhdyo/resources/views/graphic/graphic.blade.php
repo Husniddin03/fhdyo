@@ -1,4 +1,9 @@
-<x-app title="graphic">
+@extends('layouts.app')
+
+@section('title', 'graphic')
+@section('nav', 'graphic')
+
+@section('content')
     <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
             <h1 class="text-2xl font-semibold tracking-tight text-slate-900 dark:text-white">Graphics</h1>
@@ -97,11 +102,19 @@
         const provinceData = @json($provinceData);
 
         const provinceNames = {
+            toshkentsh: 'Toshkent sh',
             toshkent: 'Toshkent',
             samarqand: 'Samarqand',
             buxoro: 'Buxoro',
             fargona: "Farg'ona",
             andijon: 'Andijon',
+            sirdaryo: 'Sirdaryo',
+            jizzax: 'Jizzax',
+            qashqadaryo: 'Qashqadaryo',
+            surxondaryo: 'Surxondaryo',
+            navoiy: 'Navoiy',
+            xorazm: 'Xorazm',
+            qoraqalpogistonr: "Qoraqalpog'iston R",
         };
 
         let currentProvince = 'toshkent';
@@ -276,4 +289,4 @@
         });
     </script>
 
-</x-app>
+@endsection
