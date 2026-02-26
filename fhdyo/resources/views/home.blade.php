@@ -1,97 +1,122 @@
-<x-app title="home">
-    <h1 class="text-2xl font-semibold text-gray-900">Dashboard</h1>
-    <div class="mt-4 p-6 bg-white rounded-lg shadow-md flex justify-center space-x-4 contents-center">
-                    <a href="{{ route('home') }}">
-                        <button
-                            class="w-full p-3 flex cursor-pointer justify-center rounded-lg text-gray-500 hover:bg-gray-50">
-                            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                            </svg>
-                        </button>
-                    </a>
+@extends('layouts.app')
 
-                    <a href="{{ route('humans.index') }}">
-                        <button
-                            class="w-full p-3 flex cursor-pointer justify-center rounded-lg text-gray-500 hover:bg-gray-50">
-                            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                            </svg>
-                        </button>
-                    </a>
+@section('title', 'FHDYO')
+@section('nav', 'home')
 
-                    <a href="{{ route('couples.index') }}">
-                        <button
-                            class="w-full p-3 flex cursor-pointer justify-center rounded-lg text-gray-500 hover:bg-gray-50">
-                            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1zM15 14a4 4 0 100-8 4 4 0 000 8zm6 6a6 6 0 00-12 0v1h12v-1z" />
-                            </svg>
-                        </button>
-                    </a>
+@section('content')
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+            <h1 class="text-2xl font-semibold tracking-tight text-slate-900 dark:text-white">Dashboard</h1>
+            <p class="mt-1 text-sm text-slate-600 dark:text-slate-300">Quick access and province overview.</p>
+        </div>
 
-                    <a href="{{ route('categories.index') }}">
-                        <button
-                            class="w-full p-3 flex cursor-pointer justify-center rounded-lg text-gray-500 hover:bg-gray-50">
-                            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
-                            </svg>
-                        </button>
-                    </a>
+        <div class="flex items-center gap-2">
+            @if (Auth::user()->role == 'super_admin')
+                <x-button variant="soft" color="indigo" :href="route('users.index')">
+                    Admins
+                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 3 4.5 6.75V12c0 6.075 3.6 9.75 7.5 9.75s7.5-3.675 7.5-9.75V6.75L12 3Z"
+                            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </x-button>
+            @endif
+        </div>
+    </div>
 
-                    <a href="{{route('graphic')}}">
-                        <button
-                            class="w-full p-3 flex cursor-pointer justify-center rounded-lg text-gray-500 hover:bg-gray-50">
-                            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                            </svg>
-                        </button>
-                    </a>
+    <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+        @php
+            $actions = [
+                ['label' => 'Home', 'href' => route('home'), 'icon' => 'home'],
+                ['label' => 'Humans', 'href' => route('humans.index'), 'icon' => 'users'],
+                ['label' => 'Couples', 'href' => route('couples.index'), 'icon' => 'heart'],
+                ['label' => 'Categories', 'href' => route('categories.index'), 'icon' => 'folder'],
+                ['label' => 'Graphics', 'href' => route('graphic'), 'icon' => 'chart'],
+            ];
+        @endphp
 
-                    {{-- admins --}}
-
-                    @if (Auth::user()->role == 'super_admin')
-                        <a href="{{ route('users.index') }}">
-                            <button
-                                class="w-full p-3 flex cursor-pointer justify-center rounded-lg text-gray-500 hover:bg-gray-50">
-                                <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                    viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M13 10V3L4 14h7v7l9-11h-7z" />
+        @foreach ($actions as $a)
+            <a href="{{ $a['href'] }}"
+                class="group rounded-2xl border border-white/30 bg-white/45 p-4 shadow-xl shadow-black/5 backdrop-blur-xl transition hover:bg-white/60 dark:border-slate-800/60 dark:bg-slate-950/40 dark:hover:bg-slate-950/55">
+                <div class="flex items-center gap-3">
+                    <span
+                        class="grid h-11 w-11 place-items-center rounded-2xl bg-slate-900/5 text-slate-700 transition group-hover:bg-indigo-500/10 group-hover:text-indigo-700 dark:bg-white/5 dark:text-slate-200 dark:group-hover:text-indigo-200">
+                        @switch($a['icon'])
+                            @case('home')
+                                <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M2.25 12 11.204 3.045a1.5 1.5 0 0 1 2.121 0L22.25 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M4.5 10.5V20.25A1.5 1.5 0 0 0 6 21.75h4.5V16.5A1.5 1.5 0 0 1 12 15h0a1.5 1.5 0 0 1 1.5 1.5v5.25H18a1.5 1.5 0 0 0 1.5-1.5V10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
-                            </button>
-                        </a>
-                    @endif
+                            @break
+                            @case('users')
+                                <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M15 19.128c.851.196 1.67.476 2.448.835A8.967 8.967 0 0 0 21 12.75C21 7.78 16.97 3.75 12 3.75S3 7.78 3 12.75c0 3.146 1.618 5.914 4.065 7.5.777-.36 1.596-.64 2.448-.835" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M12 12.75a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            @break
+                            @case('heart')
+                                <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M21 8.25c0-2.485-2.099-4.5-4.687-4.5-1.844 0-3.438 1.023-4.313 2.52-.875-1.497-2.469-2.52-4.313-2.52C5.1 3.75 3 5.765 3 8.25c0 7.5 9 12 9 12s9-4.5 9-12Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            @break
+                            @case('folder')
+                                <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M2.25 6.75A2.25 2.25 0 0 1 4.5 4.5h5.379c.597 0 1.17.237 1.591.659l1.871 1.871c.422.422.994.659 1.591.659H19.5a2.25 2.25 0 0 1 2.25 2.25v8.25A2.25 2.25 0 0 1 19.5 20.25h-15A2.25 2.25 0 0 1 2.25 18V6.75Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            @break
+                            @case('chart')
+                                <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M3 3v18h18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                    <path d="M7 14v4M12 10v8M17 6v12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                </svg>
+                            @break
+                        @endswitch
+                    </span>
+                    <div class="min-w-0">
+                        <div class="text-sm font-semibold text-slate-900 dark:text-white">{{ $a['label'] }}</div>
+                        <div class="mt-0.5 text-xs text-slate-600 dark:text-slate-300">Open</div>
+                    </div>
+                </div>
+            </a>
+        @endforeach
 
-                    {{-- logout --}}
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                        onsubmit="return confirm('Are you sure you want to logout?');">
-                        @csrf
-                        <button type="submit"
-                            class="w-full p-3 flex cursor-pointer justify-center rounded-lg text-red-500 hover:bg-gray-50">
-                            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                            </svg>
-                        </button>
-                    </form>
+        <form action="{{ route('logout') }}" method="POST" onsubmit="return confirm('Are you sure you want to logout?');"
+            class="col-span-2 sm:col-span-1">
+            @csrf
+            <button type="submit"
+                class="w-full rounded-2xl border border-white/30 bg-white/45 p-4 text-left shadow-xl shadow-black/5 backdrop-blur-xl transition hover:bg-white/60 dark:border-slate-800/60 dark:bg-slate-950/40 dark:hover:bg-slate-950/55">
+                <div class="flex items-center gap-3">
+                    <span
+                        class="grid h-11 w-11 place-items-center rounded-2xl bg-rose-500/10 text-rose-700 dark:text-rose-200">
+                        <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6A2.25 2.25 0 0 0 5.25 5.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M12 9l3 3-3 3M15 12H3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </span>
+                    <div class="min-w-0">
+                        <div class="text-sm font-semibold text-slate-900 dark:text-white">Logout</div>
+                        <div class="mt-0.5 text-xs text-slate-600 dark:text-slate-300">End session</div>
+                    </div>
+                </div>
+            </button>
+        </form>
     </div>
 
-    <div class="flex justify-between mt-5">
-        <h1 class="text-2xl font-semibold text-gray-900">Province Graphic</h1>
-    </div>
-    <div class="mt-4 p-6 bg-white rounded-lg shadow-md">
-        <canvas id="provinceChart" class="w-full"></canvas>
-    </div>
+    <x-card class="p-6 sm:p-8">
+        <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+                <h2 class="text-lg font-semibold tracking-tight text-slate-900 dark:text-white">Province Graphic</h2>
+                <p class="mt-1 text-sm text-slate-600 dark:text-slate-300">Viloyatlar bo‘yicha nikoh holati.</p>
+            </div>
+            <div class="flex items-center gap-2">
+                <x-badge variant="soft" color="rose">Married</x-badge>
+                <x-badge variant="soft" color="indigo">Divorced</x-badge>
+            </div>
+        </div>
+
+        <div class="mt-6 overflow-hidden rounded-2xl border border-white/20 bg-white/20 p-4 shadow-sm shadow-black/5 dark:border-slate-800/60 dark:bg-slate-950/10">
+            <canvas id="provinceChart" class="w-full"></canvas>
+        </div>
+    </x-card>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
@@ -103,7 +128,7 @@
                 datasets: [{
                         label: 'Married',
                         data: @json($marriedCounts->values()),
-                        borderColor: '#ec4899', // pink-500
+                        borderColor: '#ec4899',
                         backgroundColor: 'transparent',
                         tension: 0.4,
                         pointBackgroundColor: '#ec4899',
@@ -112,7 +137,7 @@
                     {
                         label: 'Divorced',
                         data: @json($divorcedCounts->values()),
-                        borderColor: '#1e3a8a', // blue-900
+                        borderColor: '#1e3a8a',
                         backgroundColor: 'transparent',
                         tension: 0.4,
                         pointBackgroundColor: '#1e3a8a',
@@ -126,13 +151,13 @@
                     legend: {
                         position: 'top',
                         labels: {
-                            color: '#374151' // gray-700
+                            color: '#374151'
                         }
                     },
                     title: {
                         display: true,
                         text: 'Viloyatlar bo‘yicha nikoh holati',
-                        color: '#111827', // gray-900
+                        color: '#111827',
                         font: {
                             size: 18
                         }
@@ -142,7 +167,7 @@
                     y: {
                         beginAtZero: true,
                         ticks: {
-                            color: '#4b5563' // gray-600
+                            color: '#4b5563'
                         }
                     },
                     x: {
@@ -154,5 +179,4 @@
             }
         });
     </script>
-
-</x-app>
+@endsection

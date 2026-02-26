@@ -1,101 +1,68 @@
-<!doctype html>
-<html lang="en" class="h-full">
-
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Login</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        // Optional: Tailwind config for custom colors
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            50: '#f0f7ff',
-                            500: '#1e76ff',
-                            600: '#165fcb',
-                        },
-                    },
-                },
-            },
-        };
-    </script>
-</head>
-
-<body class="h-full bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-950">
-    <main class="min-h-full grid place-items-center px-4">
-        <div class="w-full max-w-md">
-            <div class="text-center mb-8">
-                <a href="#" class="inline-flex items-center gap-2 text-slate-800 dark:text-slate-100">
-                    <span class="text-xl font-semibold">Login</span>
-                </a>
-                <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">Welcome back. Please sign in to continue.</p>
-            </div>
-
-            <div
-                class="rounded-2xl bg-white/70 backdrop-blur-sm shadow-xl border border-slate-200 dark:bg-slate-900/60 dark:border-slate-800">
-                <div class="p-6 sm:p-8">
-                    <form action="{{ route('login') }}" method="POST" class="space-y-6" novalidate>
-                        @csrf
-                        <div>
-                            <label for="email"
-                                class="block text-sm font-medium text-slate-700 dark:text-slate-300">Email</label>
-                            <div class="mt-2 relative">
-                                <input type="email" id="email" name="email" required autocomplete="email"
-                                    class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-slate-900 shadow-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100"
-                                    placeholder="you@example.com" />
-                            </div>
-                        </div>
-
-                        <div>
-                            <div class="flex items-center justify-between">
-                                <label for="password"
-                                    class="block text-sm font-medium text-slate-700 dark:text-slate-300">Password</label>
-                                <button type="button" id="togglePwd"
-                                    class="text-xs text-brand-600 hover:text-brand-500">Show</button>
-                            </div>
-                            <div class="mt-2 relative">
-                                <input type="password" id="password" name="password" required
-                                    autocomplete="current-password"
-                                    class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-slate-900 shadow-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100"
-                                    placeholder="••••••••" />
-                            </div>
-                            <div class="mt-2">
-                                <a href="#"
-                                    class="text-sm text-slate-600 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200">Forgot
-                                    password?</a>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center justify-between">
-                            <label class="inline-flex items-center gap-2">
-                                <input type="checkbox" name="remember"
-                                    class="rounded border-slate-300 text-brand-600 focus:ring-brand-500 dark:border-slate-700" />
-                                <span class="text-sm text-slate-700 dark:text-slate-300">Remember me</span>
-                            </label>
-                            <button type="submit"
-                                class="inline-flex justify-center rounded-lg bg-brand-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-slate-900">
-                                Sign in
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-        </div>
-    </main>
-
-    <script>
-        const toggle = document.getElementById('togglePwd');
-        const pwd = document.getElementById('password');
-        toggle.addEventListener('click', () => {
-            const isText = pwd.type === 'text';
-            pwd.type = isText ? 'password' : 'text';
-            toggle.textContent = isText ? 'Show' : 'Hide';
-        });
-    </script>
-</body>
-
-</html>
+<x-user-app title="Login">
+     <div class="w-full max-w-md">
+         <div class="text-center">
+             <div class="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-white/50 shadow-xl shadow-black/5 backdrop-blur-xl dark:bg-slate-950/40">
+                 <svg class="h-7 w-7 text-indigo-600 dark:text-indigo-200" viewBox="0 0 24 24" fill="none"
+                     xmlns="http://www.w3.org/2000/svg">
+                     <path d="M12 3 4.5 6.75V12c0 6.075 3.6 9.75 7.5 9.75s7.5-3.675 7.5-9.75V6.75L12 3Z"
+                         stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                 </svg>
+             </div>
+             <h1 class="mt-5 text-2xl font-semibold tracking-tight text-slate-900 dark:text-white">Sign in</h1>
+             <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">Welcome back. Please sign in to continue.</p>
+         </div>
+ 
+         <x-card class="mt-8 p-6 sm:p-8">
+             <form action="{{ route('login') }}" method="POST" class="space-y-5" novalidate>
+                 @csrf
+ 
+                 <x-input name="email" type="email" label="Email" autocomplete="email" placeholder="you@example.com" />
+ 
+                 <div>
+                     <div class="flex items-center justify-between">
+                         <label for="password" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-200">
+                             Password
+                         </label>
+                         <button type="button" id="togglePwd"
+                             class="text-xs font-semibold text-indigo-700 transition hover:text-indigo-600 dark:text-indigo-200">
+                             Show
+                         </button>
+                     </div>
+ 
+                     <x-input name="password" type="password" autocomplete="current-password" placeholder="••••••••" />
+                 </div>
+ 
+                 <div class="flex items-center justify-between">
+                     <label class="inline-flex items-center gap-2">
+                         <input type="checkbox" name="remember"
+                             class="h-4 w-4 rounded border-white/30 bg-white/60 text-indigo-600 shadow-sm focus:ring-2 focus:ring-indigo-500/20 dark:border-slate-800/60 dark:bg-slate-950/40" />
+                         <span class="text-sm text-slate-700 dark:text-slate-300">Remember me</span>
+                     </label>
+                 </div>
+ 
+                 <div class="pt-2">
+                     <x-button type="submit" class="w-full">
+                         Sign in
+                         <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                             <path d="M15.75 12H3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                             <path d="M12.75 9 15.75 12l-3 3" stroke="currentColor" stroke-width="1.5"
+                                 stroke-linecap="round" stroke-linejoin="round" />
+                         </svg>
+                     </x-button>
+                 </div>
+             </form>
+         </x-card>
+     </div>
+ 
+     <script>
+         const toggle = document.getElementById('togglePwd');
+         const pwd = document.getElementById('password');
+         if (toggle && pwd) {
+             toggle.addEventListener('click', () => {
+                 const isText = pwd.type === 'text';
+                 pwd.type = isText ? 'password' : 'text';
+                 toggle.textContent = isText ? 'Show' : 'Hide';
+             });
+         }
+     </script>
+ </x-user-app>

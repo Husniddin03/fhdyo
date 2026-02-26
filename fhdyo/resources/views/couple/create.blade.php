@@ -1,129 +1,107 @@
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+@extends('layouts.app')
 
-<x-app title="couple">
-    <div class="flex justify-between">
-        <h1 class="text-2xl font-semibold text-gray-900">Create couple</h1>
+@section('title', 'Create couple')
+@section('nav', 'couple')
 
-        <div class="flex justify-center items-center gap-2">
-            <a href="{{ route('couples.index') }}"
-                class="mx-3 flex justify-center items-center gap-2 border p-2 rounded-md border-gray-300">
-                <h4 class="">Back</h4>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="size-6">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
-                </svg>
-            </a>
+@section('content')
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+            <h1 class="text-2xl font-semibold tracking-tight text-slate-900 dark:text-white">Create couple</h1>
+            <p class="mt-1 text-sm text-slate-600 dark:text-slate-300">Assign husband & wife and set status.</p>
         </div>
 
+        <x-button variant="soft" color="slate" :href="route('couples.index')">
+            Back
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" stroke="currentColor" stroke-width="1.5"
+                    stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+        </x-button>
     </div>
-    <div class="mt-4 p-6 bg-white rounded-lg shadow-md">
-        <form action="{{ route('couples.store') }}" method="POST" class="space-y-4 flex flex-wrap flex-row gap-4">
+
+    <x-card class="p-6 sm:p-8">
+        <form action="{{ route('couples.store') }}" method="POST" class="space-y-6">
             @csrf
             @method('POST')
 
-            <div class="w-auto">
-                <label for="husband" class="block text-sm font-medium text-gray-700">Husband</label>
-                <select required name="husband" id="husband"
-                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
-                    <option value="" {{ old('husband') == '' ? 'selected' : '' }}>Select human</option>
-                    @foreach ($humans as $human)
-                        @if ($human->gender == 'male')
-                            <option value="{{ $human->id }}" {{ old('husband') == $human->id ? 'selected' : '' }}>
-                                {{ $human->first_name }} {{ $human->middle_name }} {{ $human->last_name }}
-                            </option>
-                        @endif
-                    @endforeach
-                </select>
-            </div>
-
-            <div class="w-auto">
-                <label for="wife" class="block text-sm font-medium text-gray-700">Wife</label>
-                <select required name="wife" id="wife"
-                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
-                    <option value="" {{ old('wife') == '' ? 'selected' : '' }}>Select human</option>
-                    @foreach ($humans as $human)
-                        @if ($human->gender == 'female')
-                            <option value="{{ $human->id }}" {{ old('wife') == $human->id ? 'selected' : '' }}>
-                                {{ $human->first_name }} {{ $human->middle_name }} {{ $human->last_name }}
-                            </option>
-                        @endif
-                    @endforeach
-                </select>
-            </div>
-
-            <div class="w-auto">
-                <label for="number" class="block text-sm font-medium text-gray-700">Number</label>
-                <input type="number" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" name="count">
-            </div>
-
-            <div class="w-auto">
-                <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
-                <select required name="status" id="status"
-                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
-                    <option value="" {{ old('status') == '' ? 'selected' : '' }}>Select status</option>
-                    <option value="married" {{ old('status') == 'married' ? 'selected' : '' }}>
-                        Married
-                    </option>
-                    <option value="unmarried" {{ old('status') == 'unmarried' ? 'selected' : '' }}>
-                        Unmarried
-                    </option>
-                    <option value="divorced" {{ old('status') == 'divorced' ? 'selected' : '' }}>
-                        Divorced
-                    </option>
-                </select>
-            </div>
-
-            <div class="w-auto" id="dateDiv">
-                <label for="date" class="block text-sm font-medium text-gray-700">Date</label>
-                <input type="date" name="date" id="date"
-                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
-            </div>
-
-            <script>
-                $('#status').change(function() {
-                    if ($(this).val() === 'unmarried') {
-                        $('#dateDiv').hide();
-                    } else {
-                        $('#dateDiv').show();
-                    }
-                }).trigger('change');
-            </script>
-
-            <div class="w-full flex justify-between mt-4">
-                <div class="w-auto flex items-end">
-                    <button type="submit"
-                        class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">Create</button>
+            <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                <div>
+                    <label for="husband" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-200">Husband</label>
+                    <select required name="husband" id="husband"
+                        class="w-full rounded-2xl border border-white/30 bg-white/60 px-4 py-3 text-sm text-slate-900 shadow-sm shadow-black/5 outline-none transition focus:bg-white/80 focus:ring-2 focus:ring-indigo-500/20 dark:border-slate-800/60 dark:bg-slate-950/40 dark:text-white dark:focus:bg-slate-950/60">
+                        <option value="" {{ old('husband') == '' ? 'selected' : '' }}>Select human</option>
+                        @foreach ($humans as $human)
+                            @if ($human->gender == 'male')
+                                <option value="{{ $human->id }}" {{ old('husband') == $human->id ? 'selected' : '' }}>
+                                    {{ $human->first_name }} {{ $human->middle_name }} {{ $human->last_name }}
+                                </option>
+                            @endif
+                        @endforeach
+                    </select>
                 </div>
-                <div class="flex w-auto items-end justify-center gap-2">
-                    <a href="{{ route('couples.index') }}"
-                        class="flex justify-center items-center gap-2 border p-2 rounded-md border-gray-300">
-                        <h4 class="">Back</h4>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="size-6">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
-                        </svg>
-                    </a>
+
+                <div>
+                    <label for="wife" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-200">Wife</label>
+                    <select required name="wife" id="wife"
+                        class="w-full rounded-2xl border border-white/30 bg-white/60 px-4 py-3 text-sm text-slate-900 shadow-sm shadow-black/5 outline-none transition focus:bg-white/80 focus:ring-2 focus:ring-indigo-500/20 dark:border-slate-800/60 dark:bg-slate-950/40 dark:text-white dark:focus:bg-slate-950/60">
+                        <option value="" {{ old('wife') == '' ? 'selected' : '' }}>Select human</option>
+                        @foreach ($humans as $human)
+                            @if ($human->gender == 'female')
+                                <option value="{{ $human->id }}" {{ old('wife') == $human->id ? 'selected' : '' }}>
+                                    {{ $human->first_name }} {{ $human->middle_name }} {{ $human->last_name }}
+                                </option>
+                            @endif
+                        @endforeach
+                    </select>
                 </div>
+
+                <x-input name="count" type="number" label="Number" value="{{ old('count') }}" />
+
+                <div>
+                    <label for="status" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-200">Status</label>
+                    <select required name="status" id="status"
+                        class="w-full rounded-2xl border border-white/30 bg-white/60 px-4 py-3 text-sm text-slate-900 shadow-sm shadow-black/5 outline-none transition focus:bg-white/80 focus:ring-2 focus:ring-indigo-500/20 dark:border-slate-800/60 dark:bg-slate-950/40 dark:text-white dark:focus:bg-slate-950/60">
+                        <option value="" {{ old('status') == '' ? 'selected' : '' }}>Select status</option>
+                        <option value="married" {{ old('status') == 'married' ? 'selected' : '' }}>Married</option>
+                        <option value="unmarried" {{ old('status') == 'unmarried' ? 'selected' : '' }}>Unmarried</option>
+                        <option value="divorced" {{ old('status') == 'divorced' ? 'selected' : '' }}>Divorced</option>
+                    </select>
+                </div>
+
+                <div id="dateDiv">
+                    <label for="date" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-200">Date</label>
+                    <input type="date" name="date" id="date" value="{{ old('date') }}"
+                        class="w-full rounded-2xl border border-white/30 bg-white/60 px-4 py-3 text-sm text-slate-900 shadow-sm shadow-black/5 outline-none transition focus:bg-white/80 focus:ring-2 focus:ring-indigo-500/20 dark:border-slate-800/60 dark:bg-slate-950/40 dark:text-white dark:focus:bg-slate-950/60" />
+                </div>
+            </div>
+
+            <div class="flex flex-col-reverse gap-3 border-t border-white/20 pt-6 sm:flex-row sm:justify-end dark:border-slate-800/60">
+                <x-button variant="soft" color="slate" type="button" onclick="window.location.href='{{ route('couples.index') }}'">
+                    Cancel
+                </x-button>
+                <x-button type="submit" color="success">
+                    Create
+                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="m4.5 12.75 4.5 4.5 10.5-10.5" stroke="currentColor" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </x-button>
             </div>
         </form>
-    </div>
-</x-app>
+    </x-card>
 
+    <script>
+        (function() {
+            const status = document.getElementById('status');
+            const dateDiv = document.getElementById('dateDiv');
 
-<script>
-    $(document).ready(function() {
-        $('#husband').select2({
-            placeholder: 'Search husband...',
-            allowClear: true
-        });
+            function sync() {
+                if (!status || !dateDiv) return;
+                dateDiv.classList.toggle('hidden', status.value === 'unmarried');
+            }
 
-        $('#wife').select2({
-            placeholder: 'Search wife...',
-            allowClear: true
-        });
-    });
-</script>
+            if (status) status.addEventListener('change', sync);
+            sync();
+        })();
+    </script>
+@endsection

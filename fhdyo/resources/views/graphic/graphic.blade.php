@@ -1,314 +1,96 @@
 <x-app title="graphic">
-    <div class="flex justify-between">
-        <h1 class="text-2xl font-semibold text-gray-900">Graphic</h1>
-    </div>
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+            <h1 class="text-2xl font-semibold tracking-tight text-slate-900 dark:text-white">Graphics</h1>
+            <p class="mt-1 text-sm text-slate-600 dark:text-slate-300">Nikoh va ajrashish statistikasi (oylik).</p>
+        </div>
 
-    <style>
-        .main-body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .header {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .header h1 {
-            font-size: 28px;
-            color: #1f2937;
-        }
-
-        .header p {
-            color: #6b7280;
-            margin-top: 5px;
-        }
-
-        .province-selector {
-            padding: 12px 20px;
-            font-size: 16px;
-            border: 2px solid #e5e7eb;
-            border-radius: 8px;
-            background: white;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .province-selector:hover {
-            border-color: #8b5cf6;
-        }
-
-        .province-selector:focus {
-            outline: none;
-            border-color: #8b5cf6;
-            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-
-        .stat-card {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .stat-label {
-            color: #6b7280;
-            font-size: 14px;
-            margin-bottom: 10px;
-        }
-
-        .stat-value {
-            font-size: 36px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .stat-value.married {
-            color: #8b5cf6;
-        }
-
-        .stat-value.divorced {
-            color: #3b4252;
-        }
-
-        .stat-value.difference {
-            color: #10b981;
-        }
-
-        .stat-info {
-            color: #9ca3af;
-            font-size: 13px;
-        }
-
-        .chart-container {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-        }
-
-        .chart-title {
-            font-size: 22px;
-            font-weight: 600;
-            color: #1f2937;
-            margin-bottom: 10px;
-        }
-
-        .chart-subtitle {
-            color: #6b7280;
-            margin-bottom: 30px;
-        }
-
-        canvas {
-            max-width: 100%;
-            height: auto !important;
-        }
-
-        .legend {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-top: 20px;
-        }
-
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .legend-color {
-            width: 20px;
-            height: 4px;
-            border-radius: 2px;
-        }
-
-        .legend-color.married {
-            background: #8b5cf6;
-        }
-
-        .legend-color.divorced {
-            background: #3b4252;
-        }
-
-        .table-container {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th {
-            text-align: left;
-            padding: 15px;
-            border-bottom: 2px solid #e5e7eb;
-            color: #374151;
-            font-weight: 600;
-        }
-
-        td {
-            padding: 15px;
-            border-bottom: 1px solid #f3f4f6;
-        }
-
-        tr:hover {
-            background: #f9fafb;
-        }
-
-        .value-married {
-            color: #8b5cf6;
-            font-weight: 600;
-        }
-
-        .value-divorced {
-            color: #3b4252;
-            font-weight: 600;
-        }
-
-        .value-difference {
-            color: #10b981;
-            font-weight: 600;
-        }
-
-        @media (max-width: 768px) {
-            .header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .header h1 {
-                font-size: 22px;
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .chart-container {
-                padding: 20px;
-            }
-
-            .table-container {
-                padding: 20px;
-            }
-        }
-    </style>
-    </head>
-
-    <div class="main-body">
-        <div class="container">
-            <!-- Header -->
-            <div class="header">
-                <div>
-                    <h1>Nikoh va Ajrashish Statistikasi</h1>
-                    <p>Oylik ma'lumotlar bo'yicha tahlil</p>
-                </div>
-                <select class="province-selector" id="provinceSelect">
-                    <option value="toshkentsh">Toshkent sh</option>
-                    <option value="toshkent">Toshkent</option>
-                    <option value="samarqand">Samarqand</option>
-                    <option value="buxoro">Buxoro</option>
-                    <option value="fargona">Farg'ona</option>
-                    <option value="andijon">Andijon</option>
-                    <option value="sirdaryo">Sirdaryo</option>
-                    <option value="jizzax">Jizzax</option>
-                    <option value="qashqadaryo">Qashqadaryo</option>
-                    <option value="surxandaryo">Surxandaryo</option>
-                    <option value="navoiy">Navoiy</option>
-                    <option value="buxoro">Buxoro</option>
-                    <option value="xorazm">Xorazm</option>
-                    <option value="qoraqalpogistonr">Qoraqalpog'stoon R</option>
-                </select>
-            </div>
-
-            <!-- Statistics Cards -->
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-label">Jami Nikohlar</div>
-                    <div class="stat-value married" id="totalMarried">0</div>
-                    <div class="stat-info" id="provinceInfo1">Toshkent viloyati</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">Jami Ajrashishlar</div>
-                    <div class="stat-value divorced" id="totalDivorced">0</div>
-                    <div class="stat-info" id="provinceInfo2">Toshkent viloyati</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">Farq</div>
-                    <div class="stat-value difference" id="percentageDiff">0%</div>
-                    <div class="stat-info">Nikohlar ajrashishlardan ko'p</div>
-                </div>
-            </div>
-
-            <!-- Chart -->
-            <div class="chart-container">
-                <h2 class="chart-title w-full">Oylik Statistika - <span id="chartProvince">Toshkent</span></h2>
-                <p class="chart-subtitle w-full">Nikoh va ajrashishlar soni oylar bo'yicha</p>
-                <canvas id="lineChart" class="w-full"></canvas>
-                <div class="legend w-full">
-                    <div class="legend-item">
-                        <div class="legend-color married"></div>
-                        <span>Nikohlar</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-color divorced"></div>
-                        <span>Ajrashishlar</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Data Table -->
-            <div class="table-container">
-                <h2 class="chart-title">Batafsil Ma'lumotlar</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Oy</th>
-                            <th style="text-align: right;">Nikohlar</th>
-                            <th style="text-align: right;">Ajrashishlar</th>
-                            <th style="text-align: right;">Farq</th>
-                        </tr>
-                    </thead>
-                    <tbody id="dataTable">
-                    </tbody>
-                </table>
-            </div>
+        <div class="w-full sm:w-auto">
+            <label for="provinceSelect" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-200">Province</label>
+            <select id="provinceSelect"
+                class="w-full sm:w-72 rounded-2xl border border-white/30 bg-white/60 px-4 py-3 text-sm text-slate-900 shadow-sm shadow-black/5 outline-none transition focus:bg-white/80 focus:ring-2 focus:ring-indigo-500/20 dark:border-slate-800/60 dark:bg-slate-950/40 dark:text-white dark:focus:bg-slate-950/60">
+                <option value="toshkentsh">Toshkent sh</option>
+                <option value="toshkent">Toshkent</option>
+                <option value="samarqand">Samarqand</option>
+                <option value="buxoro">Buxoro</option>
+                <option value="fargona">Farg'ona</option>
+                <option value="andijon">Andijon</option>
+                <option value="sirdaryo">Sirdaryo</option>
+                <option value="jizzax">Jizzax</option>
+                <option value="qashqadaryo">Qashqadaryo</option>
+                <option value="surxandaryo">Surxandaryo</option>
+                <option value="navoiy">Navoiy</option>
+                <option value="xorazm">Xorazm</option>
+                <option value="qoraqalpogistonr">Qoraqalpog'stoon R</option>
+            </select>
         </div>
     </div>
+
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+        <x-card class="p-6">
+            <div class="text-sm font-semibold text-slate-600 dark:text-slate-300">Jami Nikohlar</div>
+            <div class="mt-2 text-3xl font-semibold tracking-tight text-indigo-700 dark:text-indigo-200" id="totalMarried">0</div>
+            <div class="mt-2 text-sm text-slate-500 dark:text-slate-400" id="provinceInfo1">Toshkent viloyati</div>
+        </x-card>
+
+        <x-card class="p-6">
+            <div class="text-sm font-semibold text-slate-600 dark:text-slate-300">Jami Ajrashishlar</div>
+            <div class="mt-2 text-3xl font-semibold tracking-tight text-slate-900 dark:text-white" id="totalDivorced">0</div>
+            <div class="mt-2 text-sm text-slate-500 dark:text-slate-400" id="provinceInfo2">Toshkent viloyati</div>
+        </x-card>
+
+        <x-card class="p-6">
+            <div class="text-sm font-semibold text-slate-600 dark:text-slate-300">Farq</div>
+            <div class="mt-2 text-3xl font-semibold tracking-tight text-emerald-700 dark:text-emerald-200" id="percentageDiff">0%</div>
+            <div class="mt-2 text-sm text-slate-500 dark:text-slate-400">Nikohlar ajrashishlardan ko'p</div>
+        </x-card>
+    </div>
+
+    <x-card class="p-6 sm:p-8">
+        <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+                <h2 class="text-lg font-semibold tracking-tight text-slate-900 dark:text-white">Oylik Statistika</h2>
+                <p class="mt-1 text-sm text-slate-600 dark:text-slate-300">Nikoh va ajrashishlar soni oylar bo'yicha — <span class="font-semibold" id="chartProvince">Toshkent</span></p>
+            </div>
+            <div class="flex items-center gap-3">
+                <x-badge variant="soft" color="indigo">
+                    <span class="inline-block h-2 w-2 rounded-full bg-indigo-600"></span>
+                    Nikohlar
+                </x-badge>
+                <x-badge variant="soft" color="slate">
+                    <span class="inline-block h-2 w-2 rounded-full bg-slate-700 dark:bg-slate-300"></span>
+                    Ajrashishlar
+                </x-badge>
+            </div>
+        </div>
+
+        <div class="mt-6">
+            <div class="w-full overflow-hidden rounded-2xl border border-white/20 bg-white/20 p-4 shadow-sm shadow-black/5 dark:border-slate-800/60 dark:bg-slate-950/10">
+                <canvas id="lineChart" class="w-full"></canvas>
+            </div>
+        </div>
+    </x-card>
+
+    <x-card class="p-0 overflow-hidden">
+        <div class="border-b border-white/20 px-6 py-4 dark:border-slate-800/60">
+            <h2 class="text-sm font-semibold text-slate-900 dark:text-white">Batafsil Ma'lumotlar</h2>
+            <p class="mt-1 text-sm text-slate-600 dark:text-slate-300">Oyma-oy ko'rsatkichlar.</p>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="min-w-full text-left">
+                <thead class="bg-white/40 dark:bg-slate-950/30">
+                    <tr>
+                        <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300">Oy</th>
+                        <th class="px-6 py-4 text-right text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300">Nikohlar</th>
+                        <th class="px-6 py-4 text-right text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300">Ajrashishlar</th>
+                        <th class="px-6 py-4 text-right text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300">Farq</th>
+                    </tr>
+                </thead>
+                <tbody id="dataTable" class="divide-y divide-white/20 bg-white/20 dark:divide-slate-800/60 dark:bg-slate-950/10">
+                </tbody>
+            </table>
+        </div>
+    </x-card>
 
     <script>
         // Data for different provinces
@@ -465,11 +247,12 @@
             data.forEach(row => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td>${row.month}</td>
-                    <td style="text-align: right;" class="value-married">${row.married}</td>
-                    <td style="text-align: right;" class="value-divorced">${row.divorced}</td>
-                    <td style="text-align: right;" class="value-difference">+${row.married - row.divorced}</td>
+                    <td class="px-6 py-4 text-sm font-semibold text-slate-900 dark:text-white">${row.month}</td>
+                    <td class="px-6 py-4 text-right text-sm font-semibold text-indigo-700 dark:text-indigo-200">${row.married}</td>
+                    <td class="px-6 py-4 text-right text-sm font-semibold text-slate-900 dark:text-white">${row.divorced}</td>
+                    <td class="px-6 py-4 text-right text-sm font-semibold text-emerald-700 dark:text-emerald-200">+${row.married - row.divorced}</td>
                 `;
+                tr.className = 'transition hover:bg-white/30 dark:hover:bg-white/5';
                 tbody.appendChild(tr);
             });
         }

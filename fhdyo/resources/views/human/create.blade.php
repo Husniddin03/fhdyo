@@ -1,96 +1,63 @@
-<x-app title="human">
-    <div class="flex justify-between">
-        <h1 class="text-2xl font-semibold text-gray-900">Create Human</h1>
+@extends('layouts.app')
 
-        <div class="flex justify-center items-center gap-2">
-            <a href="{{ route('humans.index') }}"
-                class="mx-3 flex justify-center items-center gap-2 border p-2 rounded-md border-gray-300">
-                <h4 class="">Back</h4>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="size-6">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
-                </svg>
-            </a>
+@section('title', 'Create human')
+@section('nav', 'human')
+
+@section('content')
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+            <h1 class="text-2xl font-semibold tracking-tight text-slate-900 dark:text-white">Create human</h1>
+            <p class="mt-1 text-sm text-slate-600 dark:text-slate-300">Add a person record with identity fields.</p>
         </div>
 
+        <x-button variant="soft" color="slate" :href="route('humans.index')">
+            Back
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" stroke="currentColor" stroke-width="1.5"
+                    stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+        </x-button>
     </div>
-    <div class="mt-4 p-6 bg-white rounded-lg shadow-md">
-        <form action="{{ route('humans.store') }}" method="POST"
-            class="space-y-4 flex flex-wrap flex-row gap-4">
+
+    <x-card class="p-6 sm:p-8">
+        <form action="{{ route('humans.store') }}" method="POST" class="space-y-6">
             @csrf
             @method('POST')
-            <div class="w-auto">
-                <label for="first_name" class="block text-sm font-medium text-gray-700">First Name</label>
-                <input required type="text" name="first_name" id="first_name" value="{{ old('first_name') }}"
-                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+
+            <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+                <x-input required name="first_name" label="First name" value="{{ old('first_name') }}" />
+                <x-input required name="last_name" label="Last name" value="{{ old('last_name') }}" />
+                <x-input required name="middle_name" label="Middle name" value="{{ old('middle_name') }}" />
+
+                <div>
+                    <label for="gender" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-200">Gender</label>
+                    <select required name="gender" id="gender"
+                        class="w-full rounded-2xl border border-white/30 bg-white/60 px-4 py-3 text-sm text-slate-900 shadow-sm shadow-black/5 outline-none transition focus:bg-white/80 focus:ring-2 focus:ring-indigo-500/20 dark:border-slate-800/60 dark:bg-slate-950/40 dark:text-white dark:focus:bg-slate-950/60">
+                        <option value="male" {{ old('gender') == 'male' ? 'selected' : '' }}>Male</option>
+                        <option value="female" {{ old('gender') == 'female' ? 'selected' : '' }}>Female</option>
+                    </select>
+                </div>
+
+                <x-input required type="date" name="birthday" label="Birthday" value="{{ old('birthday') }}" />
+                <x-input required name="phone" label="Phone" value="{{ old('phone') }}" />
+                <x-input required name="jshshir" label="JSHSHIR" value="{{ old('jshshir') }}" />
+                <x-input required name="passport_id" label="Passport ID" value="{{ old('passport_id') }}" />
+                <x-input required name="province" label="Province" value="{{ old('province') }}" />
+                <x-input required name="region" label="Region" value="{{ old('region') }}" />
             </div>
 
-            <div class="w-auto">
-                <label for="last_name" class="block text-sm font-medium text-gray-700">Last Name</label>
-                <input required type="text" name="last_name" id="last_name" value="{{ old('last_name') }}"
-                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
-            </div>
-            <div class="w-auto">
-                <label for="middle_name" class="block text-sm font-medium text-gray-700">Middle Name</label>
-                <input required type="text" name="middle_name" id="middle_name" value="{{ old('middle_name') }}"
-                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
-            </div>
-            <div class="w-auto">
-                <label for="gender" class="block text-sm font-medium text-gray-700">Gender</label>
-                <select required name="gender" id="gender"
-                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
-                    <option value="male" {{ old('gender') == 'male' ? 'selected' : '' }}>Male</option>
-                    <option value="female" {{ old('gender') == 'female' ? 'selected' : '' }}>Female</option>
-                </select>
-            </div>
-            <div class="w-auto">
-                <label for="birthday" class="block text-sm font-medium text-gray-700">Birthday</label>
-                <input required type="date" name="birthday" id="birthday" value="{{ old('birthday') }}"
-                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
-            </div>
-            <div class="w-auto">
-                <label for="phone" class="block text-sm font-medium text-gray-700">Phone</label>
-                <input required type="text" name="phone" id="phone" value="{{ old('phone') }}"
-                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
-            </div>
-            <div class="w-auto">
-                <label for="jshshir" class="block text-sm font-medium text-gray-700">JSHSHIR</label>
-                <input required type="text" name="jshshir" id="jshshir" value="{{ old('jshshir') }}"
-                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
-            </div>
-            <div class="w-auto">
-                <label for="passport_id" class="block text-sm font-medium text-gray-700">Passport ID</label>
-                <input required type="text" name="passport_id" id="passport_id" value="{{ old('passport_id') }}"
-                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
-            </div>
-            <div class="w-auto">
-                <label for="province" class="block text-sm font-medium text-gray-700">Province</label>
-                <input required type="text" name="province" id="province" value="{{ old('province') }}"
-                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
-            </div>
-            <div class="w-auto">
-                <label for="region" class="block text-sm font-medium text-gray-700">Region</label>
-                <input required type="text" name="region" id="region" value="{{ old('region') }}"
-                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
-            </div>
-            <div class="w-full flex justify-between mt-4">
-                <div class="w-auto flex items-end">
-                    <button type="submit"
-                        class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">Create</button>
-                </div>
-                <div class="flex w-auto items-end justify-center gap-2">
-                    <a href="{{ route('humans.index') }}"
-                        class="flex justify-center items-center gap-2 border p-2 rounded-md border-gray-300">
-                        <h4 class="">Back</h4>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                            stroke-width="1.5" stroke="currentColor" class="size-6">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
-                        </svg>
-                    </a>
-                </div>
+            <div class="flex flex-col-reverse gap-3 border-t border-white/20 pt-6 sm:flex-row sm:justify-end dark:border-slate-800/60">
+                <x-button variant="soft" color="slate" type="button" onclick="window.location.href='{{ route('humans.index') }}'">
+                    Cancel
+                </x-button>
+                <x-button type="submit" color="success">
+                    Create
+                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="m4.5 12.75 4.5 4.5 10.5-10.5" stroke="currentColor" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </x-button>
             </div>
         </form>
-    </div>
-</x-app>
+    </x-card>
+@endsection

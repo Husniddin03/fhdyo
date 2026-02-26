@@ -208,9 +208,3 @@
         }
     }
 </script>
-
-<style>
-    .rotate-180 {
-        transform: rotate(-90deg);
-    }
-</style>

@@ -8,30 +8,24 @@
                 murojat qiling</p>
         </div>
 
-        <div
-            class="rounded-2xl bg-white/70 backdrop-blur-sm shadow-xl border border-slate-200 dark:bg-slate-900/60 dark:border-slate-800">
-            <div class="p-6 sm:p-8">
-                <form action="{{ route('quiz.check') }}" method="POST" class="space-y-6" novalidate>
-                    @csrf
-                    <div>
-                        <label for="kalit"
-                            class="block text-sm font-medium text-slate-700 dark:text-slate-300">Kalit</label>
-                        <div class="mt-2 relative">
-                            <input type="text" id="kalit" name="key" required autocomplete="kalit"
-                                class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-slate-900 shadow-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100"
-                                placeholder="8h1jjdj3" />
-                        </div>
-                    </div>
+        <x-card class="p-6 sm:p-8">
+            <form action="{{ route('quiz.check') }}" method="POST" class="space-y-6" novalidate>
+                @csrf
 
-                    <div class="flex items-center justify-center">
-                        <button type="submit"
-                            class="inline-flex justify-center rounded-lg bg-brand-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-slate-900">
-                            Tekshirish
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
+                <x-input name="key" label="Kalit" placeholder="8h1jjdj3" />
+
+                <div class="flex items-center justify-center">
+                    <x-button type="submit" class="w-full sm:w-auto">
+                        Tekshirish
+                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15.75 12H3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                            <path d="M12.75 9 15.75 12l-3 3" stroke="currentColor" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </x-button>
+                </div>
+            </form>
+        </x-card>
 
     </div>
 </x-user-app>

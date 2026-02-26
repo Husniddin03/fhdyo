@@ -1,29 +1,29 @@
 <x-user-app>
 
-    <div
-        class="flex items-center justify-center min-h-screen bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
-        <div class="bg-white p-8 rounded-2xl shadow-2xl transform transition duration-500 hover:scale-105">
-            <div class="flex flex-col items-center">
-                <!-- Icon -->
-                <div class="flex items-center justify-center w-16 h-16 rounded-full bg-green-100 mb-4">
-                    <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" stroke-width="2"
-                        viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-                    </svg>
-                </div>
-
-
-                <!-- Subtext -->
-                <p class="mt-4 text-center text-gray-600 text-lg">
-                    🎉 Thank you for completing the quiz!
-                </p>
-
-                <!-- Button -->
-                <a href="{{ route('quiz.index') }}"
-                    class="mt-6 inline-block px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold rounded-lg shadow-md hover:from-blue-600 hover:to-indigo-700 transition duration-300">
-                    Start Another Quiz
-                </a>
+    <div class="w-full max-w-md">
+        <div class="text-center">
+            <div class="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-emerald-500/10 text-emerald-700 dark:text-emerald-200">
+                <svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 4.5 4.5 10.5-10.5" />
+                </svg>
             </div>
+            <h1 class="mt-5 text-2xl font-semibold tracking-tight text-slate-900 dark:text-white">Completed</h1>
+            <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">Thank you for completing the quiz.</p>
         </div>
+
+        <x-card class="mt-8 p-6 sm:p-8">
+            <div class="space-y-4 text-center">
+                <div class="text-sm text-slate-600 dark:text-slate-300">You can start another quiz anytime.</div>
+                <x-button type="button" onclick="window.location.href='{{ route('quiz.index') }}'" class="w-full">
+                    Start another quiz
+                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" stroke="currentColor"
+                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </x-button>
+            </div>
+        </x-card>
     </div>
 </x-user-app>
