@@ -6,16 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{{ $title ?? 'FHDYO' }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-    <script>
-        (function() {
-            const storageKey = 'theme';
-            const preferred = localStorage.getItem(storageKey);
-            const systemDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-            const shouldDark = preferred ? preferred === 'dark' : systemDark;
-            document.documentElement.classList.toggle('dark', shouldDark);
-        })();
-    </script>
 </head>
 
 <body
@@ -80,32 +70,6 @@
 
     <x-toast />
 
-    <script>
-        (function() {
-            const storageKey = 'theme';
-            const root = document.documentElement;
-            const btn = document.getElementById('themeToggle');
-            const sun = document.getElementById('themeIconSun');
-            const moon = document.getElementById('themeIconMoon');
-
-            function applyIcons() {
-                const isDark = root.classList.contains('dark');
-                if (sun) sun.classList.toggle('hidden', isDark);
-                if (moon) moon.classList.toggle('hidden', !isDark);
-            }
-
-            function toggleTheme() {
-                const isDark = root.classList.contains('dark');
-                const next = !isDark;
-                root.classList.toggle('dark', next);
-                localStorage.setItem(storageKey, next ? 'dark' : 'light');
-                applyIcons();
-            }
-
-            applyIcons();
-            if (btn) btn.addEventListener('click', toggleTheme);
-        })();
-    </script>
 </body>
 
 </html>

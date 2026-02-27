@@ -1,23 +1,23 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full">
+<html lang="uz" class="h-full">
 
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{{ $title ?? trim($__env->yieldContent('title')) ?: 'FHDYO' }}</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-
     <script>
-        if (
-            localStorage.theme === 'dark' ||
-            (!('theme' in localStorage) &&
-                window.matchMedia('(prefers-color-scheme: dark)').matches)
-        ) {
-            document.documentElement.classList.add('dark')
-        } else {
-            document.documentElement.classList.remove('dark')
-        }
+        (function () {
+            const theme = localStorage.getItem('theme')
+
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark')
+            } else if (theme === 'light') {
+                document.documentElement.classList.remove('dark')
+            }
+        })();
     </script>
+
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body
@@ -148,11 +148,11 @@
             </div>
         </header>
 
-        <div class="mx-auto max-w-7xl px-4 sm:px-6">
-            <div class="grid grid-cols-1 gap-6 lg:grid-cols-[17rem_1fr] lg:gap-8">
-                <aside class="hidden lg:block">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div class="flex gap-6 lg:gap-8">
+                <aside class="hidden lg:block w-64 shrink-0">
                     <div
-                        class="sticky top-20 rounded-2xl border border-white/30 bg-white/45 p-3 shadow-xl shadow-black/5 backdrop-blur-xl dark:border-slate-800/60 dark:bg-slate-950/40">
+                        class="sticky top-20 rounded-2xl border border-white/30 bg-white/45 p-3 shadow-xl shadow-black/5 backdrop-blur-xl dark:border-slate-800/60 dark:bg-slate-950/40 w-full">
                         <nav class="space-y-1">
                             @foreach ($navItems as $item)
                                 <a href="{{ $item['href'] }}"
@@ -271,8 +271,8 @@
                     </div>
                 </aside>
 
-                <main class="pb-24 pt-6 lg:pb-10">
-                    <div class="space-y-6">
+                <main class="flex-1 min-w-0 pb-24 lg:pb-10">
+                    <div class="space-y-6 w-full">
                         @if (isset($slot))
                             {{ $slot }}
                         @else
@@ -554,31 +554,41 @@
         })();
     </script>
 
-    <script>
-        const themeToggleBtn = document.getElementById('theme-toggle')
-        const darkIcon = document.getElementById('theme-toggle-dark-icon')
-        const lightIcon = document.getElementById('theme-toggle-light-icon')
+   <script>
+        document.addEventListener('DOMContentLoaded', function () {
 
-        if (localStorage.theme === 'dark' ||
-            (!('theme' in localStorage) &&
-                window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark')
-            lightIcon.classList.remove('hidden')
-        } else {
-            darkIcon.classList.remove('hidden')
-        }
+            const btn = document.getElementById('theme-toggle')
+            const darkIcon = document.getElementById('theme-toggle-dark-icon')
+            const lightIcon = document.getElementById('theme-toggle-light-icon')
 
-        themeToggleBtn.addEventListener('click', () => {
-            darkIcon.classList.toggle('hidden')
-            lightIcon.classList.toggle('hidden')
+            if (!btn) return
 
-            if (document.documentElement.classList.contains('dark')) {
-                document.documentElement.classList.remove('dark')
-                localStorage.theme = 'light'
-            } else {
-                document.documentElement.classList.add('dark')
-                localStorage.theme = 'dark'
+            function updateIcons() {
+                if (document.documentElement.classList.contains('dark')) {
+                    lightIcon.classList.remove('hidden')
+                    darkIcon.classList.add('hidden')
+                } else {
+                    darkIcon.classList.remove('hidden')
+                    lightIcon.classList.add('hidden')
+                }
             }
+
+            // INIT
+            updateIcons()
+
+            btn.addEventListener('click', function () {
+                const isDark = document.documentElement.classList.contains('dark')
+
+                if (isDark) {
+                    document.documentElement.classList.remove('dark')
+                    localStorage.setItem('theme', 'light')
+                } else {
+                    document.documentElement.classList.add('dark')
+                    localStorage.setItem('theme', 'dark')
+                }
+
+                updateIcons()
+            })
         })
     </script>
 </body>

@@ -427,11 +427,11 @@
                                                     value="{{ request('results_sort') === 'asc' ? 'desc' : 'asc' }}">
                                                     <svg width="20" height="20" viewBox="0 0 20 20"
                                                         fill="none" xmlns="http://www.w3.org/2000/svg"
-                                                        class="text-gray-600 hover:text-black transition">
+                                                        class="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition">
                                                         <path d="M15 9.167L10 4.167 5 9.167h10Z"
-                                                            fill="{{ request('status_sort') === 'asc' ? 'black' : '#9CA3AF' }}" />
+                                                            fill="{{ request('results_sort') === 'asc' ? 'black' : '#9CA3AF' }}" />
                                                         <path d="M15 10.833 10 15.833 5 10.833h10Z"
-                                                            fill="{{ request('status_sort') === 'desc' ? 'black' : '#9CA3AF' }}" />
+                                                            fill="{{ request('results_sort') === 'desc' ? 'black' : '#9CA3AF' }}" />
                                                     </svg>
                                                 </button>
                                             </form>
